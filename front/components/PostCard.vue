@@ -11,7 +11,6 @@
         height="190px"
       ></v-img>
       <v-card-text text style="position: relative">
-        
         <v-btn
           absolute
           dark

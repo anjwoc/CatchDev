@@ -8,7 +8,7 @@ const dotenv = require('dotenv');
 const db = require('./models');
 const app = express();
 
-db.sequelize.sync({ force:true });
+db.sequelize.sync({  });
 dotenv.config();
 
 app.use(cors({

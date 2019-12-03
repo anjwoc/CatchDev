@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   //대댓글
-  const Reply = sequelize.define('Reply', {
+  const Reply = sequelize.define('reply', {
     title: {
       type: DataTypes.STRING(50), //40자 이내
       allowNull: false, // 필수

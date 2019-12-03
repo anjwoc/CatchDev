@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Board = sequelize.define('Board', {
+  const Board = sequelize.define('board', {
     title: {
       type: DataTypes.STRING(50), //40자 이내
       allowNull: false, // 필수

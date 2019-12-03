@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  const User = sequelize.define('user', {
     email: {
       type: DataTypes.STRING(40), //40자 이내
       allowNull: false, // 필수

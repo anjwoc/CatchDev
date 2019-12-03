@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Comment = sequelize.define('Comment', {
+  const Comment = sequelize.define('comment', {
     content: {
       type: DataTypes.TEXT, //긴글
       allowNull: false,

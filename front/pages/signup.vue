@@ -70,7 +70,6 @@
                       v-model="files"
                       placeholder="Upload your profile image"
                       label="File input"
-                      multiple
                       prepend-icon="mdi-camera"
                     >
                       <template v-slot:selection="{ text }">

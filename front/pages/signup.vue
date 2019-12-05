@@ -66,7 +66,25 @@
                       required
                       outlined
                     />
-                    
+                    <v-file-input
+                      v-model="files"
+                      placeholder="Upload your profile image"
+                      label="File input"
+                      multiple
+                      prepend-icon="mdi-camera"
+                    >
+                      <template v-slot:selection="{ text }">
+                        <v-chip
+                          small
+                          label
+                          dark
+                          color="deep-purple accent-4"
+                        >
+                          {{ text }}
+                        </v-chip>
+                      </template>
+                    </v-file-input>
+
                     <v-btn x-large width="100%" type="submit" :disabled="!valid" color="grey darken-1" style="font-weight: bold; color: white;">
                       회원가입
                     </v-btn>

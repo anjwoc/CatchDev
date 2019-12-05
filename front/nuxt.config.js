@@ -1,6 +1,10 @@
 module.exports = {
   head: {
-    title: 'title'
+    title: 'title',
+    script: [
+
+    ],
+    
   },
   modules: [
     '@nuxtjs/axios',
@@ -9,15 +13,11 @@ module.exports = {
   buildModules: [
     '@nuxtjs/vuetify',
   ],
+  plugins: [
+    { src: '~plugins/nuxt-quill-plugin.js', ssr: false },
+    
+  ],
   vuetify: {
-    theme: {
-      themes: {
-          light: {
-              'custom-color-one': '#b71c1c',
-              'custom-color-two': '#3B8070',
-          }
-      }
-  }
   },
   axios: {
     browserBaseURL: 'http://localhost:3085',
@@ -26,6 +26,16 @@ module.exports = {
   },
   server: {
     port: 3000
+  },
+  css: [
+    'quill/dist/quill.snow.css',
+    'quill/dist/quill.bubble.css',
+    'quill/dist/quill.core.css'
+  ],
+  build: {
+    vendor: [
+      'vue-quill-editor',
+  ]
   }
 
 

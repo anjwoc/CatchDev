@@ -15,6 +15,9 @@
     "axios": "^0.19.0",
     "nuxt": "^2.10.2",
     "nuxt-material-design-icons": "^1.0.4",
+    "highlightjs": "^9.16.2",
+    "lodash.throttle": "^4.1.1",
+    "vue-quill-editor": "^3.0.6",
     "vue": "^2.6.10",
     "vuetify": "^2.1.12"
   }

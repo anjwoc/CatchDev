@@ -74,7 +74,7 @@
                       <v-btn text nuxt to="/signup" color="green" style="font-weight: bold;">회원가입</v-btn>
                     </v-col>
                     <v-col align="right" justify="end" class="ma-0 pa-0">
-                      <v-btn nuxt to="/" text color="primary" style="font-weight: bold;">로그인하지 않고 둘러보기</v-btn>
+                      <v-btn @click="onTemporaryUser" text color="primary" style="font-weight: bold;">로그인하지 않고 둘러보기</v-btn>
                     </v-col>
                     
                   </v-row>
@@ -109,6 +109,19 @@
     methods: {
       onSubmitForm() {
         this.$refs.form.validate();
+      },
+      onTemporaryUser() {
+        this.$store.dispatch('users/signUp', {
+          id: 'tempUser',
+          name: 'tempUser'
+        })
+          .then(()=>{
+            this.$router.push({ path: '/', });
+          })
+          .catch((err)=>{
+            console.log(err);
+          });
+
       }
     }
 

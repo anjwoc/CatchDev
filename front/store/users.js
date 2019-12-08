@@ -9,6 +9,9 @@ export const mutations = {
   setMe(state, payload){
     state.me = payload;
   },
+  logOut(state){
+    state.me = null;
+  },
   loadPosts({ commit }, payload){
     //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
     if(payload.offset === 0) {
@@ -31,6 +34,9 @@ export const mutations = {
 export const actions = {
   signUp({ commit }, payload){
     commit('setMe', payload);
+  },
+  logOut({ commit }, payload){
+    commit('logOut', payload);
   },
   loadPosts({ commit }, payload){
     //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴

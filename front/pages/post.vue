@@ -1,20 +1,19 @@
 <template>
   <v-app>
       <v-form>
-        
         <section class="container">
-          
           <v-text-field 
             outlined
+            label="Title"
           />
-          <div class="quill-editor" 
-            :content="content"
-            @change="onEditorChange($event)"
-            @blur="onEditorBlur($event)"
-            @focus="onEditorFocus($event)"
-            @ready="onEditorReady($event)"
-            v-quill:myQuillEditor="editorOption">
-          </div>
+            <div class="quill-editor" 
+              :content="content"
+              @change="onEditorChange($event)"
+              @blur="onEditorBlur($event)"
+              @focus="onEditorFocus($event)"
+              @ready="onEditorReady($event)"
+              v-quill:myQuillEditor="editorOption">
+            </div>
           <input id="getFile" type="file" hidden multiple @change="onChangeImages" />
       </section>
     </v-form>
@@ -126,4 +125,5 @@
       overflow-y: auto;
     }
   }
+  
 </style>

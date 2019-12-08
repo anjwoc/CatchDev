@@ -12,6 +12,7 @@
       <v-list>
         <v-list-item>
           <h1>VelogClone</h1>
+          <!-- <nuxt-link>About</nuxt-link> -->
         </v-list-item>
         <v-list-item>
           <v-text-field
@@ -33,7 +34,16 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title><p class="font-weight-bold pa-0 ma-0">{{ item.title }}</p></v-list-item-title>
+            <v-list-item-title>
+              <nuxt-link 
+                id="titleLink"
+                class="font-weight-bold pa-0 ma-0" 
+                :to = "item.to"
+                style="text-decoration: none;"
+              >
+                {{ item.title }}
+              </nuxt-link>
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -53,20 +63,24 @@
     data () {
       return {
         items: [
-          { title: '트렌딩', icon: 'mdi-trending-up' },
-          { title: '최신 포스트', icon: 'mdi-clock-outline' },
-          { title: '태그', icon: 'mdi-tag-outline' },
+          { title: '트렌딩', icon: 'mdi-trending-up', to: '/' },
+          { title: '최신 포스트', icon: 'mdi-clock-outline', to: '/recent' },
+          { title: '태그', icon: 'mdi-tag-outline', to: '/category' },
         ],
       }
     },
   }
 </script>
 <style scoped>
-  .tile.hover {
-    background: green;
+  #titleLink {
+    text-decoration: none;
+    color: black;
   }
-  .tile.action {
-    background: yellow;
+  #titleLink:hover{
+    color: #1565C0;
+  }
+  #titleLink:active{
+    color: #1565C0;
   }
 
 </style>

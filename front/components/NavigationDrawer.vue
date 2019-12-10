@@ -66,7 +66,7 @@
         items: [
           { title: '트렌딩', icon: 'mdi-trending-up', to: '/' },
           { title: '최신 포스트', icon: 'mdi-clock-outline', to: '/recent' },
-          { title: '태그', icon: 'mdi-tag-outline', to: '/category' },
+          { title: '카테고리', icon: 'mdi-tag-outline', to: '/category' },
         ],
       }
     },

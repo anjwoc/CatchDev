@@ -1,7 +1,7 @@
 <template>
   
   <v-app> 
-    <v-row no-gutters v-if="me">
+    <v-row no-gutters>
       <v-col cols="12" xs="12" md="2">
         <navigation-drawer />
         <floating-button />
@@ -10,12 +10,6 @@
         <nuxt />
       </v-col>
     </v-row> 
-    <div v-else-if="profile">
-
-    </div>
-    <div v-else>
-      <login-form></login-form>
-    </div>
 
 
   </v-app>
@@ -25,7 +19,6 @@
   import NavigationDrawer from '~/components/NavigationDrawer'
   import FloatingButton from '~/components/FloatingButton'
   import PostCard from '~/components/PostCard'
-  import LoginForm from '~/components/LoginForm'
   export default {
     data() {
       return {
@@ -54,7 +47,6 @@
     components: {
       NavigationDrawer,
       PostCard,
-      LoginForm,
       FloatingButton,
     }
   }

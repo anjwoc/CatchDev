@@ -60,7 +60,14 @@
     },
     methods: {
       onLogout() {
-        this.$store.dispatch('users/logOut');
+        this.$store.dispatch('users/logOut')
+          .then(()=>{
+            this.$router.push({ path: '/login' });
+          })
+          .catch((err)=>{
+            console.error(err)
+            return next(err);
+          });
       }
     }
   }

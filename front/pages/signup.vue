@@ -11,8 +11,9 @@
         >
           <v-col
             cols="12"
-            sm="8"
-            md="4"
+            sm="10"
+            md="7"
+            lg="6"
           >
             <v-card class="elevation-12">
               <v-container>
@@ -24,8 +25,6 @@
                       label="Name"
                       v-model="name"
                       prepend-inner-icon="mdi-tag-text"
-                      :rules="emailRules"
-                      type="email"
                       required
                       outlined
                     />
@@ -40,6 +39,7 @@
                     />
                     <v-text-field
                       label="Password"
+                      v-model="password"
                       prepend-inner-icon="lock"
                       :rules="passwordRules"
                       type="password"
@@ -161,10 +161,22 @@
       onSubmitForm() {
         if(this.$refs.form.validate()){
           console.log(this.email);
+          console.log(this.password);
           this.$store.dispatch('users/signUp', {
             email: this.email,
-            password: this.password
+            password: this.password,
+            name: this.name,
+            about: this.about,
           })
+            .then(()=>{
+              this.$router.push({
+                path: '/'
+              });
+            })
+            .catch((err)=>{
+              console.error(err);
+              alert('회원가입 실패');
+            });
         }
       }
     },

@@ -10,12 +10,13 @@ db.Board = require('./board')(sequelize, Sequelize);
 db.Comment = require('./comment')(sequelize, Sequelize);
 db.Reply = require('./reply')(sequelize, Sequelize)
 db.Image = require('./image')(sequelize, Sequelize);
+db.Sns = require('./sns')(sequelize, Sequelize);
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
-});
+}); 
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

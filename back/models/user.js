@@ -12,26 +12,34 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING(20),
       allowNull: false,
-
     },
     about: {
       type: DataTypes.STRING(200),
       allowNull: false,
     },
+    job: {
+      type: DataTypes.STRING(30),
+      allowNull: true,
+    },
+    location: {
+      type: DataTypes.STRING(30),
+      allowNull: true,
+    },
     imgSrc: { //프로필 이미지
       type: DataTypes.STRING(200),
-      allowNull: false,
-    }
+      allowNull: true,
+    },
   },{
     charset: 'utf8',
     collate: 'utf8_general_ci' //한글 저장
   })
   
   User.associate = (db) => {
+    db.User.hasOne(db.Sns);
     db.User.hasMany(db.Board);
     db.User.hasMany(db.Comment);
     db.User.belongsToMany(db.Board, { through: 'Like', as: 'Liked' });
-    // db.User.hasMany(db.Reply);
+    db.User.hasMany(db.Reply);
   };
   return User;
 };

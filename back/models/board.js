@@ -11,6 +11,15 @@ module.exports = (sequelize, DataTypes) => {
     category: {
       type: DataTypes.STRING(20),
       allowNull: false
+    },
+    status: {
+      type: DataTypes.ENUM,
+      values: [
+        'closed',
+        'open'
+      ],
+      defaultValue: 'open',
+      allowNull: false
     }
   },{
     charset: 'utf8',
@@ -18,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
   })
   
   Board.associate = (db) => {
-    db.Board.belongsTo(db.User); //UserId
+    db.Board.belongsTo(db.User); 
     db.Board.hasMany(db.Comment);
     db.Board.hasMany(db.Image);
     db.Board.belongsToMany(db.User, { through: 'Like', as: 'Likers' });

@@ -32,11 +32,9 @@
           <v-container></v-container>
           <v-container></v-container>
           
-          <v-btn icon><v-icon color="primary">mdi-twitter-box</v-icon></v-btn>
-          <v-btn icon><v-icon color="cyan darken-1">mdi-facebook-box</v-icon></v-btn>
+          <v-btn icon><v-icon color="black">mdi-github-box</v-icon></v-btn>
           <v-btn icon><v-icon color="black">mdi-google-plus-box</v-icon></v-btn>
           <v-btn icon><v-icon color="indigo">mdi-linkedin-box</v-icon></v-btn>
-          <v-btn icon><v-icon color="black">mdi-github-box</v-icon></v-btn>
         </v-col>
         <v-col cols="12" md="1"></v-col>
     </v-row>

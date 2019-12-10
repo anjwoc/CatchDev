@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.7",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -19,7 +20,7 @@
     "multer-s3": "^2.9.0",
     "mysql": "^2.17.1",
     "mysql2": "^2.0.1",
-    "passport": "^0.4.0",
+    "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "sequelize": "^5.21.2",
     "sequelize-cli": "^5.5.1"

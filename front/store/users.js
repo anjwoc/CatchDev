@@ -33,7 +33,20 @@ export const mutations = {
 
 export const actions = {
   signUp({ commit }, payload){
-    commit('setMe', payload);
+    this.$axios.post('/user', {
+      email: payload.email,
+      password: payload.password,
+      name: payload.name,
+      about: payload.about,
+    },{
+      withCredentials: true,
+    })
+      .then((res)=>{
+        commit('setMe', res.data);
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
   },
   logOut({ commit }, payload){
     commit('logOut', payload);

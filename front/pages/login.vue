@@ -31,6 +31,7 @@
                   />
                   <v-text-field
                     label="Password"
+                    v-model="password"
                     name="password"
                     prepend-inner-icon="lock"
                     :rules="passwordRules"
@@ -76,8 +77,6 @@
                   </v-col>
                 </v-row>
               </v-card-text>
-
-            
             </v-container>
           </v-card>
         </v-col>
@@ -110,11 +109,10 @@
             password: this.password
           })
             .then(()=>{
-              //로그인 이후 로직
+              this.$router.push({ path: '/' });
             })
             .catch((err)=>{
               console.error(err)
-              return next(err);
             })
         }
       },

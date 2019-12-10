@@ -48,6 +48,20 @@ export const actions = {
         console.error(err);
       })
   },
+  logIn({ commit }, payload){
+    this.$axios.post('/user/login', {
+      email: payload.email,
+      password: payload.password
+    },{
+      withCredentials: true,
+    })
+      .then((res)=>{
+        commit('setMe', res.data);
+      })
+      .catch((err)=>{
+        console.error(err);
+      });
+  },
   logOut({ commit }, payload){
     commit('logOut', payload);
   },

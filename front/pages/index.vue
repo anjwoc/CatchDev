@@ -60,7 +60,6 @@ import authenticated from '~/middleware/authenticated'
   export default {
     components: {
       PostCard,
-
     },
     computed: {
       me() {

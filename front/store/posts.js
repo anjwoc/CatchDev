@@ -12,16 +12,6 @@ export const mutations = {
   addMainPost(state, payload){
     state.mainPosts.unshift(payload);
   },
-  concatImagePaths(state, payload){
-    state.imagePaths = state.imagePaths.concat(payload);
-  },
-  updateImagePaths(state, payload){
-    console.log(`updateImagePaths ${payload}`)
-    state.newImagePath = payload;
-  },
-  removeImagePath(state, payload){
-    state.imagePaths.splice(payload, 1);
-  }
 };
 
 export const actions = {
@@ -39,26 +29,5 @@ export const actions = {
         console.error(err);
       });
   },
-  async uploadImages({ commit }, payload){
-    try{
-      this.$axios.post('/board/images', payload , {
-        withCredentials: true,
-      })
-        .then((res)=>{
-          console.log(`posts/uploadImages 호출 ${res}`);
-          console.log(res.data);
-          commit('updateImagePaths', res.data);
-        })
-        .catch((err)=>{
-          console.error(err);
-        })
-
-    }catch(err){
-      console.error(err);
-    }
-    commit('concatImagePaths', payload);
-    
-  },
-
 
 };

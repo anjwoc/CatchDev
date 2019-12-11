@@ -1,8 +1,8 @@
+const webpack = require('webpack')
 module.exports = {
   head: {
     title: 'title',
     script: [
-
     ],
     
   },
@@ -33,9 +33,15 @@ module.exports = {
     'quill/dist/quill.core.css'
   ],
   build: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        'window.Quill': 'quill/dist/quill.js',
+        'Quill': 'quill/dist/quill.js'
+      })
+    ],
     vendor: [
       'vue-quill-editor',
-  ]
+    ]
   }
 
 

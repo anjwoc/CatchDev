@@ -22,6 +22,7 @@ app.use(cors({
   credentials: true,
 }));
 
+app.use('/', express.static('uploads'));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

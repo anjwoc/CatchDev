@@ -1,12 +1,21 @@
 <template>
-  <v-app>
-      <v-form>
-        <section class="container">
-          <v-text-field 
-            outlined
-            label="Title"
-          />
-            <div class="quill-editor" 
+  <v-row
+    justify="center"
+    class="ma-0 pa-0 fill-height"
+  >
+    <v-card
+      color="white"
+      justify="center fill-height"  
+    >
+        <v-form>
+          <section class="container">
+            <v-text-field 
+              outlined
+              v-model="title"
+              label="Title"
+            />
+            <div class="quill-editor"
+              
               :content="content"
               @change="onEditorChange($event)"
               @blur="onEditorBlur($event)"
@@ -15,14 +24,23 @@
               v-quill:myQuillEditor="editorOption">
             </div>
           <input id="getFile" type="file" hidden multiple @change="onChangeImages" />
-      </section>
-    </v-form>
-  </v-app>
+          <v-row class="ma-0 pa-0 mt-2 mb-2" justify="end">
+            <v-divider></v-divider>
+            <v-btn class="mx-auto" color="green" outlined width="50%">돌아가기</v-btn>
+            <v-btn class="mx-auto" color="primary" outlined width="50%">작성하기</v-btn>
+          </v-row>
+          
+        </section>    
+      </v-form>
+    </v-card>
+    
+  </v-row>
   
 </template>
  
 <script>
   import hljs from 'highlightjs'
+  import { mapState} from 'vuex';
   const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],
     ['blockquote', 'code-block'],
@@ -44,6 +62,7 @@
       return {
         content: '<p>I am Example</p>',
         quillUpdateImg: false,
+        title: '',
         serverUrl: '',
         editorOption: {
           theme: 'snow',
@@ -54,31 +73,29 @@
               handlers: {
                 'image': function(value){
                   if(value){
+                    console.log("클릭하냐?");
                     document.getElementById('getFile').click();
                   }else {
-                    this.quill.format('image', false);
+                    console.log("여기 들어오냐?");
+                    this.myQuillEditor.format('image', false);
                   }
                 },
                 'video': function(value){
                   if(value){
-                    
                   }
                 }
               }
             },
-            
             syntax: {
               highlight: text => hljs.highlightAuto(text).value
-            }
+            },
+            imageResize: true,
           },
         }
       }
     },
-    mounted() {
-      console.log('app init, my quill insrance object is:', this.myQuillEditor)
-      setTimeout(() => {
-        this.content = 'i am changed'
-      }, 3000)
+    computed: {
+      ...mapState('posts', ['newImagePath'])
     },
     methods: {
       onEditorBlur(editor) {
@@ -104,10 +121,26 @@
           .then(()=>{
             console.log("진입");
             const range = this.myQuillEditor.getSelection();
-            console.log(`range: ${range}`);
-            this.myQuillEditor.insertEmbed(range.index, 'image', 'https://imgur.com/HesPs6K');
+            console.log(`rangeLength: ${range.length}  rangeIndex: ${range.index}`);
+            console.log(typeof(this.newImagePath));
+            console.log(`이미지경로 : ${this.newImagePath}`)
+            if(this.newImagePath.length === 1) {
+              //이미지가 1개라면
+              console.log(`이미지 패스 갯수 ${this.newImagePath.length}`);
+              this.myQuillEditor.insertEmbed(range.index, 'image', `http://localhost:4000/${this.newImagePath[0]}`);
+            }
+            else{
+              // 이미지가 1개 이상이면
+              console.log(`이미지 패스 갯수 ${this.newImagePath.length}`);
+              for (const img of this.newImagePath){
+                console.log(img);
+                this.myQuillEditor.insertEmbed(range.index, 'image', `http://localhost:4000/${img}`);
+              }
+            };
+            
           })
-          .catch(()=>{
+          .catch((err)=>{
+            console.error(err);
           });
       }
     },

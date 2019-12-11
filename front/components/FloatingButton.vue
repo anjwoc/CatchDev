@@ -33,7 +33,7 @@
       dark
       small
       color="green"
-      nuxt to="/post"
+      nuxt to="/posting"
     >
       <v-icon>mdi-pencil</v-icon>
     </v-btn>
@@ -50,11 +50,21 @@
       fab
       dark
       small
+      color="primary"
+      nuxt to="/login"
+    >
+      <v-icon>mdi-login</v-icon>
+    </v-btn>
+    <v-btn
+      fab
+      dark
+      small
       color="red"
       @click="onLogout"
     >
       <v-icon>mdi-logout</v-icon>
     </v-btn>
+    
     
   </v-speed-dial>
 </template>

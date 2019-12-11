@@ -66,7 +66,6 @@ import authenticated from '~/middleware/authenticated'
         return this.$store.state.users.me;
       }
     },
-    middleware: 'authenticated',
 
   }
 </script>

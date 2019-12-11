@@ -10,7 +10,15 @@ export const mutations = {
     state.me = payload;
   },
   logOut(state){
-    state.me = null;
+    this.$axios.post('/user/logout', {}, {
+      withCredentials: true,
+    })
+      .then((data)=>{
+        commit('setMe', null);
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
   },
   loadPosts({ commit }, payload){
     //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
@@ -32,6 +40,17 @@ export const mutations = {
 };
 
 export const actions = {
+  async loadUser({ state, commit }){
+    try{
+      const res = await this.$axios.get('/user', {
+        withCredentials: true,
+      });
+      console.log("loadUser 진입");
+      commit('setMe', res.data);
+    }catch(err){
+      console.error(err);
+    };
+  },
   signUp({ commit }, payload){
     this.$axios.post('/user', {
       email: payload.email,

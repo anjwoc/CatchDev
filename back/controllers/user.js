@@ -2,6 +2,19 @@ const db = require('../models');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
+
+//로그인이 새로고침되도 유지하기 위해서 사용하는 get요청
+exports.loadUser = async (req, res, next) => {
+  try{
+    const user = req.user;
+    console.log(user);
+    res.json(user);
+  }catch(err){
+    console.error(err)
+    next(err);
+  }
+};
+
  // post 회원가입
 exports.signUp = async (req, res, next) => {
   try{
@@ -81,4 +94,18 @@ exports.logIn = async (req, res, next) => {
       return res.json(fullUser);
     });
   })(req, res, next);
+};
+
+
+exports.logOut = async (req, res, next) => {
+  try{
+    if (req.isAuthenticated()) {
+      req.logout();
+      req.session.destroy(); // 선택사항
+      return res.status(200).send('로그아웃 되었습니다.');
+    }
+  }catch(err){
+    console.error(err);
+    return next(err);
+  }
 };

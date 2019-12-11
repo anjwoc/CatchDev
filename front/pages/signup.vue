@@ -84,18 +84,24 @@
                       </template>
                     </v-file-input>
 
-                    <v-btn x-large width="100%" type="submit" :disabled="!valid" color="grey darken-1" style="font-weight: bold; color: white;">
+                    <v-btn 
+                      x-large width="100%"
+                      type="submit"
+                      :disabled="!valid"
+                      color="grey darken-1"
+                      style="font-weight: bold; color: white;"
+                      @click="alert = !alert"
+                    >
                       회원가입
                     </v-btn>
+                    <!-- <alert-message :alert=true :success="success" :message="msg" /> -->
                   </v-form>
-                  <v-card-actions class="mt-0 pt-0 justify-center">
-                    
-                  </v-card-actions>
+
+                  
                   <v-card-actions class="ma-0 pa-0" style="font-weight: bold; color: black;">
                     <v-divider></v-divider>
                     OR
                     <v-divider></v-divider>
-                    
                   </v-card-actions>
 
                   <v-row align="center" justify="center" style="margin-bottom: 20px; margin-top:20px;">
@@ -132,6 +138,7 @@
 </template>
 
 <script>
+  import AlertMessage from '~/components/AlertMessage';
   export default {
     data() {
       return {
@@ -140,7 +147,9 @@
         email: '',
         password: '',
         passwordCheck: '',
+        msg: '이미 가입된 회원이거나 양식을 다시 확인해주십시오.',
         about: '',
+        success: true,
         emailRules: [
           v => !!v || '이메일은 필수입니다.',
           v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
@@ -168,17 +177,26 @@
             name: this.name,
             about: this.about,
           })
-            .then(()=>{
+            .then((res)=>{
+              console.log(res);
               this.$router.push({
                 path: '/'
               });
+              success = true;
             })
             .catch((err)=>{
               console.error(err);
-              alert('회원가입 실패');
+              success = false;
             });
         }
+      },
+      onSuccessCheck() {
+        this.success === false ? false : true;
       }
+    },
+    component: {
+      AlertMessage,
+
     },
     middleware: 'anonymous',
     head() {

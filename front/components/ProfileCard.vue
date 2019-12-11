@@ -1,11 +1,12 @@
 <template>
-  <v-card class="mx-auto" max-height="250" outlined>
-    <v-container>
+  <v-card class="mx-auto" nuxt to="/board" max-height="250" outlined>
+    <v-container
+      v-ripple
+    >
       <p class="font-weight-medium caption ma-0 pa-0">{{ datetime }}</p>
       <a id="postLink" class="ma-0 pa-0">{{ title }}</a>
       <p class="body-1" v-if="bodyText.length >= 150"> {{ lengthCheck() }} </p>
       <p class="body-1" v-else> {{ bodyText }} </p>
-      
     </v-container>
     
   </v-card>

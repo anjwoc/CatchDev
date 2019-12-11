@@ -18,11 +18,16 @@
           <p style="color: #1A237E" class="ma-0 pa-0">{{ me.email }}</p>
           <v-divider></v-divider>
           <h2>{{ me.name }}</h2>
-          <p>{{ me.job === null ? '직업을 추가해주세요' : me.job }}</p>
-          <span style="font-size: 13px; margin: 0px 0px 0px 0px;">
-            <v-icon small>mdi-map-marker</v-icon>
+          <div>
+            {{ me.job === null ? '직업을 추가해주세요' : me.job }}
+            
+
+          </div>
+          
+          <div style="font-size: 13px; margin: 0px 0px 0px 0px;">
+            <v-icon v-if="me.location" regular>mdi-map-marker</v-icon>
             {{ me.location === null ? '지역을 추가해주세요' : me.location }}
-          </span>
+          </div>
           <v-divider></v-divider>
           <div class="black--text mt-2">
             {{ me.about }}
@@ -35,6 +40,7 @@
           <v-btn icon><v-icon color="black">mdi-github-box</v-icon></v-btn>
           <v-btn icon><v-icon color="black">mdi-google-plus-box</v-icon></v-btn>
           <v-btn icon><v-icon color="indigo">mdi-linkedin-box</v-icon></v-btn>
+          
         </v-col>
         <v-col cols="12" md="1"></v-col>
     </v-row>
@@ -97,9 +103,30 @@
         tabs: 3,
         tabNames: ['', '글','진행중인 스터디','종료된 스터디'],
         text: 'test',
-        
-
+        job: '',
+        location: '',
+        github: '',
+        gmail: '',
+        linkedIn: '',
       }
+    },
+    methods: {
+      addInfo() {
+        this.$store.dispatch('users/addAdditionalInfo', {
+          job: this.job,
+          location: this.location,
+          github: this.github,
+          gmail: this.gmail,
+          linkedIn: this.linkedIn,
+        })
+          .then(()=>{
+
+          })
+          .catch((err)=>{
+            console.error(err);
+          });
+      },
+     
     },
     components: {
       ProfileCard,

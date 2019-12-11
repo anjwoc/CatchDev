@@ -37,7 +37,15 @@
     >
       <v-icon>mdi-pencil</v-icon>
     </v-btn>
-    
+    <v-btn
+      fab
+      dark
+      small
+      color="black"
+      nuxt to="/setting"
+    >
+      <v-icon>mdi-settings</v-icon>
+    </v-btn>
     <v-btn
       fab
       dark
@@ -47,6 +55,7 @@
     >
       <v-icon>mdi-logout</v-icon>
     </v-btn>
+    
   </v-speed-dial>
 </template>
 

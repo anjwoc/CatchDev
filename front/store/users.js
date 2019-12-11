@@ -84,6 +84,24 @@ export const actions = {
         console.error(err);
       })
   },
+  addAdditionalInfo({ commit }, payload){
+    //프로필페이지에서 직무나 지역정보를 수정하고 
+    //github, gmail, linkedIn의 정보를 표시
+    this.$axios.post('/user/info', {
+
+    },{
+      withCredentials: true,
+    })
+      .then((res)=>{
+
+      })
+      .catch((err)=>{
+        console.error(err);
+      });
+
+
+  },
+  
   loadPosts({ commit }, payload){
     //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
     commit('loadPosts', payload);
@@ -95,7 +113,8 @@ export const actions = {
   loadOngoingPosts({ commit }, payload){
     //진행중인 스터디만 불러옴
     commit('loadOngoingPosts', payload);
-  }
+  },
+  
 
 
 

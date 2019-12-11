@@ -117,31 +117,35 @@
         [].forEach.call(e.target.files, (f) => {
           imageFormData.append('image', f);
         });
-        this.$store.dispatch('posts/uploadImages', imageFormData)
-          .then(()=>{
-            console.log("진입");
+        this.$axios.post('/board/images', imageFormData , {
+          withCredentials: true,
+        })
+          .then((files)=>{
+            console.log(`posts/uploadImages 호출 ${files}`);
+            console.log(files.data);
             const range = this.myQuillEditor.getSelection();
             console.log(`rangeLength: ${range.length}  rangeIndex: ${range.index}`);
-            console.log(typeof(this.newImagePath));
-            console.log(`이미지경로 : ${this.newImagePath}`)
-            if(this.newImagePath.length === 1) {
+            console.log(typeof(files.data));
+            console.log(`이미지경로 : ${files.data}`)
+            if(files.data.length === 1) {
               //이미지가 1개라면
-              console.log(`이미지 패스 갯수 ${this.newImagePath.length}`);
-              this.myQuillEditor.insertEmbed(range.index, 'image', `http://localhost:4000/${this.newImagePath[0]}`);
+              console.log(`이미지 패스 갯수 ${files.data.length}`);
+              this.myQuillEditor.insertEmbed(range.index, 'image', `http://localhost:4000/${files.data[0]}`);
             }
             else{
               // 이미지가 1개 이상이면
-              console.log(`이미지 패스 갯수 ${this.newImagePath.length}`);
-              for (const img of this.newImagePath){
+              console.log(`이미지 패스 갯수 ${files.data.length}`);
+              for (const img of files.data){
                 console.log(img);
                 this.myQuillEditor.insertEmbed(range.index, 'image', `http://localhost:4000/${img}`);
               }
             };
-            
           })
           .catch((err)=>{
             console.error(err);
           });
+
+        
       }
     },
 

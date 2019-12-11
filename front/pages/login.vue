@@ -129,7 +129,8 @@
           });
 
       }
-    }
+    },
+    middleware: 'anonymous',
 
   }
 </script>

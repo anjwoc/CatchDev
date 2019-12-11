@@ -15,7 +15,7 @@ module.exports = () => {
       //
       const user = await db.User.findOne({
         where: { id },
-        attributes: ['id', 'name'],
+        attributes: ['id','email', 'name', 'about', 'job', 'location', 'imgSrc'],
         include: [{
           model: db.Board,
           attributes: ['id'],

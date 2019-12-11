@@ -110,7 +110,10 @@
           .catch(()=>{
           });
       }
-    }
+    },
+
+    middleware: 'authenticated',
+
   }
 </script>
  

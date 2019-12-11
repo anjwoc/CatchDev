@@ -52,7 +52,7 @@ exports.signUp = async (req, res, next) => {
         }
         const fullUser = await db.User.findOne({
           where: { id: user.id },
-          attributes: ['id', 'email', 'name'],
+          attributes: ['id','email', 'name', 'about', 'job', 'location', 'imgSrc'],
           include: [{
             model: db.Board,
             attributes: ['id'],
@@ -85,7 +85,7 @@ exports.logIn = async (req, res, next) => {
       }
       const fullUser = await db.User.findOne({
         where: { id: user.id },
-        attributes: ['id', 'email', 'name'],
+        attributes: ['id','email', 'name', 'about', 'job', 'location', 'imgSrc'],
         include: [{
           model: db.Board,
           attributes: ['id'],
@@ -102,7 +102,7 @@ exports.logOut = async (req, res, next) => {
     if (req.isAuthenticated()) {
       req.logout();
       req.session.destroy(); // 선택사항
-      return res.status(200).send('로그아웃 되었습니다.');
+      return res.clearCookie('connect.sid', {path: '/'}).status(200).send('로그아웃 되었습니다.');
     }
   }catch(err){
     console.error(err);

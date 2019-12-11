@@ -180,6 +180,7 @@
         }
       }
     },
+    middleware: 'anonymous',
     head() {
       title: '회원가입'
     }

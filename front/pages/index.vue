@@ -56,7 +56,6 @@
 <script>
 import PostCard from '~/components/PostCard'
 import authenticated from '~/middleware/authenticated'
-
   export default {
     components: {
       PostCard,
@@ -66,7 +65,13 @@ import authenticated from '~/middleware/authenticated'
         return this.$store.state.users.me;
       }
     },
-
+    watch: {
+      me: function (newValue){
+        if(!this.me){
+          this.$router.push({ path: '/login' });
+        }
+      }
+    },
   }
 </script>
 

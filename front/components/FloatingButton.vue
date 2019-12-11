@@ -55,7 +55,6 @@
     data() {
       return {
         fab: false,
-
       }
     },
     methods: {

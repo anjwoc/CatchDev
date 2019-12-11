@@ -15,17 +15,17 @@
         </v-col>
         <v-col cols="12" md="5">
           <v-container class="mt-4"></v-container>
-          <p style="color: #1A237E" class="ma-0 pa-0">@anjwoc</p>
+          <p style="color: #1A237E" class="ma-0 pa-0">{{ me.email }}</p>
           <v-divider></v-divider>
-          <h2>홍길동</h2>
-          <p>Network Engineer(직무) OR (학생)</p>
+          <h2>{{ me.name }}</h2>
+          <p>{{ me.job === null ? '직업을 추가해주세요' : me.job }}</p>
           <span style="font-size: 13px; margin: 0px 0px 0px 0px;">
             <v-icon small>mdi-map-marker</v-icon>
-            Boston, MA. United States    (간단한 지역)
+            {{ me.location === null ? '지역을 추가해주세요' : me.location }}
           </span>
           <v-divider></v-divider>
           <div class="black--text mt-2">
-            간단한 자기 소개 한줄ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ
+            {{ me.about }}
           </div>
         </v-col>
         <v-col cols="12" md="3">
@@ -103,7 +103,14 @@
     },
     components: {
       ProfileCard,
-    }
+    },
+    computed: {
+      me() { 
+        return this.$store.state.users.me;
+      }
+    },
+    middleware: 'authenticated',
+
   }
 </script>
 

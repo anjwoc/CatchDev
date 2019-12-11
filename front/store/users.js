@@ -10,15 +10,7 @@ export const mutations = {
     state.me = payload;
   },
   logOut(state){
-    this.$axios.post('/user/logout', {}, {
-      withCredentials: true,
-    })
-      .then((data)=>{
-        commit('setMe', null);
-      })
-      .catch((err)=>{
-        console.error(err);
-      })
+    state.me = null;
   },
   loadPosts({ commit }, payload){
     //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
@@ -82,7 +74,15 @@ export const actions = {
       });
   },
   logOut({ commit }, payload){
-    commit('logOut', payload);
+    this.$axios.post('/user/logout', {}, {
+      withCredentials: true,
+    })
+      .then((data)=>{
+        commit('setMe', null);
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
   },
   loadPosts({ commit }, payload){
     //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴

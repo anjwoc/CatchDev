@@ -5,8 +5,9 @@
         <v-col cols="12" md="1"></v-col>
         <v-col cols="12" md="2">
           <div>
-            <v-avatar size="160" class="mt-6 mb-6" fixed>
+            <v-avatar size="90%"  class="mt-8 mb-6" fixed>
               <img
+                max-width="160px" max-height="160px"
                 src="https://cdn.vuetifyjs.com/images/john.jpg"
                 alt="John"
               >

@@ -15,7 +15,6 @@
               label="Title"
             />
             <div class="quill-editor"
-              
               :content="content"
               @change="onEditorChange($event)"
               @blur="onEditorBlur($event)"
@@ -40,7 +39,7 @@
  
 <script>
   import hljs from 'highlightjs'
-  import { mapState} from 'vuex';
+  import { mapState } from 'vuex';
   const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],
     ['blockquote', 'code-block'],
@@ -73,10 +72,8 @@
               handlers: {
                 'image': function(value){
                   if(value){
-                    console.log("클릭하냐?");
                     document.getElementById('getFile').click();
                   }else {
-                    console.log("여기 들어오냐?");
                     this.myQuillEditor.format('image', false);
                   }
                 },
@@ -93,9 +90,6 @@
           },
         }
       }
-    },
-    computed: {
-      ...mapState('posts', ['newImagePath'])
     },
     methods: {
       onEditorBlur(editor) {
@@ -125,8 +119,6 @@
             console.log(files.data);
             const range = this.myQuillEditor.getSelection();
             console.log(`rangeLength: ${range.length}  rangeIndex: ${range.index}`);
-            console.log(typeof(files.data));
-            console.log(`이미지경로 : ${files.data}`)
             if(files.data.length === 1) {
               //이미지가 1개라면
               console.log(`이미지 패스 갯수 ${files.data.length}`);

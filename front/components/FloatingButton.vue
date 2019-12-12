@@ -3,6 +3,7 @@
     v-model="fab"
     fab
     fixed
+    absolute
     top
     right
     direction="bottom"
@@ -10,6 +11,7 @@
   >
     <template v-slot:activator>
       <v-btn
+        
         v-model="fab"
         color="blue darken-2"
         dark
@@ -92,5 +94,9 @@
 </script>
 
 <style scoped>
+* {
+  z-index: 10;
+
+}
 
 </style>

@@ -1,7 +1,8 @@
-const webpack = require('webpack')
+const webpack = require('webpack');
+
 module.exports = {
   head: {
-    title: 'title',
+    title: 'StudyPlatform',
     script: [
     ],
     
@@ -12,6 +13,7 @@ module.exports = {
   ],
   buildModules: [
     '@nuxtjs/vuetify',
+    
   ],
   plugins: [
     { src: '~plugins/nuxt-quill-plugin.js', ssr: false },
@@ -42,7 +44,8 @@ module.exports = {
     vendor: [
       'vue-quill-editor',
     ]
-  }
+  },
+
 
 
 };

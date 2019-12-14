@@ -4,9 +4,7 @@ const { isLoggedIn, isNotLoggedIn, upload } = require('./middlewares');
 
 const router = express.Router();
 
-//router.get('/', isLoggedIn, test);
-
-
+router.post('/', isLoggedIn, board.addBoard);
 router.post('/images', isLoggedIn, upload.array('image'), board.uploadImage);
 
 module.exports = router

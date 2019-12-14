@@ -5,6 +5,7 @@ import scrollBehavior from './router.scrollBehavior.js'
 
 const _8fe5e1c6 = () => interopDefault(import('..\\pages\\board.vue' /* webpackChunkName: "pages_board" */))
 const _9d5fd3c0 = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages_login" */))
+const _0772ca8e = () => interopDefault(import('..\\pages\\post.vue' /* webpackChunkName: "pages_post" */))
 const _8248bc8e = () => interopDefault(import('..\\pages\\posting.vue' /* webpackChunkName: "pages_posting" */))
 const _ce6036c0 = () => interopDefault(import('..\\pages\\profile.vue' /* webpackChunkName: "pages_profile" */))
 const _f2208472 = () => interopDefault(import('..\\pages\\setting.vue' /* webpackChunkName: "pages_setting" */))
@@ -28,6 +29,10 @@ export const routerOptions = {
     path: "/login",
     component: _9d5fd3c0,
     name: "login"
+  }, {
+    path: "/post",
+    component: _0772ca8e,
+    name: "post"
   }, {
     path: "/posting",
     component: _8248bc8e,

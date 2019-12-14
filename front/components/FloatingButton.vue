@@ -49,6 +49,7 @@
       <v-icon>mdi-settings</v-icon>
     </v-btn>
     <v-btn
+      v-if="!me"
       fab
       dark
       small
@@ -58,6 +59,7 @@
       <v-icon>mdi-login</v-icon>
     </v-btn>
     <v-btn
+      v-if="me"
       fab
       dark
       small
@@ -76,6 +78,11 @@
     data() {
       return {
         fab: false,
+      }
+    },
+    computed: {
+      me() {
+        return this.$store.state.users.me;
       }
     },
     methods: {

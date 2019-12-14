@@ -7,39 +7,45 @@
       color="white"
       justify="center fill-height"  
     >
-        <v-form>
+        <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
           <section class="container">
+            <div class="d-flex flex-row text-center">
+              <PostOptionModal style="width: 100%;" @receive="onChangeCategory" name="Category" :Items="categoryItems" />
+              <PostOptionModal style="width: 100%;" @receive="onChangeLocation" name="Location" :Items="LocationItems" />
+            </div>
+            
+            
+            <!-- v-text-field에서 hiede-details옵션을 false로 안하면 밑에 여백 공간이 생긴다. -->
             <v-text-field 
+              class="ma-0 pa-0"
               outlined
+              :hide-details=true
               v-model="title"
               label="Title"
             />
+            
             <div class="quill-editor"
               :content="content"
               @change="onEditorChange($event)"
-              @blur="onEditorBlur($event)"
-              @focus="onEditorFocus($event)"
-              @ready="onEditorReady($event)"
               v-quill:myQuillEditor="editorOption">
             </div>
           <input id="getFile" type="file" hidden multiple @change="onChangeImages" />
           <v-row class="ma-0 pa-0 mt-2 mb-2" justify="end">
             <v-divider></v-divider>
             <v-btn class="mx-auto" color="green" outlined width="50%">돌아가기</v-btn>
-            <v-btn class="mx-auto" color="primary" outlined width="50%">작성하기</v-btn>
+            <v-btn class="mx-auto" type="submit" color="primary" outlined width="50%">작성하기</v-btn>
           </v-row>
-          
         </section>    
       </v-form>
     </v-card>
-    
   </v-row>
-  
 </template>
  
 <script>
   import hljs from 'highlightjs'
+  import PostOptionModal from '~/components/PostOptionModal'
   import { mapState } from 'vuex';
+  
   const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],
     ['blockquote', 'code-block'],
@@ -59,10 +65,15 @@
   export default {
     data () {
       return {
-        content: '<p>I am Example</p>',
-        quillUpdateImg: false,
+        content: '<p>Initial Content</p>',
         title: '',
-        serverUrl: '',
+        hideDetails: true,
+        valid: false,
+        location :'',
+        category: '',
+        categoryItems: [ '어학', '취업', '고시', '자격증', '프로그래밍', '기타' ],
+        LocationItems: [ '서울', '수원', '인천', '부산', '강원', '천안', '울산', '광주', '제주', '기타' ],
+        serverUrl: 'http://localhost:4000',
         editorOption: {
           theme: 'snow',
           // some quill options
@@ -76,10 +87,6 @@
                   }else {
                     this.myQuillEditor.format('image', false);
                   }
-                },
-                'video': function(value){
-                  if(value){
-                  }
                 }
               }
             },
@@ -91,19 +98,21 @@
         }
       }
     },
+    mounted() {
+      console.log(this.myQuillEditor);
+    },
     methods: {
-      onEditorBlur(editor) {
-        console.log('editor blur!', editor)
-      },
-      onEditorFocus(editor) {
-        console.log('editor focus!', editor)
-      },
-      onEditorReady(editor) {
-        console.log('editor ready!', editor)
-      },
       onEditorChange({ editor, html, text }) {
         console.log('editor change!', editor, html, text)
         this.content = html
+      },
+      onChangeLocation(data){
+        this.location = data;
+        console.log(`this.location: ${this.location}`);
+      },
+      onChangeCategory(data){
+        this.category = data;
+        console.log(`this.category: ${this.category}`);
       },
       onChangeImages(e){
         console.log(e.target.files, e.target.files.forEach);
@@ -117,30 +126,48 @@
           .then((files)=>{
             console.log(`posts/uploadImages 호출 ${files}`);
             console.log(files.data);
+            this.$store.commit('posts/concatImagePaths', files.data);
             const range = this.myQuillEditor.getSelection();
             console.log(`rangeLength: ${range.length}  rangeIndex: ${range.index}`);
             if(files.data.length === 1) {
               //이미지가 1개라면
               console.log(`이미지 패스 갯수 ${files.data.length}`);
-              this.myQuillEditor.insertEmbed(range.index, 'image', `http://localhost:4000/${files.data[0]}`);
+              this.myQuillEditor.insertEmbed(range.index, 'image', `${this.serverUrl}/${files.data[0]}`);
             }
             else{
               // 이미지가 1개 이상이면
               console.log(`이미지 패스 갯수 ${files.data.length}`);
               for (const img of files.data){
                 console.log(img);
-                this.myQuillEditor.insertEmbed(range.index, 'image', `http://localhost:4000/${img}`);
+                this.myQuillEditor.insertEmbed(range.index, 'image', `${this.serverUrl}/${img}`);
               }
             };
           })
           .catch((err)=>{
             console.error(err);
           });
-
-        
+      },
+      onSubmitForm() {
+        if(this.$refs.form.validate()){
+          this.$store.dispatch('posts/add', {
+            title: this.title,
+            content: this.content,
+            location: this.location,
+            category: this.category,
+          })
+          .then(()=>{
+            this.$store.commit('posts/concatImagePaths', null);
+            this.$router.push({ path: '/post'});
+          })
+          .catch((err)=>{
+            console.error(err);
+          });
+        }
       }
     },
-
+    components: {
+      PostOptionModal,
+    },  
     middleware: 'authenticated',
 
   }

@@ -21,9 +21,9 @@
           <h2>{{ me.name }}</h2>
           <div>
             {{ me.job === null ? '직업을 추가해주세요' : me.job }}
-            
-
           </div>
+          
+
           
           <div style="font-size: 13px; margin: 0px 0px 0px 0px;">
             <v-icon v-if="me.location" regular>mdi-map-marker</v-icon>

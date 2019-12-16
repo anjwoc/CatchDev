@@ -38,45 +38,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use('/', routes)
-
-app.get('/test', async (req, res, next)=>{
-  try{
-    console.log(`loadBoard진입 req.query값: ${req.query.lastId}`)
-    let where = {};
-    if(parseInt(req.query.lastId, 10)){
-      //lastId가 있을 경우
-      where = {
-        id: {
-          //less than
-          [db.Sequelize.Op.lt]: parseInt(req.query.lastId, 10), 
-        }
-      }
-    }
-    const posts = await db.Board.findAll({
-      where,
-      include: [{
-        model: db.User,
-        attributes: ['id', 'email', 'name', 'imgSrc']
-      },{
-        model: db.Image,
-      },{
-        model: db.User,
-        as: 'Likers',
-        attributes: ['id']
-      }],
-      order: [['createdAt', 'DESC']],
-      limit: parseInt(req.query.limit, 10) || 10,
-    });
-    res.json(posts);
-
-  }catch(err){
-    console.error(err);
-    return next(err);
-  }
-
-});
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello World');

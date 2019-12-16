@@ -65,8 +65,7 @@ export const actions = {
     console.log('loadPosts');
     try{
       if(payload && payload.reset) {
-        const res = await this.$axios.get(`/test`);
-        console.log(`loadPosts 결과: ${res.data}`);
+        const res = await this.$axios.get(`/boards`);
         commit('loadPosts', {
           data: res.data,
           reset: true,
@@ -75,7 +74,7 @@ export const actions = {
       }
       if(state.hasMorePost) {
         const lastPost  = state.mainPosts[state.mainPosts.length - 1];
-        const res = await this.$axios.get(`/test/lastId=${lastPost && lastPost.id}&limit=10`);
+        const res = await this.$axios.get(`/boards?lastId=${lastPost && lastPost.id}&limit=10`);
         commit('loadPosts', {
           data: res.data,
         });

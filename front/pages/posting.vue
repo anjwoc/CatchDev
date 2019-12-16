@@ -13,8 +13,6 @@
               <PostOptionModal style="width: 100%;" @receive="onChangeCategory" name="Category" :Items="categoryItems" />
               <PostOptionModal style="width: 100%;" @receive="onChangeLocation" name="Location" :Items="LocationItems" />
             </div>
-            
-            
             <!-- v-text-field에서 hiede-details옵션을 false로 안하면 밑에 여백 공간이 생긴다. -->
             <v-text-field 
               class="ma-0 pa-0"
@@ -23,7 +21,6 @@
               v-model="title"
               label="Title"
             />
-            
             <div class="quill-editor"
               :content="content"
               @change="onEditorChange($event)"

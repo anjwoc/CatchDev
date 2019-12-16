@@ -1,5 +1,4 @@
 const db = require('../models');
-const passport = require('passport');
 
 exports.addBoard = async (req, res, next)=>{
   try{
@@ -11,7 +10,6 @@ exports.addBoard = async (req, res, next)=>{
       category: category,
       userId: req.user.id,
     });
-    console.log(`newPostId: ${newPost.id}`)
     if(req.body.image){ //이미지가 있다면
       if(Array.isArray(req.body.image)){ //이미자가 여러개이면
         await Promise.all(req.body.image.map((image)=>{
@@ -45,4 +43,65 @@ exports.addBoard = async (req, res, next)=>{
 exports.uploadImage = (req, res, next) => {
   console.log(req.files);
   res.json(req.files.map(v => v.filename));
+};
+
+exports.loadBoard = async (req, res, next) => {
+  try{
+    const board = await db.Board.findOne({
+      where: { id: req.params.id },
+      include: [{
+        model: db.User,
+        attributes: ['id', 'email', 'name', 'imgSrc']
+      },{
+        model: db.Image
+      },{
+        model: db.User,
+        as: 'Likers',
+        attributes: ['id']
+      }]
+    });
+    res.json(board);
+  }catch(err){
+    console.error(err);
+    return next(err);
+  };
+};
+
+exports.allPosts = async (req, res, next) => {
+  //GET /board/allPosts?offset=10&limit=10
+  try{
+    console.log(`loadBoard진입 req.query값: ${req.query.lastId}`)
+    let where = {};
+    if(parseInt(req.query.lastId, 10)){
+      //lastId가 있을 경우
+      where = {
+        id: {
+          //less than
+          [db.Sequelize.Op.lt]: parseInt(req.query.lastId, 10), 
+        }
+      }
+    }
+    const posts = await db.Board.findAll({
+      where,
+      include: [{
+        model: db.User,
+        attributes: ['id', 'email', 'name', 'imgSrc']
+      },{
+        model: db.Image,
+      },{
+        model: db.User,
+        as: 'Likers',
+        attributes: ['id']
+      }],
+      order: [['createdAt', 'DESC']],
+      limit: parseInt(req.query.limit, 10) || 10,
+    });
+    console.log(`posts: ${posts}`)
+    res.json(posts);
+
+  }catch(err){
+    console.error(err);
+    return next(err);
+  }
+
 };

@@ -4,6 +4,8 @@ const { isLoggedIn, isNotLoggedIn, upload } = require('./middlewares');
 
 const router = express.Router();
 
+router.get('/:id', board.loadBoard);
+router.get('/allPosts',isLoggedIn, board.allPosts);
 router.post('/', isLoggedIn, board.addBoard);
 router.post('/images', isLoggedIn, upload.array('image'), board.uploadImage);
 

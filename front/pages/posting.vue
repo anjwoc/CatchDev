@@ -95,8 +95,13 @@
         }
       }
     },
-    mounted() {
-      console.log(this.myQuillEditor);
+    computed: {
+      lastId() {
+        return this.$store.state.posts.lastId;
+      }
+    },
+    created() {
+      console.log(this.lastId);
     },
     methods: {
       onEditorChange({ editor, html, text }) {
@@ -152,9 +157,10 @@
             location: this.location,
             category: this.category,
           })
-          .then(()=>{
+          .then((res)=>{
+            this.content = '';
             this.$store.commit('posts/concatImagePaths', null);
-            this.$router.push({ path: '/post'});
+            // this.$router.push({ path: `/post/${this.lastId}`});
           })
           .catch((err)=>{
             console.error(err);

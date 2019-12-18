@@ -1,14 +1,17 @@
 <template>
-  <div>
-    
+  <div v-if="post">
+    <post-page :html="post" />
+  </div>
+  <div v-else>
+    <div>게시글이 없습니다.</div>
   </div>
 </template>
 
 <script>
+  import PostPage from '~/components/PostPage'
   export default {
     data() {
-      return {
-
+      return {  
       }
     },
     computed: {
@@ -19,6 +22,9 @@
     fetch({ store, params }) {
       return store.dispatch('posts/loadPost', params.id);
     },
+    components: {
+      PostPage,
+    }
     
   }
 </script>

@@ -5,11 +5,15 @@ export const state = () => ({
   mainPosts: [],
   hasMorePost: true,
   imagePaths: [],
-
+  lastId: 0,
 });
 export const mutations = {
   addMainPost(state, payload){
     state.mainPosts.unshift(payload);
+    state.lastId = state.mainPosts.length - 1;
+  },
+  setLastId(state, payload){
+    state.lastId = payload;
   },
   concatImagePaths(state, payload) {
     console.log(`현재 이미지: ${state.imagePaths}`)
@@ -45,9 +49,13 @@ export const actions = {
       withCredentials: true,
     })
       .then((res)=> {
-        console.log("통과")
-        console.log(`res: ${res.data}`)
+        console.log("통과aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        console.log(res.data);
         commit('addMainPost', res.data);
+        // const last = state.mainPosts.length - 1;
+        // console.log(`last: ${last}`)
+        // this.$router.push({ path: `post/${last}`});
+
       })
       .catch((err)=>{
         console.error(err);
@@ -85,6 +93,7 @@ export const actions = {
     }
 
   }, 2000),
+  
 
 
 

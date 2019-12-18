@@ -4,26 +4,27 @@
       <div id="mainContent"></div>
     </v-row>
   </v-app>
-</template> 
+</template>
 
 <script>
   export default {
     props: {
       html: {
-        type: String,
-        required: true
+        type: Object,
+        required: true,
       }
     },
     data() {
       return {
-        
       }
-    }
+    },
+    mounted() {
+      this.content = document.querySelector('#mainContent');
+      this.content.innerHTML = this.html.content;
+    },
   }
 </script>
 
 <style scoped>
-#mainContainer {
-  background-color: white;
-}
+
 </style>

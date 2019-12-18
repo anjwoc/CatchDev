@@ -96,8 +96,8 @@
       }
     },
     computed: {
-      lastId() {
-        return this.$store.state.posts.lastId;
+      mainPosts() {
+        return this.$store.state.posts.mainPosts;
       }
     },
     created() {
@@ -160,7 +160,7 @@
           .then((res)=>{
             this.content = '';
             this.$store.commit('posts/concatImagePaths', null);
-            // this.$router.push({ path: `/post/${this.lastId}`});
+            this.$router.push({ path: `/post/${this.mainPosts.length-1}`});
           })
           .catch((err)=>{
             console.error(err);

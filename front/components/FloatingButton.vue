@@ -102,7 +102,7 @@
 
 <style scoped>
 * {
-  z-index: 10;
+  z-index: 20;
 
 }
 

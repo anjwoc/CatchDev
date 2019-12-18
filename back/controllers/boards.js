@@ -3,7 +3,7 @@ const db = require('../models');
 exports.allPosts = async (req, res, next) => {
   // res.json({'test': '1234'});
   try{
-    console.log(`loadBoard진입 req.query값: ${req.query.lastId}`)
+    console.log(`loadBoards진입 req.query값: ${req.query.lastId}`)
     let where = {};
     if(parseInt(req.query.lastId, 10)){
       //lastId가 있을 경우

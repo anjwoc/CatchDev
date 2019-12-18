@@ -1,22 +1,27 @@
 <template>
   <v-container >
     <v-card
+      :elevation="hover ? 13 : 2"
       max-width="410"
       max-height="450"
       height="450"
+      nuxt to="/post/20"
       outlined
     >
       <v-img
         src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
         height="190px"
+        
       ></v-img>
       <v-card-text text style="position: relative">
         <v-btn
+          id="profileButton"
           absolute
           dark
           fab
           top
           right
+          nuxt to ="/profile"
           color="white"
         >
           <v-avatar>
@@ -29,6 +34,7 @@
       </v-card-text>
       <v-list-item three-line>
         <v-list-item-content>
+          <div>postID: {{post.id}}</div>
           <!-- this.post.user가 없을때 email프로퍼티에 접근할 수도 있어서 and연산으로 user가 있는지 체크 -->
           <div class="mb-3 font-weight-regular" style="color: #7986CB;">{{this.post.user && this.post.user.email.split('@')[0]}}</div>
 
@@ -43,6 +49,7 @@
         
       </v-card-subtitle>
     </v-card>
+        
   </v-container>
 </template>
 <script>
@@ -51,20 +58,21 @@ export default {
     post: {
       type: Object,
       required: true,
+    },
+    hover: {
+      type: Boolean,
+      required: true,
     }
   },
   data() {
     return {
       mainContent: null,
-
+      postId: this.post.id,
     }
   },
   mounted() {
-    
     this.mainContent = document.querySelector('#mainContent');
     this.mainContent.innerHTML = this.post.content;
-  },
-  created() {
   },
   computed:{
     diffTime() {
@@ -73,7 +81,8 @@ export default {
       const diffTime = parseInt(curDate.getTime() - postDate.getTime()) / (1000*60*60*24);
       //floor는 반올림 버리기
       return Math.floor(diffTime);
-    },
+    }
+
   },
   
   
@@ -81,5 +90,8 @@ export default {
 }
 </script>
 <style scoped>
+  #profileButton > img {
+    z-index: 10;
+  }
 
 </style>

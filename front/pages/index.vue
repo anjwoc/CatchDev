@@ -9,7 +9,17 @@
     <v-row>
       <v-col v-for="p in mainPosts" :key="p.id" cols="12" xl="3" lg="4" md="6" sm="6" xs="12" class="ma-0 pa-0">
         <v-container>
-          <post-card :post=p />
+          <v-hover
+            v-slot:default="{ hover }"
+            :open-delay="openDelay"
+            :close-delay="closeDelay"
+            :disabled="disabled"
+            :value="value"
+          >
+            <post-card :hover="hover" :post=p />
+          </v-hover>
+          
+
         </v-container>
       </v-col>
     </v-row>
@@ -22,6 +32,14 @@
 import PostCard from '~/components/PostCard'
 import authenticated from '~/middleware/authenticated'
   export default {
+    data() {
+      return { 
+        disabled: false,
+        openDelay: '0',
+        closeDelay: '0',
+        value: false,
+      }
+    },
     components: {
       PostCard,
     },
@@ -48,7 +66,7 @@ import authenticated from '~/middleware/authenticated'
     methods: {
       onScroll() {
         console.log('scroll');
-        if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
+        if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 200) {
           if (this.hasMorePost){
             this.$store.dispatch('posts/loadPosts');
           }

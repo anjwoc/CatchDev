@@ -3,8 +3,11 @@
     justify="center"
     class="ma-0 pa-0 fill-height"
   >
+  
     <v-card
       color="white"
+      width="100%"
+      class="ma-0 pa-0"
       justify="center fill-height"  
     >
         <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
@@ -24,9 +27,37 @@
             <div class="quill-editor"
               :content="content"
               @change="onEditorChange($event)"
+              @focus="onEditorFocus($event)"
               v-quill:myQuillEditor="editorOption">
             </div>
-          <input id="getFile" type="file" hidden multiple @change="onChangeImages" />
+            <v-dialog v-model="dialog" max-width="600px">
+              <template v-slot:activator="{ on }">
+                <v-btn id="showVideoForm" hidden v-on="on"></v-btn>
+              </template>
+              <div>
+                <v-card>
+                  <v-card-text>
+                    <v-text-field
+                      outlined
+                      class="mb-0 pb-0"
+                      v-model="videoUrl"
+                      color="red"
+                      :hide-details=true
+                      label="Youtube link here..."
+                      prepend-inner-icon="mdi-youtube"
+                    >
+                    </v-text-field>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="ma-0 pa-0" @click="dialog = false" text color="black">cancel</v-btn>
+                    <v-btn class="ma-0 pa-0" @click="insertVideo" text color="black">save</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </div>
+            </v-dialog>
+            
+            <input id="getFile" type="file" hidden multiple @change="onChangeImages" />
           <v-row class="ma-0 pa-0 mt-2 mb-2" justify="end">
             <v-divider></v-divider>
             <v-btn class="mx-auto" color="green" outlined width="50%">돌아가기</v-btn>
@@ -41,6 +72,7 @@
 <script>
   import hljs from 'highlightjs'
   import PostOptionModal from '~/components/PostOptionModal'
+  
   import { mapState } from 'vuex';
   
   const toolbarOptions = [
@@ -68,6 +100,9 @@
         valid: false,
         location :'',
         category: '',
+        videoUrl: '',
+        editorIndex: '',
+        dialog: false,
         categoryItems: [ '어학', '취업', '고시', '자격증', '프로그래밍', '기타' ],
         LocationItems: [ '서울', '수원', '인천', '부산', '강원', '천안', '울산', '광주', '제주', '기타' ],
         serverUrl: 'http://localhost:4000',
@@ -84,6 +119,13 @@
                   }else {
                     this.myQuillEditor.format('image', false);
                   }
+                },
+                'video': function(value) {
+                  if(value){
+                    document.getElementById('showVideoForm').click();
+                  }else{
+                    this.myQuillEditor.format('video', false);
+                  }
                 }
               }
             },
@@ -98,15 +140,31 @@
     computed: {
       mainPosts() {
         return this.$store.state.posts.mainPosts;
+      },
+      lastId() {
+        return this.$store.state.posts.lastId;
       }
     },
-    created() {
-      console.log(this.lastId);
+    mounted() {
     },
     methods: {
+      insertVideo() {
+        const idx = this.editorIndex ? this.editorIndex.index : 'none';
+        this.videoUrl = this.videoUrl.replace("watch?v=", "embed/");
+        this.myQuillEditor.insertEmbed(idx, 'video', this.videoUrl);
+        this.dialog = false;
+        this.videoUrl = '';
+      },
       onEditorChange({ editor, html, text }) {
         console.log('editor change!', editor, html, text)
+        console.log(this.myQuillEditor.getSelection());
+        this.editorIndex = this.myQuillEditor.getSelection();
         this.content = html
+      },
+      onEditorFocus(quill) {
+        this.editorIndex = this.myQuillEditor.getSelection();
+        console.log(`인덱스: ${this.editorIndex.index}`);
+        console.log('editor focus!', quill)
       },
       onChangeLocation(data){
         this.location = data;
@@ -126,21 +184,21 @@
           withCredentials: true,
         })
           .then((files)=>{
-            console.log(`posts/uploadImages 호출 ${files}`);
-            console.log(files.data);
+            // console.log(`posts/uploadImages 호출 ${files}`);
+            // console.log(files.data);
             this.$store.commit('posts/concatImagePaths', files.data);
             const range = this.myQuillEditor.getSelection();
-            console.log(`rangeLength: ${range.length}  rangeIndex: ${range.index}`);
+            // console.log(`rangeLength: ${range.length}  rangeIndex: ${range.index}`);
             if(files.data.length === 1) {
               //이미지가 1개라면
-              console.log(`이미지 패스 갯수 ${files.data.length}`);
+              // console.log(`이미지 패스 갯수 ${files.data.length}`);
               this.myQuillEditor.insertEmbed(range.index, 'image', `${this.serverUrl}/${files.data[0]}`);
             }
             else{
               // 이미지가 1개 이상이면
-              console.log(`이미지 패스 갯수 ${files.data.length}`);
+              // console.log(`이미지 패스 갯수 ${files.data.length}`);
               for (const img of files.data){
-                console.log(img);
+                // console.log(img);
                 this.myQuillEditor.insertEmbed(range.index, 'image', `${this.serverUrl}/${img}`);
               }
             };
@@ -160,7 +218,7 @@
           .then((res)=>{
             this.content = '';
             this.$store.commit('posts/concatImagePaths', null);
-            this.$router.push({ path: `/post/${this.mainPosts.length-1}`});
+            this.$router.push({ path: `/post/${this.lastId}`});
           })
           .catch((err)=>{
             console.error(err);

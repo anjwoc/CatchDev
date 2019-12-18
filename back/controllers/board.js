@@ -66,3 +66,13 @@ exports.loadBoard = async (req, res, next) => {
     return next(err);
   };
 };
+
+exports.getLastId = (req, res, next) => {
+  try{
+    const post = db.Board.findAll({ });
+    res.json(post);
+  }catch(err){
+    console.error(err);
+    next(err);
+  }
+};

@@ -4,7 +4,7 @@
       <template v-slot:activator="{ on }">
         <v-card outlined width="100%">
           <div>
-            <p class="font-weight-black ma-0 pa-0">{{name}}</p>
+            <p class="font-weight-black ma-0 pa-0">{{ name }}</p>
             <v-btn class="font-weight-black ma-0 pa-0 ml-4" color="black" text v-on="on">
               {{ title === '' ? '선택' : title }}
               <v-icon>mdi-menu-swap</v-icon>

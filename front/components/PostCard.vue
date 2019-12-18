@@ -5,7 +5,7 @@
       max-width="410"
       max-height="450"
       height="450"
-      nuxt to="/post/20"
+      :to="postUrl"
       outlined
     >
       <v-img
@@ -21,7 +21,7 @@
           fab
           top
           right
-          nuxt to ="/profile"
+          :to="profileUrl"
           color="white"
         >
           <v-avatar>
@@ -67,7 +67,10 @@ export default {
   data() {
     return {
       mainContent: null,
-      postId: this.post.id,
+      postUrl: '/post/'+this.post.id,
+      //profileUrl은 아직 구현 예정
+      //'/profile/'+this.post.user.id
+      profileUrl: '/profile',
     }
   },
   mounted() {

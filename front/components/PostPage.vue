@@ -1,7 +1,13 @@
 <template>
   <v-app>
-    <v-row class="fill-height white ma-0 pa-0 ml-1">
-      <div id="mainContent"></div>
+    <v-row id="test" class="fill-height white ma-0 pa-0">
+      <v-col md="1"></v-col>
+      <v-col>
+        <div id="mainContent">
+          
+        </div>
+      </v-col>
+      <v-col md="1"></v-col>
     </v-row>
   </v-app>
 </template>
@@ -26,5 +32,5 @@
 </script>
 
 <style scoped>
-
+  
 </style>

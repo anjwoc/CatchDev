@@ -36,28 +36,24 @@
       <v-list-item three-line>
         <v-list-item-content>
           <div>postID: {{post.id}}</div>
+          <div>{{post.status}}</div>
           <!-- this.post.user가 없을때 email프로퍼티에 접근할 수도 있어서 and연산으로 user가 있는지 체크 -->
           <div class="mb-3 font-weight-regular" style="color: #7986CB;">{{this.post.user && this.post.user.email.split('@')[0]}}</div>
 
           <h2 class="mb-1" style="font-size: 25px;">{{post.title}}</h2>
           <v-list-item-subtitle style="color: #90A4AE; ">{{diffTime}}일 전 / N개의 댓글</v-list-item-subtitle>
-          
-          
           <div id="heart" class="ma-0 pa-0">
             <v-chip
-            class="ma-0"
-            color="indigo"
-            @click="onClickHeart"
-            dark
-            outlined
+            class="ma-0 mt-4"
+            :color="statusColor"
+            text-color="white"
             to="/"
             >
             <v-avatar left>
-              <v-icon>{{ heartIcon }}</v-icon>
+              <v-icon>{{statusIcon}}</v-icon>
             </v-avatar>
-              좋아요
+              {{ status }}
             </v-chip>
-
           </div>
             
           <v-container></v-container>
@@ -127,6 +123,15 @@ export default {
     },
     heartIcon() {
       return this.liked ? 'mdi-heart' : 'mdi-heart-outline';
+    },
+    status(){ 
+      return this.post.status === "open" ? '모집중' : '모집마감';
+    },
+    statusColor() {
+      return this.post.status === "open" ? 'indigo' : 'red';
+    },
+    statusIcon() {
+      return this.post.status === "open" ? 'mdi-progress-clock' : 'mdi-alert';
     }
   },
 }

@@ -5,7 +5,6 @@ export const state = () => ({
   mainPosts: [],
   hasMorePost: false,
   imagePaths: [],
-  lastId: 0,
 });
 export const mutations = {
   addMainPost(state, payload){
@@ -13,9 +12,6 @@ export const mutations = {
   },
   concatImagePaths(state, payload) {
     state.imagePaths = state.imagePaths.concat(payload);
-  },
-  setLastId(state, payload){
-    state.lastId = payload;
   },
   loadPost(state, payload){
     //배열 전체를 바꿔줌

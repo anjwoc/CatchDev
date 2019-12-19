@@ -58,7 +58,7 @@
             </v-dialog>
             
             <input id="getFile" type="file" hidden multiple @change="onChangeImages" />
-          <v-row class="ma-0 pa-0 mt-2 mb-2" justify="end">
+          <v-row class="ma-0 pa-0" justify="end">
             <v-divider></v-divider>
             <v-btn class="mx-auto" color="green" outlined width="50%">돌아가기</v-btn>
             <v-btn class="mx-auto" type="submit" color="primary" outlined width="50%">작성하기</v-btn>
@@ -232,8 +232,8 @@
     margin: 0 auto;
     padding: 50px 0;
     .quill-editor {
-      min-height: 200px;
-      max-height: 800px;
+      min-height: 600px;
+      max-height: 650px;
       overflow-y: auto;
     }
   }

@@ -151,23 +151,17 @@
         this.videoUrl = '';
       },
       onEditorChange({ editor, html, text }) {
-        console.log('editor change!', editor, html, text)
-        console.log(this.myQuillEditor.getSelection());
         this.editorIndex = this.myQuillEditor.getSelection();
         this.content = html
       },
       onEditorFocus(quill) {
         this.editorIndex = this.myQuillEditor.getSelection();
-        console.log(`인덱스: ${this.editorIndex.index}`);
-        console.log('editor focus!', quill)
       },
       onChangeLocation(data){
         this.location = data;
-        console.log(`this.location: ${this.location}`);
       },
       onChangeCategory(data){
         this.category = data;
-        console.log(`this.category: ${this.category}`);
       },
       onChangeImages(e){
         console.log(e.target.files, e.target.files.forEach);

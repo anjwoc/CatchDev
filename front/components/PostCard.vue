@@ -35,14 +35,12 @@
       </v-card-text>
       <v-list-item three-line>
         <v-list-item-content>
-          <div>postID: {{post.id}}</div>
-          <div>{{post.status}}</div>
           <!-- this.post.user가 없을때 email프로퍼티에 접근할 수도 있어서 and연산으로 user가 있는지 체크 -->
           <div class="mb-3 font-weight-regular" style="color: #7986CB;">{{this.post.user && this.post.user.email.split('@')[0]}}</div>
 
           <h2 class="mb-1" style="font-size: 25px;">{{post.title}}</h2>
           <v-list-item-subtitle style="color: #90A4AE; ">{{diffTime}}일 전 / N개의 댓글</v-list-item-subtitle>
-          <div id="heart" class="ma-0 pa-0">
+          <div id="heart" class="ma-0 pa-0" style="display: inline-block;">
             <v-chip
             class="ma-0 mt-4"
             :color="statusColor"
@@ -54,11 +52,36 @@
             </v-avatar>
               {{ status }}
             </v-chip>
+            <v-chip
+            class="ma-0 mt-4"
+            color="green"
+            @click="onClickHeart"
+            text-color="white"
+            to="/"
+            >
+            <v-avatar left>
+              <v-icon>{{heartIcon}}</v-icon>
+            </v-avatar>
+              찜하기
+            </v-chip>
           </div>
+          
             
           <v-container></v-container>
           <v-divider></v-divider>
-          
+          <div class="ma-0 pa-0">
+            <v-chip
+              v-for="i in 3"
+              :key="i"
+              class="ma-0 mt-4 ml-1 mr-1 font-weight-regular"
+              color="grey lighten-4" 
+              outlined
+              text-color="blue-grey"
+              to="/"
+            >
+              #{{tagItems[i]}}
+            </v-chip>
+          </div>
         </v-list-item-content>
 
         
@@ -89,6 +112,7 @@ export default {
       //profileUrl은 아직 구현 예정
       //'/profile/'+this.post.user.id
       profileUrl: '/profile',
+      tagItems: ['','React', 'Angular', 'Vue']
     }
   },
   methods: {

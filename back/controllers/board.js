@@ -1,9 +1,9 @@
-const { Board, Image, User } = require('../models');
+const db = require('../models');
 
 exports.addBoard = async (req, res, next)=>{
   try{
     const { title, content, location, category } = req.body; 
-    const newPost = await Board.create({
+    const newPost = await db.Board.create({
       title: title,
       content: content,
       location: location,
@@ -13,21 +13,21 @@ exports.addBoard = async (req, res, next)=>{
     if(req.body.image){ //이미지가 있다면
       if(Array.isArray(req.body.image)){ //이미자가 여러개이면
         await Promise.all(req.body.image.map((image)=>{
-          return Image.create({ src: image, boardId: newPost.id });
+          return db.Image.create({ src: image, boardId: newPost.id });
         }));
       } else{ //하나일 때
-        await Image.create({ src: req.body.imgae, boardId: newPost.id });
+        await db.Image.create({ src: req.body.imgae, boardId: newPost.id });
       }
     }
-    const fullPost = await Board.findOne({
+    const fullPost = await db.Board.findOne({
       where: { id: newPost.id },
       include: [{
-        model: User,
+        model: db.User,
         attributes: ['email', 'name', ]
       },{
-        model: Image
+        model: db.Image
       },{
-        model: User,
+        model: db.User,
         as: 'Likers',
         attributes: ['id'],
       }]
@@ -47,15 +47,15 @@ exports.uploadImage = (req, res, next) => {
 
 exports.loadBoard = async (req, res, next) => {
   try{
-    const board = await Board.findOne({
+    const board = await db.Board.findOne({
       where: { id: req.params.id },
       include: [{
-        model: User,
+        model: db.User,
         attributes: ['id', 'email', 'name', 'imgSrc']
       },{
-        model: Image
+        model: db.Image
       },{
-        model: User,
+        model: db.User,
         as: 'Likers',
         attributes: ['id']
       }]
@@ -69,11 +69,59 @@ exports.loadBoard = async (req, res, next) => {
 
 exports.getLastId = async (req, res, next) => {
   try{
-    const post = await Board.findOne({ 
+    const post = await db.Board.findOne({ 
       attributes: ['id'],
       order: [['createdAt', 'DESC']],
     });
     res.json(post);
+  }catch(err){
+    console.error(err);
+    next(err);
+  }
+};
+
+
+exports.addHeart = async (req, res, next) => {
+  try{
+    const post = await db.Board.findOne({ where: { id: req.params.id }})
+
+    if(!post){
+      return res.status(404).send('포스트가 존재하지 않습니다');
+    }
+    await post.addLiker(req.user.id);
+    res.json({ userId: req.user.id });
+  }catch(err){
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.removeHeart = async (req, res, next) => {
+  try{
+    const post = await db.Board.findOne({ where: { id: req.params.id }});
+    if(!post){
+      return res.status(404).send('포스트가 존재하지 않습니다');
+    }
+    await post.removeLiker(req.user.id);
+    res.json({ userId: req.user.id });
+  }catch(err){
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.countHeart = async (req, res, next) => {
+  try{
+    const allCount = await db.Board.findOne({
+      where: { id: req.params.id },
+      include: [{
+        model: db.User,
+        as: 'Likers', 
+        attributes: [[db.sequelize.fn('count', '*'), 'count']],
+      }]
+    });
+    res.json(allCount.Likers);
+
   }catch(err){
     console.error(err);
     next(err);

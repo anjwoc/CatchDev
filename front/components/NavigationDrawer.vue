@@ -11,7 +11,7 @@
     >
       <v-list>
         <v-list-item>
-          <nuxt-link to="/" style="text-decoration: none; color: black;"><h1>VelogClone</h1></nuxt-link>
+          <nuxt-link to="/" style="text-decoration: none; color: black;"><h1>CatchDev</h1></nuxt-link>
           <h1></h1>
           <!-- <nuxt-link>About</nuxt-link> -->
         </v-list-item>

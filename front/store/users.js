@@ -59,8 +59,8 @@ export const actions = {
         console.error(err);
       })
   },
-  logIn({ commit }, payload){
-    this.$axios.post('/user/login', {
+  async logIn({ commit }, payload){
+    await this.$axios.post('/user/login', {
       email: payload.email,
       password: payload.password
     },{
@@ -73,11 +73,11 @@ export const actions = {
         console.error(err);
       });
   },
-  logOut({ commit }, payload){
-    this.$axios.post('/user/logout', {}, {
+  async logOut({ commit }, payload){
+    await this.$axios.post('/user/logout', {}, {
       withCredentials: true,
     })
-      .then((data)=>{
+      .then(()=>{
         commit('setMe', null);
       })
       .catch((err)=>{
@@ -88,7 +88,6 @@ export const actions = {
     //프로필페이지에서 직무나 지역정보를 수정하고 
     //github, gmail, linkedIn의 정보를 표시
     this.$axios.post('/user/info', {
-
     },{
       withCredentials: true,
     })

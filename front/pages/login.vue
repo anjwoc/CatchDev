@@ -111,9 +111,9 @@
             .then(()=>{
               this.$router.push({ path: '/' });
             })
-            .catch((err)=>{
-              console.error(err)
-            })
+            // .catch((err)=>{
+            //   console.error(err)
+            // })
         }
       },
       onTemporaryUser() {

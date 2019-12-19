@@ -28,7 +28,6 @@
 
 <script>
 import PostCard from '~/components/PostCard'
-import authenticated from '~/middleware/authenticated'
   export default {
     data() {
       return { 
@@ -52,15 +51,6 @@ import authenticated from '~/middleware/authenticated'
         return this.$store.state.posts.mainPosts;
       }
     },
-    fetch({ store }) {
-      return store.dispatch('posts/loadPosts', { reset: true });
-    },
-    mounted() {
-      window.addEventListener('scroll', this.onScroll);
-    },
-    beforeDestroy() {
-      window.removeEventListener('scroll', this.onScroll);
-    },
     methods: {
       onScroll() {
         console.log('scroll');
@@ -71,13 +61,18 @@ import authenticated from '~/middleware/authenticated'
         }
       }
     },
-    watch: {
-      me: function (newValue){
-        if(!this.me){
-          this.$router.push({ path: '/login' });
-        }
-      }
+    fetch({ store }) {
+      return store.dispatch('posts/loadPosts', { reset: true });
     },
+    mounted() {
+      window.addEventListener('scroll', this.onScroll);
+    },
+    beforeDestroy() {
+      window.removeEventListener('scroll', this.onScroll);
+    },
+    middleware: 'authenticated'
+    
+    
   }
 </script>
 

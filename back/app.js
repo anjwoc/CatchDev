@@ -6,7 +6,7 @@ const cookie = require('cookie-parser');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const db = require('./models');
-const routes = require('./routes')
+const routes = require('./routes');
 
 const passportConfig = require('./passport');
 
@@ -43,18 +43,7 @@ app.use('/', routes)
 app.get('/', (req, res) => {
   res.status(200).send('Hello World');
 });
-app.get('/test', async (req, res) => {
-  try{
-    const post = await db.Board.findOne({
-      attributes: ['id'],
-      order: [['createdAt', 'DESC']],
-     });
-    res.json(post);
-  }catch(err){
-    console.error(err);
-    next(err);
-  }
-})
+
 
 app.listen(4000, () => {
   console.log(`백엔드 서버 ${app.get.PORT}번 포트에서 작동중.`);

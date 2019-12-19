@@ -12,9 +12,7 @@ export const mutations = {
     state.mainPosts.unshift(payload);
   },
   concatImagePaths(state, payload) {
-    console.log(`현재 이미지: ${state.imagePaths}`)
     state.imagePaths = state.imagePaths.concat(payload);
-    console.log(`합친 후 이미지: ${state.imagePaths}`)
   },
   setLastId(state, payload){
     state.lastId = payload;
@@ -26,26 +24,18 @@ export const mutations = {
   loadPosts(state, payload){
     if(payload.reset) {
       state.mainPosts = payload.data;
-      console.log('state.mainPosts의 길이');
-      console.log(state.mainPosts.length);
     }else{
       //실수로 payload를 concat해서 lastPost가 10개의 배열 값이 들어가서 id값이 undefined로 찍혀서 실수
       state.mainPosts = state.mainPosts.concat(payload.data);
-      console.log('concat state.mainPosts의 길이');
-      console.log(state.mainPosts.length);
     }
     // true이면 10개를 가져와서 이후에도 더 불러올게 있다는 뜻이고
     // false이면 10미만이여서 더 이상 가져올게 없다는 의미
-    console.log(`payload.data.length: ${payload.data.length}`);
     state.hasMorePost = payload.data.length === 10;
-    console.log(`hasMorePost: ${state.hasMorePost}`);
   }
 };
 
 export const actions = {
   add({ commit, state }, payload){
-    console.log(`페이로드: ${payload}`);
-    console.log(payload);
     this.$axios.post('/board', {
       title: payload.title,
       content: payload.content,
@@ -56,8 +46,6 @@ export const actions = {
       withCredentials: true,
     })
       .then((res)=> {
-        console.log("통과aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        console.log(res.data);
         commit('addMainPost', res.data);
       })
       .catch((err)=>{

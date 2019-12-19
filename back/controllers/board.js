@@ -1,9 +1,9 @@
-const db = require('../models');
+const { Board, Image, User } = require('../models');
 
 exports.addBoard = async (req, res, next)=>{
   try{
     const { title, content, location, category } = req.body; 
-    const newPost = await db.Board.create({
+    const newPost = await Board.create({
       title: title,
       content: content,
       location: location,
@@ -13,21 +13,21 @@ exports.addBoard = async (req, res, next)=>{
     if(req.body.image){ //이미지가 있다면
       if(Array.isArray(req.body.image)){ //이미자가 여러개이면
         await Promise.all(req.body.image.map((image)=>{
-          return db.Image.create({ src: image, boardId: newPost.id });
+          return Image.create({ src: image, boardId: newPost.id });
         }));
       } else{ //하나일 때
-        await db.Image.create({ src: req.body.imgae, boardId: newPost.id });
+        await Image.create({ src: req.body.imgae, boardId: newPost.id });
       }
     }
-    const fullPost = await db.Board.findOne({
+    const fullPost = await Board.findOne({
       where: { id: newPost.id },
       include: [{
-        model: db.User,
+        model: User,
         attributes: ['email', 'name', ]
       },{
-        model: db.Image
+        model: Image
       },{
-        model: db.User,
+        model: User,
         as: 'Likers',
         attributes: ['id'],
       }]
@@ -47,15 +47,15 @@ exports.uploadImage = (req, res, next) => {
 
 exports.loadBoard = async (req, res, next) => {
   try{
-    const board = await db.Board.findOne({
+    const board = await Board.findOne({
       where: { id: req.params.id },
       include: [{
-        model: db.User,
+        model: User,
         attributes: ['id', 'email', 'name', 'imgSrc']
       },{
-        model: db.Image
+        model: Image
       },{
-        model: db.User,
+        model: User,
         as: 'Likers',
         attributes: ['id']
       }]
@@ -67,9 +67,12 @@ exports.loadBoard = async (req, res, next) => {
   };
 };
 
-exports.getLastId = (req, res, next) => {
+exports.getLastId = async (req, res, next) => {
   try{
-    const post = db.Board.findAll({ });
+    const post = await Board.findOne({ 
+      attributes: ['id'],
+      order: [['createdAt', 'DESC']],
+    });
     res.json(post);
   }catch(err){
     console.error(err);

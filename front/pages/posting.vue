@@ -140,12 +140,7 @@
     computed: {
       mainPosts() {
         return this.$store.state.posts.mainPosts;
-      },
-      lastId() {
-        return this.$store.state.posts.lastId;
       }
-    },
-    mounted() {
     },
     methods: {
       insertVideo() {
@@ -184,21 +179,15 @@
           withCredentials: true,
         })
           .then((files)=>{
-            // console.log(`posts/uploadImages 호출 ${files}`);
-            // console.log(files.data);
             this.$store.commit('posts/concatImagePaths', files.data);
             const range = this.myQuillEditor.getSelection();
-            // console.log(`rangeLength: ${range.length}  rangeIndex: ${range.index}`);
             if(files.data.length === 1) {
               //이미지가 1개라면
-              // console.log(`이미지 패스 갯수 ${files.data.length}`);
               this.myQuillEditor.insertEmbed(range.index, 'image', `${this.serverUrl}/${files.data[0]}`);
             }
             else{
               // 이미지가 1개 이상이면
-              // console.log(`이미지 패스 갯수 ${files.data.length}`);
               for (const img of files.data){
-                // console.log(img);
                 this.myQuillEditor.insertEmbed(range.index, 'image', `${this.serverUrl}/${img}`);
               }
             };
@@ -218,7 +207,10 @@
           .then((res)=>{
             this.content = '';
             this.$store.commit('posts/concatImagePaths', null);
-            this.$router.push({ path: `/post/${this.lastId}`});
+            const lastId = '';
+            this.$axios.get('/board/lastId').then((res)=>{ 
+              this.$router.push({ path: `/post/${res.data.id}` });
+            });
           })
           .catch((err)=>{
             console.error(err);

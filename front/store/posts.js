@@ -28,6 +28,18 @@ export const mutations = {
     // false이면 10미만이여서 더 이상 가져올게 없다는 의미
     state.hasMorePost = payload.data.length === 10;
   },
+  loadComments(state, payload){
+    const index = state.mainPosts.findIndex(v => v.id === payload.postId);
+    //post.id는 type이 Number인데 params.id로 바로 넘기면 String이 넘어오기때문에 서로 일치하지않아서
+    //index를 찾지못해서 계속 에러발생
+    Vue.set(state.mainPosts[index], 'Comments', payload.data);
+  },
+  addComment(state, payload){
+    //디비는 board이기때문에 용어를 통일시켜줘야함
+    //postId와 boardId 용어 혼용으로 에러 발생
+    const index = state.mainPosts.findIndex(v => v.id === payload.boardId);
+    state.mainPosts[index].Comments.unshift(payload);
+  },
   unlikePost(state, payload){
     const index = state.mainPosts.findIndex(v => v.id === payload.postId);
     const userIndex = state.mainPosts[index].Likers.findIndex(v => v.id === payload.userId);
@@ -59,10 +71,28 @@ export const actions = {
         console.error(err);
       });
   },
+  async addComment({ commit, state }, payload){
+    await this.$axios.post(`/comment/${payload.postId}`,{
+      postId: payload.postId,
+      content: payload.content,
+    },{
+      withCredentials: true,
+    })
+      .then((res)=>{
+        console.log("addComment");
+        console.log(res.data);
+        commit('addComment', res.data);
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
+  },
   async loadPost({ commit, state }, payload){
     try{
       console.log("loadPost 페이로드");
       console.log(payload);
+      console.log("loadPost내부에서 mainPosts 존재하는지")
+      console.log(state.mainPosts);
       const res = await this.$axios.get(`/board/${payload}`);
       commit('loadPost', res.data);
     }catch(err){
@@ -94,6 +124,22 @@ export const actions = {
     }
 
   }, 2000),
+  async loadComments({ commit }, payload){
+    console.log("loadComments store 진입");
+    console.log(payload);
+    await this.$axios.get(`/comment/${payload.postId}`)
+      .then((res) => {
+        console.log(res.data);
+        console.log(`res: ${res.data}`)
+        commit('loadComments', {
+          postId: payload.postId,
+          data: res.data
+        });
+      })
+      .catch(err=>{
+        console.error(err);
+      })
+  },
   likePost({ commit }, payload){
     this.$axios.post(`/board/${payload.postId}/like`, {}, {
       withCredentials: true,

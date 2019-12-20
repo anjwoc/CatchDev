@@ -14,6 +14,7 @@ import { createStore } from './store.js'
 
 import nuxt_plugin_plugin_1c354179 from 'nuxt_plugin_plugin_1c354179' // Source: .\\vuetify\\plugin.js (mode: 'all')
 import nuxt_plugin_axios_45349604 from 'nuxt_plugin_axios_45349604' // Source: .\\axios.js (mode: 'all')
+import nuxt_plugin_moment_4407074c from 'nuxt_plugin_moment_4407074c' // Source: .\\moment.js (mode: 'all')
 import nuxt_plugin_nuxtquillplugin_3ab6ceae from 'nuxt_plugin_nuxtquillplugin_3ab6ceae' // Source: ..\\plugins\\nuxt-quill-plugin.js (mode: 'client')
 
 // Component: <ClientOnly>
@@ -177,6 +178,10 @@ async function createApp (ssrContext) {
 
   if (typeof nuxt_plugin_axios_45349604 === 'function') {
     await nuxt_plugin_axios_45349604(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_moment_4407074c === 'function') {
+    await nuxt_plugin_moment_4407074c(app.context, inject)
   }
 
   if (process.client && typeof nuxt_plugin_nuxtquillplugin_3ab6ceae === 'function') {

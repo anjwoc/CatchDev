@@ -11,10 +11,10 @@
     >
       <v-img
         src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-        height="190px"
+        height="170px"
         
       ></v-img>
-      <v-card-text text style="position: relative">
+      <v-card-text class="pa-1" text style="position: relative">
         <v-btn
           id="profileButton"
           absolute
@@ -36,11 +36,11 @@
       <v-list-item three-line>
         <v-list-item-content>
           <!-- this.post.user가 없을때 email프로퍼티에 접근할 수도 있어서 and연산으로 user가 있는지 체크 -->
-          <div class="mb-3 font-weight-regular" style="color: #7986CB;">{{this.post.user && this.post.user.email.split('@')[0]}}</div>
+          <div class="mb-3 font-weight-regular" style="color: #7986CB;">{{id}}</div>
 
           <h2 class="mb-1" style="font-size: 25px;">{{post.title}}</h2>
-          <v-list-item-subtitle style="color: #90A4AE; ">{{diffTime}}일 전 / N개의 댓글</v-list-item-subtitle>
-          <div id="heart" class="ma-0 pa-0" style="display: inline-block;">
+          <v-list-item-subtitle style="color: #90A4AE; ">{{diffTime}}일 전 / {{post.Comments && post.Comments.length}}개의 댓글</v-list-item-subtitle>
+          <div id="heart" bottom class="ma-0 pa-0 d-flex align-end" style="display: inline-block;">
             <v-chip
             class="ma-0 mt-4"
             :color="statusColor"
@@ -83,9 +83,6 @@
             </v-chip>
           </div>
         </v-list-item-content>
-
-        
-
       </v-list-item>
       
 
@@ -156,6 +153,9 @@ export default {
     },
     statusIcon() {
       return this.post.status === "open" ? 'mdi-progress-clock' : 'mdi-alert';
+    },
+    id() {
+      return this.post.user && this.post.user.email.split('@')[0];
     }
   },
 }

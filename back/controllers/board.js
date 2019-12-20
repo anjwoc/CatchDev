@@ -51,7 +51,7 @@ exports.loadBoard = async (req, res, next) => {
       where: { id: req.params.id },
       include: [{
         model: db.User,
-        attributes: ['id', 'email', 'name', 'imgSrc']
+        attributes: ['id', 'email', 'name', 'imgSrc', 'about']
       },{
         model: db.Image
       },{
@@ -81,7 +81,8 @@ exports.getLastId = async (req, res, next) => {
 };
 
 
-exports.addHeart = async (req, res, next) => {
+
+exports.addLike = async (req, res, next) => {
   try{
     const post = await db.Board.findOne({ where: { id: req.params.id }})
 
@@ -96,7 +97,7 @@ exports.addHeart = async (req, res, next) => {
   }
 };
 
-exports.removeHeart = async (req, res, next) => {
+exports.removeLike = async (req, res, next) => {
   try{
     const post = await db.Board.findOne({ where: { id: req.params.id }});
     if(!post){
@@ -110,7 +111,7 @@ exports.removeHeart = async (req, res, next) => {
   }
 };
 
-exports.countHeart = async (req, res, next) => {
+exports.countLike = async (req, res, next) => {
   try{
     const allCount = await db.Board.findOne({
       where: { id: req.params.id },

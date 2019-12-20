@@ -13,6 +13,7 @@ module.exports = {
   ],
   buildModules: [
     '@nuxtjs/vuetify',
+    '@nuxtjs/moment',
     
   ],
   plugins: [

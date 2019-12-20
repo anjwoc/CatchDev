@@ -3,7 +3,6 @@
     justify="center"
     class="ma-0 pa-0 fill-height"
   >
-  
     <v-card
       color="white"
       width="100%"

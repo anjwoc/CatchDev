@@ -1,6 +1,6 @@
 <template>
   <div v-if="post">
-    <post-page :html="post" />
+    <post-page :post="post" />
   </div>
   <div v-else>
     <div>게시글이 없습니다.</div>
@@ -19,8 +19,13 @@
         return this.$store.state.posts.mainPosts.find(v => v.id === parseInt(this.$route.params.id, 10));
       }
     },
-    fetch({ store, params }) {
-      return store.dispatch('posts/loadPost', params.id);
+    async fetch({ store, params }) {
+      return await Promise.all([
+        store.dispatch('posts/loadPost', params.id),
+        store.dispatch('posts/loadComments', {
+          postId: parseInt(params.id)
+        })
+      ]);
     },
     components: {
       PostPage,

@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <v-alert
       v-model="alert"
       border="left"

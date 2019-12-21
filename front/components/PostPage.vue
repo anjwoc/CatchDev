@@ -28,14 +28,6 @@
         
         <v-divider></v-divider>
         <comment-content :comments="post.Comments" :postCreatedAt="post.createdAt"  />
-
-        <div>
-          <!-- 댓글 vuex store에서 받아와서 v-for로 돌려서 있는 만큼 표시해주는 곳  -->
-        </div>
-        
-
-
-
       </v-col>
       <v-col cols="12" md="2"></v-col>
     </v-row>
@@ -51,11 +43,6 @@
       post: {
         type: Object,
         required: true,
-      }
-    },
-    data() {
-      return {
-        
       }
     },
     mounted() {

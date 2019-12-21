@@ -27,7 +27,7 @@
         <comment-form class="mb-6" :postId="this.post && this.post.id" />
         
         <v-divider></v-divider>
-        <comment-content :comments="post.Comments" :postCreatedAt="post.createdAt" :nickname="nickname" />
+        <comment-content :comments="post.Comments" :postCreatedAt="post.createdAt"  />
 
         <div>
           <!-- 댓글 vuex store에서 받아와서 v-for로 돌려서 있는 만큼 표시해주는 곳  -->

@@ -19,8 +19,8 @@
         return this.$store.state.posts.mainPosts.find(v => v.id === parseInt(this.$route.params.id, 10));
       }
     },
-    async fetch({ store, params }) {
-      return await Promise.all([
+    fetch({ store, params }) {
+      return Promise.all([
         store.dispatch('posts/loadPost', params.id),
         store.dispatch('posts/loadComments', {
           postId: parseInt(params.id)

@@ -80,7 +80,6 @@ export const actions = {
     })
       .then((res)=>{
         console.log("addComment");
-        console.log(res.data);
         commit('addComment', res.data);
       })
       .catch((err)=>{
@@ -90,9 +89,6 @@ export const actions = {
   async loadPost({ commit, state }, payload){
     try{
       console.log("loadPost 페이로드");
-      console.log(payload);
-      console.log("loadPost내부에서 mainPosts 존재하는지")
-      console.log(state.mainPosts);
       const res = await this.$axios.get(`/board/${payload}`);
       commit('loadPost', res.data);
     }catch(err){
@@ -125,12 +121,8 @@ export const actions = {
 
   }, 2000),
   async loadComments({ commit }, payload){
-    console.log("loadComments store 진입");
-    console.log(payload);
     await this.$axios.get(`/comment/${payload.postId}`)
       .then((res) => {
-        console.log(res.data);
-        console.log(`res: ${res.data}`)
         commit('loadComments', {
           postId: payload.postId,
           data: res.data

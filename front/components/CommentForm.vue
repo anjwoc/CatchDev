@@ -15,6 +15,7 @@
     />
     <div id="commentSection" class="ma-0 pa-0 justify-end" align="end">
       <v-btn color="primary" type="submit" outlined>작성하기</v-btn>
+    
     </div>
   </v-form>
 </template>

@@ -15,7 +15,8 @@
             >
           </v-avatar>
           <div style="display: inline-block;">
-            <p class="ma-0 pa-0 subtitle-1 font-weight-black">{{ c.user && c.user.email && c.user.email.split('@')[0] }}</p>
+            <!-- c.user && c.user.email && c.user.email.split('@')[0] -->
+            <p class="ma-0 pa-0 subtitle-1 font-weight-black">{{ c.user && c.user.email && c.user.email.split('@')[0]  }}</p>
             <p class="ma-0 pa-0 subtitle-2" style="opacity: 0.5;">{{diffTime(c.createdAt)}}</p>
           </div>
         </div>
@@ -39,9 +40,15 @@
         type: Array,
       }
     },
+    // async asyncData({ store }) {
+
+    // },
     data() {
       return {
       }
+    },
+    mounted() {
+      
     },
     computed: { 
       nickname() {
@@ -71,6 +78,8 @@
           return `${hours}시간 전`
         }else if(days===0 && hours ===0 && minutes){
           return `${minutes}분 전`
+        }else{
+          return `방금 전`
         }
       },
 

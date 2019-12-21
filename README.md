@@ -1,3 +1,3 @@
 # catchDev Study Platform
 
-[Project Document Notion Link](https://www.notion.so/anjwoc/f4e1993f55b549d0833300dc598a5e3f)
+[Project Document Notion Link](https://www.notion.so/catchDev-85361aa4500842539e499a10d0788bb6)

@@ -5,6 +5,7 @@ const comment = require('../controllers/comment');
 const router = express.Router();
 
 
+router.post('/update/:id', comment.updateComment);
 router.get('/:id', comment.getComments);
 router.post('/:id', isLoggedIn, comment.addComment);
 

@@ -34,6 +34,14 @@ export const mutations = {
     //index를 찾지못해서 계속 에러발생
     Vue.set(state.mainPosts[index], 'Comments', payload.data);
   },
+  updateToggleComment(state, payload){
+    const commentIdx = state.mainPosts[0].Comments.findIndex(v => v.id === payload.commentId);
+    Vue.set(state.mainPosts[0].Comments[commentIdx], 'updateOpened', !payload.updateOpened);
+  },
+  updateComment(state, payload){
+    const index = state.mainPosts[0].Comments.findIndex(v => v.id === payload.id);
+    state.mainPosts[index].Comments[index] = payload;
+  },
   addComment(state, payload){
     //디비는 board이기때문에 용어를 통일시켜줘야함
     //postId와 boardId 용어 혼용으로 에러 발생
@@ -71,7 +79,7 @@ export const actions = {
         console.error(err);
       });
   },
-  async addComment({ commit, state }, payload){
+  async addComment({ commit }, payload){
     await this.$axios.post(`/comment/${payload.postId}`,{
       postId: payload.postId,
       content: payload.content,
@@ -86,6 +94,21 @@ export const actions = {
         console.error(err);
       })
   },
+  async updateComment({ commit }, payload){
+    await this.$axios.post(`/comment/update/${payload.commentId}`,{
+      content: payload.content,
+    },{
+      withCredentials: true,
+    })
+      .then((res)=>{
+        console.log("updateComment");
+        commit('updateComment', res.data);
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
+  },
+  
   async loadPost({ commit, state }, payload){
     try{
       console.log("loadPost 페이로드");

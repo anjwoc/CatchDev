@@ -27,7 +27,8 @@
         <comment-form class="mb-6" :postId="this.post && this.post.id" />
         
         <v-divider></v-divider>
-        <comment-content :comments="post.Comments" :postCreatedAt="post.createdAt"  />
+        <comment-content :comments="post.Comments" :postId="post.id" :postCreatedAt="post.createdAt"  />
+
       </v-col>
       <v-col cols="12" md="2"></v-col>
     </v-row>

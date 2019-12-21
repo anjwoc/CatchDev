@@ -39,7 +39,8 @@
           <div class="mb-3 font-weight-regular" style="color: #7986CB;">{{id}}</div>
 
           <h2 class="mb-1" style="font-size: 25px;">{{post.title}}</h2>
-          <v-list-item-subtitle style="color: #90A4AE; ">{{diffTime}}일 전 / {{post.Comments && post.Comments.length}}개의 댓글</v-list-item-subtitle>
+          <!-- 게시글 페이지에 들어가야 Comments가 생성이 되서 length값을 어떻게 받아올지 생각해야함 -->
+          <v-list-item-subtitle style="color: #90A4AE; ">{{diffTime}}일 전 / {{ post.Comments && post.Comments.length }}개의 댓글</v-list-item-subtitle>
           <div id="heart" bottom class="ma-0 pa-0 d-flex align-end" style="display: inline-block;">
             <v-chip
             class="ma-0 mt-4"
@@ -62,7 +63,7 @@
             <v-avatar left>
               <v-icon>{{heartIcon}}</v-icon>
             </v-avatar>
-              찜하기
+              좋아요
             </v-chip>
           </div>
           

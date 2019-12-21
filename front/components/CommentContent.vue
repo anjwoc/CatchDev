@@ -20,7 +20,14 @@
             <p class="ma-0 pa-0 subtitle-2" style="opacity: 0.5;">{{diffTime(c.createdAt)}}</p>
           </div>
         </div>
+
+        <!-- <div v-if="c.updateOpened">여기 업데이트</div> -->
+
         <div>{{ c.content }}</div>
+        <div align="end">
+          <v-btn class="ma-0 pa-0" @click="onToggleUpdate(c.content, c.id, c.updateOpened)" color="blue-grey" text bottom right>수정</v-btn>
+          <v-btn class="ma-0 pa-0" color="red" text bottom right>삭제</v-btn>
+        </div>
       </v-container>
     </v-card>
     <div id="bottomSpace"></div>
@@ -29,8 +36,13 @@
 </template>
 
 <script>
+  import CommentForm from '~/components/CommentForm';
   export default {
     props: {
+      postId: {
+        type: Number,
+        required: true,
+      },
       postCreatedAt: {
         type: String,
         default: new Date(),
@@ -40,23 +52,28 @@
         type: Array,
       }
     },
-    // async asyncData({ store }) {
-
-    // },
     data() {
       return {
+        updateOpened: false,
+        updatedValue: '',
       }
     },
-    mounted() {
-      
+    components: {
+      CommentForm,
     },
     computed: { 
       nickname() {
         return this.comments.user && this.comments.user.email && this.comments.user.email.split('@')[0];
       },
-      
     },
     methods: {
+      onToggleUpdate(content, commentId, updateOpened){
+        this.$store.commit('posts/updateToggleComment', {
+          postId: this.postId,
+          commentId: commentId,
+          updateOpened: updateOpened,
+        });
+      },
       diffTime(commentDate) {
         const first = this.$moment();
         const second = this.$moment(commentDate);

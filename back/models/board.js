@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(20),
       allowNull: false
     },
+    hit: { // 조회수 속성
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     status: {
       type: DataTypes.ENUM,
       values: [
@@ -31,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     db.Board.hasMany(db.Comment);
     db.Board.hasMany(db.Image);
     db.Board.belongsToMany(db.User, { through: 'Like', as: 'Likers' });
+    db.Board.belongsToMany(db.Hashtag, { through: 'BoardHashtag' });
   };
   return Board;
 };

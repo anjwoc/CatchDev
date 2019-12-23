@@ -13,7 +13,7 @@ const passportConfig = require('./passport');
 
 const app = express();
 
-db.sequelize.sync({  });
+db.sequelize.sync({ force: true });
 dotenv.config();
 passportConfig();
 

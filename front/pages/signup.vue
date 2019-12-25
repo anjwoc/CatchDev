@@ -6,7 +6,7 @@
       >
         <v-row
           class="mt-0 pt-0"
-          align="center"
+          
           justify="center"
         >
           <v-col
@@ -66,23 +66,7 @@
                       required
                       outlined
                     />
-                    <v-file-input
-                      v-model="files"
-                      placeholder="Upload your profile image"
-                      label="File input"
-                      prepend-icon="mdi-camera"
-                    >
-                      <template v-slot:selection="{ text }">
-                        <v-chip
-                          small
-                          label
-                          dark
-                          color="deep-purple accent-4"
-                        >
-                          {{ text }}
-                        </v-chip>
-                      </template>
-                    </v-file-input>
+                    
 
                     <v-btn 
                       x-large width="100%"
@@ -90,11 +74,16 @@
                       :disabled="!valid"
                       color="grey darken-1"
                       style="font-weight: bold; color: white;"
-                      @click="alert = !alert"
                     >
                       회원가입
                     </v-btn>
-                    <!-- <alert-message :alert=true :success="success" :message="msg" /> -->
+                    <alert-message
+                      @update="alertStatusUpdate"
+                      :dialog="dialog"
+                      :alertType="alertType"
+                      :message="msg"
+                      :type="type"
+                      />
                   </v-form>
 
                   
@@ -104,26 +93,26 @@
                     <v-divider></v-divider>
                   </v-card-actions>
 
-                  <v-row align="center" justify="center" style="margin-bottom: 20px; margin-top:20px;">
+                  <v-row justify="center" style="margin-bottom: 20px; margin-top:20px;">
                     <v-btn x-large color="grey lighten-2" width="90%" dark style="color: black;">
                       <v-icon left x-large color="black">mdi-github-box</v-icon>&nbsp
                       Github로 가입하기
                     </v-btn>
                   </v-row>
-                  <v-row align="center" justify="center" style="margin-bottom: 20px;"> 
+                  <v-row justify="center" style="margin-bottom: 20px;"> 
                     <v-btn x-large color="red" width="90%" dark>
                       <v-icon left large>mdi-google</v-icon>&nbsp
                       Google로 가입하기
                     </v-btn>
                   </v-row>
-                  <v-row align="center" justify="center" style="margin-bottom: 20px;">
+                  <v-row  justify="center" style="margin-bottom: 20px;">
                     <v-btn x-large color="blue" width="90%" dark>
                     <v-icon left large>mdi-facebook-box</v-icon>&nbsp
                       Facebook로 가입하기
                     </v-btn>
                   </v-row>
                   <v-divider></v-divider>
-                  <v-row align="right" justify="end">
+                  <v-row justify="end">
                     <v-btn nuxt to="/login" text color="primary" style="font-weight: bold;">로그인창으로 돌아가기</v-btn>
                   </v-row>
                 </v-card-text>
@@ -138,16 +127,21 @@
 </template>
 
 <script>
+  import wildcard  from 'wildcard';
   import AlertMessage from '~/components/AlertMessage';
   export default {
     data() {
       return {
         activeColor: 'green',
         valid: '',
+        name: '',
         email: '',
+        dialog: false,
+        alertType: '',
+        type: '',
+        msg: '',
         password: '',
         passwordCheck: '',
-        msg: '이미 가입된 회원이거나 양식을 다시 확인해주십시오.',
         about: '',
         success: true,
         emailRules: [
@@ -163,15 +157,14 @@
         ],
         aboutRules: [
           v => v.length <= 80 || 'Max 80 Characters',
-        ]
+        ],
+
       }
     },
     methods: {
-      onSubmitForm() {
+      async onSubmitForm() {
         if(this.$refs.form.validate()){
-          console.log(this.email);
-          console.log(this.password);
-          this.$store.dispatch('users/signUp', {
+          await this.$store.dispatch('users/signUp', {
             email: this.email,
             password: this.password,
             name: this.name,
@@ -179,22 +172,36 @@
           })
             .then((res)=>{
               console.log(res);
-              this.$router.push({
-                path: '/'
-              });
-              success = true;
+              if(res.response && wildcard('40*', res.response.status.toString())){
+                console.log("회원가입 실패");
+                this.dialog = true;
+                this.alertType = 'signup'
+                this.type = 'error'
+                this.msg = "회원가입에 실패했습니다."
+              }else if(res.status && wildcard('20*', res.status.toString())){
+                console.log("회원가입 성공");
+                this.dialog = true;
+                this.alertType = 'signup'
+                this.type = 'success'
+                this.msg = "회원가입에 성공했습니다";
+              }
             })
             .catch((err)=>{
               console.error(err);
-              success = false;
             });
         }
       },
-      onSuccessCheck() {
-        this.success === false ? false : true;
+      onChangeImages(file) {
+        const imageFormData = new FormData();
+        imageFormData.append('image', file);
+        console.log(imageFormData.getAll('image'));
+      },
+      alertStatusUpdate(data) {
+        this.dialog = data.dialog
       }
+
     },
-    component: {
+    components: {
       AlertMessage,
 
     },

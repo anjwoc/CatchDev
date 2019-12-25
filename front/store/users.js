@@ -43,8 +43,8 @@ export const actions = {
       console.error(err);
     };
   },
-  signUp({ commit }, payload){
-    this.$axios.post('/user', {
+  async signUp({ commit }, payload){
+    return await this.$axios.post('/user', {
       email: payload.email,
       password: payload.password,
       name: payload.name,
@@ -53,11 +53,19 @@ export const actions = {
       withCredentials: true,
     })
       .then((res)=>{
-        commit('setMe', res.data);
+        // console.log(res.status);
+        if(res.status === 200){
+          commit('setMe', res.data);
+          return res;
+        }
       })
       .catch((err)=>{
-        console.error(err);
-      })
+        if(err.response && err.response.data){
+          // console.log(err);
+          // console.log(err.response);
+          return err;
+        }
+      });
   },
   async logIn({ commit }, payload){
     await this.$axios.post('/user/login', {

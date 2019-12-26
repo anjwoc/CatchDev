@@ -6,7 +6,6 @@
       >
         <v-row
           class="mt-0 pt-0"
-          
           justify="center"
         >
           <v-col
@@ -78,8 +77,8 @@
                       회원가입
                     </v-btn>
                     <alert-message
-                      @update="alertStatusUpdate"
                       :dialog="dialog"
+                      :userId="userId"
                       :alertType="alertType"
                       :message="msg"
                       :type="type"
@@ -140,6 +139,7 @@
         alertType: '',
         type: '',
         msg: '',
+        userId: '',
         password: '',
         passwordCheck: '',
         about: '',
@@ -150,7 +150,7 @@
         ],
         passwordRules: [
           v => !!v || '비밀번호는 필수입니다.',
-        ],
+        ], 
         passwordCheckRules: [
           v => !!v || '비밀번호는 필수입니다.',
           v => v === this.password || '비밀번호가 일치하지 않습니다.'
@@ -175,12 +175,14 @@
               if(res.response && wildcard('40*', res.response.status.toString())){
                 console.log("회원가입 실패");
                 this.dialog = true;
+                this.userId = res.data.id;
                 this.alertType = 'signup'
                 this.type = 'error'
                 this.msg = "회원가입에 실패했습니다."
               }else if(res.status && wildcard('20*', res.status.toString())){
                 console.log("회원가입 성공");
                 this.dialog = true;
+                this.userId = res.data.id;
                 this.alertType = 'signup'
                 this.type = 'success'
                 this.msg = "회원가입에 성공했습니다";
@@ -190,14 +192,6 @@
               console.error(err);
             });
         }
-      },
-      onChangeImages(file) {
-        const imageFormData = new FormData();
-        imageFormData.append('image', file);
-        console.log(imageFormData.getAll('image'));
-      },
-      alertStatusUpdate(data) {
-        this.dialog = data.dialog
       }
 
     },

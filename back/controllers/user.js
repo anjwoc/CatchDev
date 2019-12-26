@@ -109,3 +109,30 @@ exports.logOut = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.test = (req, res, next) => {
+  res.json('test router');
+};
+
+exports.uploadProfileImage = (req, res, next) => {
+  console.log(req.files);
+  res.json(req.files.map(v => v.filename));
+};
+
+exports.profileUpdate = async (req, res, next) => {
+  try{ 
+    const user = await db.User.findOne({ where: { id: req.params.id }});
+    if(!user){
+      return res.status(404).send('회원이 존재하지 않습니다.');
+    }
+    const newUser = await db.User.update({
+      job: req.body.job,
+      location: req.body.location,
+      imgSrc: req.body.imgSrc, 
+      where: { id : req.params.id },
+    })
+    return res.json(newUser);
+  }catch(err){
+    console.error(err);
+  }
+};

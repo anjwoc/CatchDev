@@ -3,11 +3,14 @@ export const state = () => ({
   AllPosts: [],
   ClosedPosts: [],
   OngoingPosts: [],
-
+  imagePaths: [],
 });
 export const mutations = {
   setMe(state, payload){
     state.me = payload;
+  },
+  updateImagePaths(state, payload) {
+    state.imagePaths = payload;
   },
   logOut(state){
     state.me = null;
@@ -105,10 +108,24 @@ export const actions = {
       .catch((err)=>{
         console.error(err);
       });
-
-
   },
-  
+  updateProfile({ commit, state }, payload){
+    this.$axios.post(`/user/profileUpdate/${payload.userId}`, {
+      userId: payload.userId,
+      job: payload.job,
+      location: payload.location,
+      imgSrc: state.imagePaths,
+    }, {
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log("updateProfile response");
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  },
   loadPosts({ commit }, payload){
     //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
     commit('loadPosts', payload);

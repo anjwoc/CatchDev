@@ -52,7 +52,7 @@
       <template v-slot:append>
         <v-divider></v-divider>
         <div align="end" justify="end">
-          <p class="font-weight-black pa-2 pb-0">서비스 정책</p>
+          <p class="font-weight-black pa-2 pb-0" style="font-size: 20px;">Contact</p>
         </div>
 
       </template>
@@ -64,8 +64,8 @@
     data () {
       return {
         items: [
-          { title: '트렌딩', icon: 'mdi-trending-up', to: '/' },
-          { title: '최신 포스트', icon: 'mdi-clock-outline', to: '/recent' },
+          { title: '인기 스터디', icon: 'mdi-trending-up', to: '/' },
+          { title: '최신 스터디', icon: 'mdi-clock-outline', to: '/recent' },
           { title: '카테고리', icon: 'mdi-tag-outline', to: '/category' },
         ],
       }

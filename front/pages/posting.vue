@@ -3,6 +3,7 @@
     justify="center"
     class="ma-0 pa-0 fill-height"
   >
+    <alert-message @update="updateStatus" :message="msg" :dialog="alertDialog" :type="type" />
     <v-card
       color="white"
       width="100%"
@@ -13,7 +14,7 @@
           <section class="container">
           <div class="d-flex flex-row text-center">
             <PostOptionModal style="width: 100%;" @receive="onChangeCategory" name="Category" :Items="categoryItems" />
-            <PostOptionModal style="width: 100%;" @receive="onChangeLocation" name="Location" :Items="LocationItems" />
+            <PostOptionModal style="width: 100%;" @receive="onChangeLocation" name="Location" :Items="locationItems" />
           </div>
           <!-- v-text-field에서 hiede-details옵션을 false로 안하면 밑에 여백 공간이 생긴다. -->
           <v-text-field 
@@ -21,6 +22,7 @@
             outlined
             :hide-details=true
             v-model="title"
+            :rules="titleRules"
             label="Title"
           />
           <div class="quill-editor"
@@ -56,8 +58,6 @@
             </div>
           </v-dialog>
           <input-tag v-model="hashtags" placeholder="Hashtags here..." ></input-tag>
-          <div>{{hashtags}}</div>
-
           <input id="getFile" type="file" hidden multiple @change="onChangeImages" />
           <v-row class="ma-0 pa-0" justify="end">
             <v-divider></v-divider>
@@ -67,13 +67,14 @@
         </section>    
       </v-form>
     </v-card>
+    
   </v-row>
 </template>
  
 <script>
   import hljs from 'highlightjs'
   import PostOptionModal from '~/components/PostOptionModal'
-  
+  import AlertMessage from '~/components/AlertMessage'
   import { mapState } from 'vuex';
   
   const toolbarOptions = [
@@ -104,9 +105,16 @@
         category: '',
         videoUrl: '',
         editorIndex: '',
+        msg: '',
+        type: 'fail',
+        alertDialog: false,
         dialog: false,
         categoryItems: [ '어학', '취업', '고시', '자격증', '프로그래밍', '기타' ],
-        LocationItems: [ '서울', '수원', '인천', '부산', '강원', '천안', '울산', '광주', '제주', '기타' ],
+        locationItems: [ '서울', '수원', '인천', '부산', '강원', '천안', '울산', '광주', '제주', '기타' ],
+        titleRules: [
+          v => !!v || '게시글 제목은 필수입니다.'
+        ],
+
         serverUrl: 'http://localhost:4000',
         editorOption: {
           theme: 'snow',
@@ -147,9 +155,10 @@
     methods: {
       insertVideo() {
         const idx = this.editorIndex ? this.editorIndex.index : 'none';
+        //youtube 재생 에러때문에 replace
         this.videoUrl = this.videoUrl.replace("watch?v=", "embed/");
         this.myQuillEditor.insertEmbed(idx, 'video', this.videoUrl);
-        this.dialog = false;
+        this.alertDialog = false;
         this.videoUrl = '';
       },
       onEditorChange({ editor, html, text }) {
@@ -192,8 +201,18 @@
             console.error(err);
           });
       },
+      updateStatus(data) {
+        const status = !data;
+        this.alertDialog = status;
+      },
       onSubmitForm() {
         if(this.$refs.form.validate()){
+          if(this.category === '' || this.location === ''){
+            //v-menu나 v-dialog는 rules 옵션이 없어서 직접 적용
+            this.alertDialog = true;
+            this.msg = '카테고리 혹은 지역은 필수입니다.';
+            return;
+          }
           this.$store.dispatch('posts/add', {
             title: this.title,
             content: this.content,
@@ -217,6 +236,7 @@
     },
     components: {
       PostOptionModal,
+      AlertMessage,
     },  
     middleware: 'authenticated',
 

@@ -25,73 +25,76 @@
             </v-col>
               
           </v-row>
-          <v-divider class="mt-4"></v-divider>
-          <v-row
-            class="ma-0 pa-0 d-flex row"
-          >
-            <v-col cols="12" align="center">
-              <p class="font-weight-black" style="color: #455A64;">프로필 이미지와 추가정보를 입력해주세요!</p>
-              <p class="font-weight-black" style="color: #455A64;">추가하지 않을 경우 기본 이미지로 설정됩니다.</p>
-              
-              <v-avatar color="grey">
-                <v-icon x-large>mdi-account</v-icon>
-              </v-avatar>
-            </v-col>
-            <v-col cols="12" class="ma-0 pa-0">
-                <v-file-input
-                v-model="files"
-                :rules="imageRules"
-                @change="onChangeImage"
-                color="deep-purple accent-4"
-                accept="image/png"
-                placeholder="Select your profile image(Only png)"
-                prepend-icon="mdi-camera"
-                counter
-                outlined
-                :show-size="1000"
-              >
-                <template v-slot:selection="{ index, text }">
-                  <v-chip
-                    v-if="index < 2"
-                    color="deep-purple accent-4"
-                    dark
-                    label
-                    small
-                  >
-                    {{ text }}
-                  </v-chip>
-            
-                  <span
-                    v-else-if="index === 2"
-                    class="overline grey--text text--darken-3 mx-2"
-                  >
-                    +{{ files.length - 2 }} File(s)
-                  </span>
-                </template>
-              </v-file-input>
-            </v-col>
-            <v-col cols="6" class="ma-0 pa-0">
-                <v-text-field
-                v-model="job"
-                outlined
-                prepend-icon="mdi-account-card-details"
-                placeholder="직업"
-              >
-              </v-text-field>
-            </v-col>
-            <v-col cols="6" class="ma-0 pa-0">
-              <v-text-field
-                v-model="location"
-                outlined
-                prepend-icon="mdi-map-marker"
-                placeholder="지역"
-              >
-              </v-text-field>
-            </v-col>
-            
 
-            
-          </v-row>
+          <div v-if="this.alertType === 'signup' && this.type === 'success'" class="ma-0 pa-0">
+              <v-divider class="mt-4"></v-divider>
+            <v-row
+              class="ma-0 pa-0 d-flex row"
+            >
+              <v-col cols="12" align="center">
+                <p class="font-weight-black" style="color: #455A64;">프로필 이미지와 추가정보를 입력해주세요!</p>
+                <p class="font-weight-black" style="color: #455A64;">추가하지 않을 경우 기본 이미지로 설정됩니다.</p>
+                
+                <v-avatar color="grey">
+                  <v-icon x-large>mdi-account</v-icon>
+                </v-avatar>
+              </v-col>
+              <v-col cols="12" class="ma-0 pa-0">
+                  <v-file-input
+                  v-model="files"
+                  :rules="imageRules"
+                  @change="onChangeImage"
+                  color="deep-purple accent-4"
+                  accept="image/png"
+                  placeholder="Select your profile image(Only png)"
+                  prepend-icon="mdi-camera"
+                  counter
+                  outlined
+                  :show-size="1000"
+                >
+                  <template v-slot:selection="{ index, text }">
+                    <v-chip
+                      v-if="index < 2"
+                      color="deep-purple accent-4"
+                      dark
+                      label
+                      small
+                    >
+                      {{ text }}
+                    </v-chip>
+              
+                    <span
+                      v-else-if="index === 2"
+                      class="overline grey--text text--darken-3 mx-2"
+                    >
+                      +{{ files.length - 2 }} File(s)
+                    </span>
+                  </template>
+                </v-file-input>
+              </v-col>
+              <v-col cols="6" class="ma-0 pa-0">
+                  <v-text-field
+                  v-model="job"
+                  outlined
+                  prepend-icon="mdi-account-card-details"
+                  placeholder="직업"
+                >
+                </v-text-field>
+              </v-col>
+              <v-col cols="6" class="ma-0 pa-0">
+                <v-text-field
+                  v-model="location"
+                  outlined
+                  prepend-icon="mdi-map-marker"
+                  placeholder="지역"
+                >
+                </v-text-field>
+              </v-col>
+              
+
+              
+            </v-row>
+          </div>
           <v-row class="ma-0 pa-0 d-flex row">
             <v-btn
               v-if="this.alertType === 'signup' && this.type === 'success'"
@@ -110,7 +113,7 @@
             >
               나중에 하기
             </v-btn>
-            <v-btn v-else color="info" text>
+            <v-btn v-else color="info" @click="updateStatus" text>
               확인
             </v-btn>
             <div>
@@ -141,11 +144,11 @@
       },
       userId: {
         type: Number,
-        required: true,
+        required: false,
       },
       alertType: {
         type: String,
-        required: true,
+        required: false,
       }
     },
     data() {
@@ -178,20 +181,14 @@
         return this.$store.state.users.imagePaths;
       }
     },
-    created() {
-      console.log(this.type);
-      console.log(this.alertType);
-    },
     methods: {
       updateStatus(){ 
-        this.dialog = false;
-        if(this.type === 'success'){
+        this.$emit('update', this.dialog);
+        if(this.type === 'success' && this.alertType === 'signup'){
           this.$router.push({ path: '/' });
         }
       },
       onChangeImage(){
-        console.log("현재 이미지");
-        console.log(this.files);
         const imageFormData = new FormData();
         imageFormData.append('userId', this.userId);
         imageFormData.append('image', this.files);
@@ -199,8 +196,6 @@
           withCredentials: true,
         })
           .then((files) => {
-            console.log(`files: ${files}`)
-            console.log(files.data);
           });
       }, 
       onProfileUpdate() {

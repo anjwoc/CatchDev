@@ -3,20 +3,19 @@ const db = require('../models');
 exports.addBoard = async (req, res, next)=>{
   try{
     const { title, content, location, category, hashtags } = req.body; 
-
     const newPost = await db.Board.create({
       title: title,
       content: content,
       location: location,
       category: category,
       userId: req.user.id,
+      hit: 1,
     });
 
     if(hashtags){
       const result = await Promise.all(hashtags.map(tag => db.Hashtag.findOrCreate({
         where: { name: tag },
       })));
-      console.log(`result: ${result}`);
       await newPost.addHashtags(result.map(r => r[0]));
     };
 
@@ -73,6 +72,7 @@ exports.loadBoard = async (req, res, next) => {
         attributes: ['name']
       }]
     });
+    
     res.json(board);
   }catch(err){
     console.error(err);

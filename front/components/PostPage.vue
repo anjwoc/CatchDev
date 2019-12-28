@@ -1,10 +1,8 @@
 <template>
   <v-app>
-    <div>{{post}}</div>
     <v-row id="test" class="fill-height white ma-0 pa-0">
       <v-col cols="12" md="2"></v-col>
       <v-col cols="12" md="8">
-        <!-- <div>{{post}}</div> -->
         <h1 id="mainTitle" style="font-size: 40px;">{{post.title}}</h1>
 
         <div>

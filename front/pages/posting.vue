@@ -114,7 +114,6 @@
         titleRules: [
           v => !!v || '게시글 제목은 필수입니다.'
         ],
-
         serverUrl: 'http://localhost:4000',
         editorOption: {
           theme: 'snow',

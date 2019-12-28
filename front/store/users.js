@@ -3,14 +3,10 @@ export const state = () => ({
   AllPosts: [],
   ClosedPosts: [],
   OngoingPosts: [],
-  imagePaths: [],
 });
 export const mutations = {
   setMe(state, payload){
     state.me = payload;
-  },
-  updateImagePaths(state, payload) {
-    state.imagePaths = payload;
   },
   logOut(state){
     state.me = null;
@@ -46,6 +42,18 @@ export const actions = {
       console.error(err);
     };
   },
+  async loadSpecificUser({ state, commit }, payload){
+    try{
+      const res = await this.$axios.get(`/user/${payload.id}`, {
+        withCredentials: true,
+      });
+      console.log("loadSpecificUser 진입");
+      commit('setMe', res.data);
+    }catch(err){
+      console.error(err);
+    };
+  },
+  
   async signUp({ commit }, payload){
     return await this.$axios.post('/user', {
       email: payload.email,
@@ -66,6 +74,7 @@ export const actions = {
         if(err.response && err.response.data){
           // console.log(err);
           // console.log(err.response);
+          // return을 해야 컴포넌트에서 에러 객체를 받을 수 있다.
           return err;
         }
       });
@@ -114,7 +123,6 @@ export const actions = {
       userId: payload.userId,
       job: payload.job,
       location: payload.location,
-      imgSrc: state.imagePaths,
     }, {
       withCredentials: true,
     })

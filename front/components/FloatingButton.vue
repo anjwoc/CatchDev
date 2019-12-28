@@ -26,7 +26,7 @@
       dark
       small
       color="indigo"
-      nuxt to="/profile"
+      :to="profileUrl"
     >
       <v-icon>mdi-account-circle</v-icon>
     </v-btn>
@@ -83,6 +83,12 @@
     computed: {
       me() {
         return this.$store.state.users.me;
+      },
+      profileUrl() {
+        if(this.me && this.me.id){
+          return 'profile/' + this.me.id;
+        }
+        return 'profile/'
       }
     },
     methods: {

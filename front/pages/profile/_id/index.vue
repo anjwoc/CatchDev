@@ -1,18 +1,24 @@
 <template>
   <v-container class="ma-0 pa-0" height="600">
-
       <v-row no-gutters style="background: #E3F2FD;">
         <v-col cols="12" md="1"></v-col>
         <v-col cols="12" md="2">
-          <div>
+        
+          <div v-if="me && me.imgSrc">
             <v-avatar size="90%"  class="mt-8 mb-6" fixed>
               <img
                 max-width="160px" max-height="160px"
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
-                alt="John"
+                :src="me.imgSrc"
+                alt="profileIcon"
               >
             </v-avatar>
           </div>
+          <div v-else>
+            <v-avatar size="90%"  class="mt-8 mb-6" fixed>
+              <v-icon>mdi-account</v-icon>
+            </v-avatar>
+          </div>
+
         </v-col>
         <v-col cols="12" md="5">
           <v-container class="mt-4"></v-container>
@@ -22,8 +28,6 @@
           <div>
             {{ me.job === null ? '직업을 추가해주세요' : me.job }}
           </div>
-          
-
           
           <div style="font-size: 13px; margin: 0px 0px 0px 0px;">
             <v-icon v-if="me.location" regular>mdi-map-marker</v-icon>
@@ -87,8 +91,6 @@
             </v-tab-item>
 
           </v-tabs>
-
-
       </v-col>
       <v-col cols="12" md="1"></v-col>
     </v-row>
@@ -121,13 +123,16 @@
           linkedIn: this.linkedIn,
         })
           .then(()=>{
-
           })
           .catch((err)=>{
             console.error(err);
           });
       },
-     
+    },
+    fetch({ store, params }) {
+      return store.dispatch('users/loadSpecificUser', {
+        id: params.id,
+      });
     },
     components: {
       ProfileCard,

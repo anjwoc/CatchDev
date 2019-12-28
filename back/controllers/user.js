@@ -15,6 +15,19 @@ exports.loadUser = async (req, res, next) => {
   }
 };
 
+exports.loadSpecificUser = async (req, res, next) => {
+  try{
+    const user = await db.User.findOne({
+      where : { id: req.params.id},
+      attributes: ['id', 'about', 'job', 'location', 'imgSrc', 'name']
+    });
+    res.json(user);
+  }catch(err) {
+    console.error(err);
+    next(err);
+  }
+};
+
  // post 회원가입
 exports.signUp = async (req, res, next) => {
   try{
@@ -114,9 +127,33 @@ exports.test = (req, res, next) => {
   res.json('test router');
 };
 
-exports.uploadProfileImage = (req, res, next) => {
-  console.log(req.files);
-  res.json(req.files.map(v => v.filename));
+exports.uploadProfileImage = async (req, res, next) => {
+  try{
+    const user = await db.User.findOne({ where : { id: req.body.userId }});
+    if(!user){ 
+      res.status(404).send('회원이 존재하지 않습니다');
+    }
+    if(req.files.image !== undefined){
+      console.log(user.dataValues.imgSrc);
+      //일단 개발 중엔 하드코딩하고 나중에 dotenv로 가저올 예정
+      const serverName = 'http://localhost:4000/profile/';
+      const imageName = req.files.image[0].filename || '';
+      const filename = serverName + imageName;
+
+      if(filename !== user.dataValues.imgSrc && imageName !== ''){
+        const updatedUser = await db.User.update({
+          imgSrc: filename,
+        },{
+          where: { id: req.body.userId },
+        });
+        return res.json(updatedUser);
+      }
+    }        
+    return res.json("No Change");
+    
+  }catch(err){
+    console.error(err);
+  }
 };
 
 exports.profileUpdate = async (req, res, next) => {
@@ -125,13 +162,13 @@ exports.profileUpdate = async (req, res, next) => {
     if(!user){
       return res.status(404).send('회원이 존재하지 않습니다.');
     }
-    const newUser = await db.User.update({
+    const updatedUser = await db.User.update({
       job: req.body.job,
       location: req.body.location,
-      imgSrc: req.body.imgSrc, 
+    },{
       where: { id : req.params.id },
     })
-    return res.json(newUser);
+    return res.json(updatedUser);
   }catch(err){
     console.error(err);
   }

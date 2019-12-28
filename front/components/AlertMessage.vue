@@ -43,8 +43,8 @@
                 :rules="imageRules"
                 @change="onChangeImage"
                 color="deep-purple accent-4"
-                accept="image/png, image/jpeg, image/bmp"
-                placeholder="Select your Profile Image(Only png, jpeg, bmp)"
+                accept="image/png"
+                placeholder="Select your profile image(Only png)"
                 prepend-icon="mdi-camera"
                 counter
                 outlined
@@ -193,14 +193,14 @@
         console.log("현재 이미지");
         console.log(this.files);
         const imageFormData = new FormData();
+        imageFormData.append('userId', this.userId);
         imageFormData.append('image', this.files);
-        this.$axios.post(`/user/image`, imageFormData, {
+        this.$axios.post(`/user/image`,imageFormData, {
           withCredentials: true,
         })
           .then((files) => {
             console.log(`files: ${files}`)
             console.log(files.data);
-            this.$store.commit('users/updateImagePaths', files.data);
           });
       }, 
       onProfileUpdate() {
@@ -211,7 +211,10 @@
           location: this.location
         })
           .then((res)=>{
-
+            this.job = '';
+            this.location = '';
+            this.files = [];
+            this.$router.push({ path: '/' });
           })
           .catch((err)=>{
             console.log(err);

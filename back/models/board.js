@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     hit: { // 조회수 속성
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     status: {
       type: DataTypes.ENUM,

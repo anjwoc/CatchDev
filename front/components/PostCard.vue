@@ -72,23 +72,21 @@
           <v-divider></v-divider>
           <div class="ma-0 pa-0">
             <v-chip
-              v-for="i in 3"
-              :key="i"
+              v-for="tag in this.hashtags"
+              :key="tag"
               class="ma-0 mt-4 ml-1 mr-1 font-weight-regular"
               color="grey lighten-4" 
               outlined
               text-color="blue-grey"
               to="/"
             >
-              #{{tagItems[i]}}
+              #{{tag}}
             </v-chip>
           </div>
         </v-list-item-content>
       </v-list-item>
       
-
     </v-card>
-        
   </v-container>
 </template>
 <script>
@@ -126,7 +124,8 @@ export default {
       return this.$store.dispatch('posts/likePost', {
         postId: this.post.id,
       });
-    }
+    },
+    
   },
   computed:{
     diffTime() {
@@ -157,6 +156,14 @@ export default {
     },
     id() {
       return this.post.user && this.post.user.email.split('@')[0];
+    },
+    hashtags() {
+      if(this.post && this.post.hashtags){
+        const tags = [];
+        tags.unshift(this.post.hashtags.map(tag => tag.name));
+        return tags[0];
+      }
+      return null;
     }
   },
 }

@@ -2,7 +2,8 @@ const db = require('../models');
 
 exports.addBoard = async (req, res, next)=>{
   try{
-    const { title, content, location, category } = req.body; 
+    const { title, content, location, category, hashtags } = req.body; 
+
     const newPost = await db.Board.create({
       title: title,
       content: content,
@@ -10,6 +11,15 @@ exports.addBoard = async (req, res, next)=>{
       category: category,
       userId: req.user.id,
     });
+
+    if(hashtags){
+      const result = await Promise.all(hashtags.map(tag => db.Hashtag.findOrCreate({
+        where: { name: tag },
+      })));
+      console.log(`result: ${result}`);
+      await newPost.addHashtags(result.map(r => r[0]));
+    };
+
     if(req.body.image){ //이미지가 있다면
       if(Array.isArray(req.body.image)){ //이미자가 여러개이면
         await Promise.all(req.body.image.map((image)=>{
@@ -58,6 +68,9 @@ exports.loadBoard = async (req, res, next) => {
         model: db.User,
         as: 'Likers',
         attributes: ['id']
+      },{
+        model: db.Hashtag,
+        attributes: ['name']
       }]
     });
     res.json(board);
@@ -73,6 +86,10 @@ exports.getLastId = async (req, res, next) => {
       attributes: ['id'],
       order: [['createdAt', 'DESC']],
     });
+    if(!post){
+      //게시글이 하나도 없을 때
+      res.json({"id": 1});
+    }
     res.json(post);
   }catch(err){
     console.error(err);

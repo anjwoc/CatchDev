@@ -26,6 +26,9 @@ exports.allPosts = async (req, res, next) => {
         model: db.User,
         as: 'Likers',
         attributes: ['id']
+      },{
+        model: db.Hashtag,
+        attributes: ['name']
       }],
       order: [['createdAt', 'DESC']],
       limit: parseInt(req.query.limit, 10) || 10,

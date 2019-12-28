@@ -18,7 +18,7 @@ module.exports = {
   ],
   plugins: [
     { src: '~plugins/nuxt-quill-plugin.js', ssr: false },
-    
+    { src: '~plugins/vue-input-tag.js', ssr: false },
   ],
   vuetify: {
   },

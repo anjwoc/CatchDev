@@ -66,6 +66,7 @@ export const actions = {
     this.$axios.post('/board', {
       title: payload.title,
       content: payload.content,
+      hashtags: payload.hashtags,
       location: payload.location,
       category: payload.category,
       image: state.imagePaths

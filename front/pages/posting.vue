@@ -11,52 +11,54 @@
     >
         <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
           <section class="container">
-            <div class="d-flex flex-row text-center">
-              <PostOptionModal style="width: 100%;" @receive="onChangeCategory" name="Category" :Items="categoryItems" />
-              <PostOptionModal style="width: 100%;" @receive="onChangeLocation" name="Location" :Items="LocationItems" />
+          <div class="d-flex flex-row text-center">
+            <PostOptionModal style="width: 100%;" @receive="onChangeCategory" name="Category" :Items="categoryItems" />
+            <PostOptionModal style="width: 100%;" @receive="onChangeLocation" name="Location" :Items="LocationItems" />
+          </div>
+          <!-- v-text-field에서 hiede-details옵션을 false로 안하면 밑에 여백 공간이 생긴다. -->
+          <v-text-field 
+            class="ma-0 pa-0"
+            outlined
+            :hide-details=true
+            v-model="title"
+            label="Title"
+          />
+          <div class="quill-editor"
+            :content="content"
+            @change="onEditorChange($event)"
+            @focus="onEditorFocus($event)"
+            v-quill:myQuillEditor="editorOption">
+          </div>
+          <v-dialog v-model="dialog" max-width="600px">
+            <template v-slot:activator="{ on }">
+              <v-btn id="showVideoForm" hidden v-on="on"></v-btn>
+            </template>
+            <div>
+              <v-card>
+                <v-card-text>
+                  <v-text-field
+                    outlined
+                    class="mb-0 pb-0"
+                    v-model="videoUrl"
+                    color="red"
+                    :hide-details=true
+                    label="Youtube link here..."
+                    prepend-inner-icon="mdi-youtube"
+                  >
+                  </v-text-field>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn class="ma-0 pa-0" @click="dialog = false" text color="black">cancel</v-btn>
+                  <v-btn class="ma-0 pa-0" @click="insertVideo" text color="black">save</v-btn>
+                </v-card-actions>
+              </v-card>
             </div>
-            <!-- v-text-field에서 hiede-details옵션을 false로 안하면 밑에 여백 공간이 생긴다. -->
-            <v-text-field 
-              class="ma-0 pa-0"
-              outlined
-              :hide-details=true
-              v-model="title"
-              label="Title"
-            />
-            <div class="quill-editor"
-              :content="content"
-              @change="onEditorChange($event)"
-              @focus="onEditorFocus($event)"
-              v-quill:myQuillEditor="editorOption">
-            </div>
-            <v-dialog v-model="dialog" max-width="600px">
-              <template v-slot:activator="{ on }">
-                <v-btn id="showVideoForm" hidden v-on="on"></v-btn>
-              </template>
-              <div>
-                <v-card>
-                  <v-card-text>
-                    <v-text-field
-                      outlined
-                      class="mb-0 pb-0"
-                      v-model="videoUrl"
-                      color="red"
-                      :hide-details=true
-                      label="Youtube link here..."
-                      prepend-inner-icon="mdi-youtube"
-                    >
-                    </v-text-field>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn class="ma-0 pa-0" @click="dialog = false" text color="black">cancel</v-btn>
-                    <v-btn class="ma-0 pa-0" @click="insertVideo" text color="black">save</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </div>
-            </v-dialog>
-            
-            <input id="getFile" type="file" hidden multiple @change="onChangeImages" />
+          </v-dialog>
+          <input-tag v-model="hashtags" placeholder="Hashtags here..." ></input-tag>
+          <div>{{hashtags}}</div>
+
+          <input id="getFile" type="file" hidden multiple @change="onChangeImages" />
           <v-row class="ma-0 pa-0" justify="end">
             <v-divider></v-divider>
             <v-btn class="mx-auto" color="green" outlined width="50%">돌아가기</v-btn>
@@ -98,6 +100,7 @@
         hideDetails: true,
         valid: false,
         location :'',
+        hashtags: [],
         category: '',
         videoUrl: '',
         editorIndex: '',
@@ -194,6 +197,7 @@
           this.$store.dispatch('posts/add', {
             title: this.title,
             content: this.content,
+            hashtags: this.hashtags,
             location: this.location,
             category: this.category,
           })

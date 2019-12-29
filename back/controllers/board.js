@@ -115,26 +115,6 @@ exports.updateStatus = async (req, res, next) => {
     next(err);
   }
 };
-
-exports.getLastId = async (req, res, next) => {
-  try{
-    const post = await db.Board.findOne({ 
-      attributes: ['id'],
-      order: [['createdAt', 'DESC']],
-    });
-    if(!post){
-      //게시글이 하나도 없을 때
-      res.json({"id": 1});
-    }
-    res.json(post);
-  }catch(err){
-    console.error(err);
-    next(err);
-  }
-};
-
-
-
 exports.addLike = async (req, res, next) => {
   try{
     const post = await db.Board.findOne({ where: { id: req.params.id }})

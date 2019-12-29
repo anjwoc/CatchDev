@@ -4,7 +4,6 @@ const board = require('../controllers/board');
 
 const router = express.Router();
 
-router.get('/lastId', board.getLastId);
 router.post('/', isLoggedIn, board.addBoard);
 router.post('/images', isLoggedIn, upload.array('image'), board.uploadImage);
 router.get('/countLike/:id', board.countLike);

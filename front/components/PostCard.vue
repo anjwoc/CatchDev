@@ -25,12 +25,16 @@
           :to="profileUrl"
           color="white"
         >
-          <v-avatar>
+          <v-avatar v-if="this.post.user && this.post.user.imgSrc">
             <img
-              src="https://cdn.vuetifyjs.com/images/john.jpg"
-              alt="John"
+              :src="this.post.user.imgSrc"
+              alt="profileImage"
             >
           </v-avatar>
+          <v-avatar v-else color="grey">
+            <v-icon large>mdi-account</v-icon>
+          </v-avatar>
+
         </v-btn>
       </v-card-text>
       <v-list-item three-line>
@@ -85,7 +89,6 @@
           </div>
         </v-list-item-content>
       </v-list-item>
-      
     </v-card>
   </v-container>
 </template>

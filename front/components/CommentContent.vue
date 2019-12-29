@@ -8,21 +8,24 @@
     >
       <v-container>
         <div>
-          <v-avatar class="mr-2 mb-6" size="60">
+
+          <v-avatar v-if="c.user && c.user.imgSrc" class="mr-2 mb-6" size="60">
             <img
-              src="https://cdn.vuetifyjs.com/images/john.jpg"
-              alt="John"
+              :src="c.user.imgSrc"
+              alt="profileImage"
             >
           </v-avatar>
+          <v-avatar v-else color="grey" class="mr-2 mb-6" size="60">
+            <v-icon size="50">mdi-account</v-icon>
+          </v-avatar>
+
           <div style="display: inline-block;">
-            <!-- c.user && c.user.email && c.user.email.split('@')[0] -->
             <p class="ma-0 pa-0 subtitle-1 font-weight-black">{{ c.user && c.user.email && c.user.email.split('@')[0]  }}</p>
             <p class="ma-0 pa-0 subtitle-2" style="opacity: 0.5;">{{diffTime(c.createdAt)}}</p>
           </div>
         </div>
 
         <!-- <div v-if="c.updateOpened">여기 업데이트</div> -->
-
         <div>{{ c.content }}</div>
         <div align="end">
           <v-btn class="ma-0 pa-0" @click="onToggleUpdate(c.content, c.id, c.updateOpened)" color="blue-grey" text bottom right>수정</v-btn>

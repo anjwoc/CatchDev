@@ -86,7 +86,9 @@ export const actions = {
   },
   remove({ commit }, payload){
     console.log('deletePost');
-    this.$axios.delete(`/board/${payload.postId}`, {
+    this.$axios.delete(`/board/${payload.postId}`,{
+      hashtags: payload.hashtags,
+    }, {
       withCredentials: true,
     })
       .then((res) => {

@@ -72,7 +72,7 @@ export const mutations = {
 
 export const actions = {
   add({ commit, state }, payload){
-    this.$axios.post('/board', {
+    return this.$axios.post('/board', {
       title: payload.title,
       content: payload.content,
       hashtags: payload.hashtags,
@@ -84,6 +84,8 @@ export const actions = {
     })
       .then((res)=> {
         commit('addMainPost', res.data);
+        //컴포넌트 내부에서 사용할 id값 리턴
+        return res.data.id;
       })
       .catch((err)=>{
         console.error(err);

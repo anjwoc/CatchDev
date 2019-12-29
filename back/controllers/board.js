@@ -18,7 +18,8 @@ exports.addBoard = async (req, res, next)=>{
       })));
       await newPost.addHashtags(result.map(r => r[0]));
     };
-
+    console.log("이미지 여부");
+    console.log(req.body.image);
     if(req.body.image){ //이미지가 있다면
       if(Array.isArray(req.body.image)){ //이미자가 여러개이면
         await Promise.all(req.body.image.map((image)=>{

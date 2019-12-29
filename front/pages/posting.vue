@@ -183,7 +183,9 @@
           withCredentials: true,
         })
           .then((files)=>{
-            this.$store.commit('posts/concatImagePaths', files.data);
+            if(files.data){
+              this.$store.commit('posts/concatImagePaths', files.data);
+            }
             const range = this.myQuillEditor.getSelection();
             if(files.data.length === 1) {
               //이미지가 1개라면
@@ -221,11 +223,9 @@
           })
           .then((res)=>{
             this.content = '';
-            this.$store.commit('posts/concatImagePaths', null);
+            this.$store.commit('posts/concatImagePaths', []);
             const lastId = '';
-            this.$axios.get('/board/lastId').then((res)=>{ 
-              this.$router.push({ path: `/post/${res.data.id}` });
-            });
+            this.$router.push({ path: `/post/${res} `});
           })
           .catch((err)=>{
             console.error(err);

@@ -93,6 +93,28 @@ exports.deleteBoard = async (req, res, next) => {
   }
 };
 
+exports.updateStatus = async (req, res, next) => {
+  try{
+    let status = req.body.status;
+    if(status === 'open'){
+      status = 'closed';
+    }else{
+      res.status(403).send('이미 모집완료된 스터디입니다.');
+    }
+    await db.Board.update({
+      status: status,
+    },{
+      where: {
+        id: req.params.id,
+      }
+    });
+    res.json(status);
+  }catch(err){
+    console.error(err);
+    next(err);
+  }
+};
+
 exports.getLastId = async (req, res, next) => {
   try{
     const post = await db.Board.findOne({ 

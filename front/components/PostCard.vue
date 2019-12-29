@@ -58,7 +58,7 @@
               {{ status }}
             </v-chip>
             <v-chip
-            class="ma-0 mt-4"
+            class="mt-4"
             color="green"
             @click="onClickHeart"
             text-color="white"

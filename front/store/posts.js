@@ -63,6 +63,11 @@ export const mutations = {
       id: payload.userId,
     });
   },
+  updatePostStatus(state, payload){
+    const index = state.mainPosts.findIndex(v => v.id === payload.postId);
+    state.mainPosts[index].status = payload.status;
+  },
+
 };
 
 export const actions = {
@@ -201,6 +206,19 @@ export const actions = {
       })
       .catch((err)=>{
         console.error(err);
+      })
+  },
+  updatePostStatus({ commit }, payload){
+    this.$axios.post(`/board/${payload.postId}/status`,{
+      status: payload.status,
+    }, {
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log('updatePostStatus');
+        console.log(res);
+        console.log(res.data);
+        
       })
 
   },

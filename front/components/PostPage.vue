@@ -13,7 +13,7 @@
                 alt="profileImage"
               >
             </v-avatar>
-            <v-avatar v-else color="grey" class="mr-2 mb-6" size="60">
+            <v-avatar v-else color="grey" class="mr-2 mb-6" size="55">
               <v-icon size="50">mdi-account</v-icon>
             </v-avatar>
             
@@ -47,7 +47,13 @@
           </v-card>
         </v-row>
         
-        <v-subheader class="ma-0 pa-0" style="font-size: 18px;">{{ $moment(post.createdAt).format("YYYY년 MM월 DD일") }}</v-subheader>
+        <div class="d-flex row">
+          <v-subheader class="ma-0 pa-0" style="font-size: 18px;">{{ $moment(post.createdAt).format("YYYY년 MM월 DD일") }}</v-subheader>
+          <v-spacer></v-spacer>
+          <v-btn v-if="this.post.status === 'open'" @click="onUpdateStatus" outlined color="blue-grey darken-4">모집마감</v-btn>
+          <v-btn v-else disabled outlined color="blue-grey lighten-2">모집완료</v-btn>
+        </div>
+        
 
         <v-divider></v-divider>
         <div class="mt-8" id="mainContent">
@@ -88,6 +94,16 @@
           .then((res)=>{
             this.$router.push({ path: '/' });
           })
+      },
+      onUpdateStatus() {
+        this.$store.dispatch('posts/updatePostStatus', {
+          postId: this.post.id,
+          status: this.post.status,
+        })
+          .then((res) => {
+
+          })
+
       },
     },
     mounted() {

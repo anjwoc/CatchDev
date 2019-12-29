@@ -108,9 +108,7 @@ export default {
     return {
       mainContent: null,
       postUrl: '/post/'+this.post.id,
-      //profileUrl은 아직 구현 예정
-      //'/profile/'+this.post.user.id
-      profileUrl: '/profile',
+      profileUrl: '/profile/' + this.post.user.id,
       tagItems: ['','React', 'Angular', 'Vue']
     }
   },

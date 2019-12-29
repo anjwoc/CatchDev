@@ -22,9 +22,9 @@
       </v-col>
       <v-col cols="12" md="5">
         <v-container class="mt-4"></v-container>
-        <p style="color: #1A237E" class="ma-0 pa-0">{{ me.email }}</p>
+        <p style="color: #1A237E" class="ma-0 pa-0">{{ me && me.email }}</p>
         <v-divider></v-divider>
-        <h2>{{ me.name }}</h2>
+        <h2>{{ me && me.name }}</h2>
         <div>
           {{ me.job === null ? '직업을 추가해주세요' : me.job }}
         </div>
@@ -126,8 +126,8 @@
           });
       },
     },
-    fetch({ store, params }) {
-      return store.dispatch('users/loadSpecificUser', {
+    async fetch({ store, params }) {
+      return await store.dispatch('users/loadSpecificUser', {
         id: params.id,
       });
       // 포스팅 불러오는거도 넣어야됌

@@ -5,22 +5,29 @@
       <v-col cols="12" md="8">
         <h1 id="mainTitle" style="font-size: 40px;">{{post.title}}</h1>
 
-        <div>
-          <v-avatar v-if="this.post && this.post.user && this.post.user.imgSrc" class="mr-2 mb-6" size="60">
-            <img
-              :src="this.post.user.imgSrc"
-              alt="profileImage"
-            >
-          </v-avatar>
-          <v-avatar v-else color="grey" class="mr-2 mb-6" size="60">
-            <v-icon size="50">mdi-account</v-icon>
-          </v-avatar>
-          
-          
-          <div style="display: inline-block;">
-            <p class="ma-0 pa-0 title font-weight-medium">{{ nickname }}</p>
-            <p class="ma-0 pa-0 subtitle-2" style="opacity: 0.5;">{{ post.user && post.user.about }}</p>
+        <v-row>
+          <div>
+            <v-avatar v-if="this.post && this.post.user && this.post.user.imgSrc" class="mr-2 mb-6" size="60">
+              <img
+                :src="this.post.user.imgSrc"
+                alt="profileImage"
+              >
+            </v-avatar>
+            <v-avatar v-else color="grey" class="mr-2 mb-6" size="60">
+              <v-icon size="50">mdi-account</v-icon>
+            </v-avatar>
+            
+            <div style="display: inline-block;">
+              <p class="ma-0 pa-0 title font-weight-medium">{{ nickname }}</p>
+              <p class="ma-0 pa-0 subtitle-2" style="opacity: 0.5;">{{ post.user && post.user.about }}</p>
+            </div>
           </div>
+          <v-spacer></v-spacer>       
+          <v-btn class="ma-0 pa-0"  color="blue-grey" text right>수정</v-btn>
+          <v-btn class="ma-0 pa-0" @click="onDeletePost" color="blue-grey" text right>삭제</v-btn>
+          
+        </v-row>
+        <v-row>
           <v-card class="ma-0 pa-0 elevation-0" >
             <v-chip
               v-for="tag in this.hashtags"
@@ -34,10 +41,11 @@
               #{{tag}}
             </v-chip>
           </v-card>
-        </div>
+        </v-row>
 
         
         <v-subheader class="ma-0 pa-0" style="font-size: 18px;">{{ $moment(post.createdAt).format("YYYY년 MM월 DD일") }}</v-subheader>
+
         <v-divider></v-divider>
         <div class="mt-8" id="mainContent">
         </div>
@@ -62,7 +70,21 @@
       post: {
         type: Object,
         required: true,
+      },
+      me: {
+        type: Object,
+        required: true,
       }
+    },
+    methods: {
+      onDeletePost() {
+        this.$store.dispatch('posts/remove', {
+          postId: this.post.id,
+        })
+          .then((res)=>{
+            this.$router.push({ path: '/' });
+          })
+      },
     },
     mounted() {
       this.content = document.querySelector('#mainContent');

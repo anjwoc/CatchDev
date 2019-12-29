@@ -5,7 +5,6 @@ module.exports = {
     title: 'StudyPlatform',
     script: [
     ],
-    
   },
   modules: [
     '@nuxtjs/axios',

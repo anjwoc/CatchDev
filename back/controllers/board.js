@@ -79,6 +79,19 @@ exports.loadBoard = async (req, res, next) => {
     return next(err);
   };
 };
+exports.deleteBoard = async (req, res, next) => {
+  try{
+    await db.Board.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.json('삭제 성공');
+  }catch(err) {
+    console.error(err);
+    next(err);
+  }
+};
 
 exports.getLastId = async (req, res, next) => {
   try{

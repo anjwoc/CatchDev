@@ -147,7 +147,7 @@ export const actions = {
     console.log('loadTrendingPosts');
     try{
       if(payload && payload.reset) {
-        const res = await this.$axios.get(`/boards`);
+        const res = await this.$axios.get(`/boards/trendingBoards`);
         commit('loadPosts', {
           data: res.data,
           reset: true,

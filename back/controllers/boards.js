@@ -1,5 +1,6 @@
 
 const db = require('../models');
+const { Board } = require('../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const Fn = Sequelize.fn;
@@ -60,26 +61,27 @@ exports.loadTrendingBoards = async (req, res, next) => {
     }
     const posts = await db.Board.findAll({
       where,
+      attributes: [
+        'id',
+        'title',
+        'content',
+        'category',
+        'hit',
+        'status',
+        'createdAt',
+        'userId',
+        [Sequelize.literal('(SELECT COUNT(*) FROM `Like` WHERE Like.boardId = id)'), `LikeCount`],
+      ],
       include: [{
         model: db.User,
         attributes: ['id', 'email', 'name', 'imgSrc']
       },{
         model: db.Image,
       },{
-        model: db.User,
-        as: 'Likers',
-        attributes: ['id'],
-        include: [{
-          model: db.Board,
-          as: 'Likers', 
-          attributes: [[db.sequelize.fn('count', '*'), 'count']],
-        }]
-      },{
         model: db.Hashtag,
         attributes: ['name']
       }],
-      order: [['createdAt', 'DESC']],
-      // order: Sequelize.literal('max(count) DESC'),
+      order: [[Sequelize.literal('LikeCount'), 'DESC']],
       limit: parseInt(req.query.limit, 10) || 10,
     });
     res.json(posts);

@@ -62,7 +62,7 @@ import PostCard from '~/components/PostCard'
       }
     },
     fetch({ store }) {
-      return store.dispatch('posts/loadPosts', { reset: true });
+      return store.dispatch('posts/loadTrendingPosts', { reset: true });
     },
     mounted() {
       window.addEventListener('scroll', this.onScroll);

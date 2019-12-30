@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.get('/', boards.loadAllBoards);
 
+router.get('/trendingBoards', boards.loadTrendingBoards);
+
 // 프로필 페이지에서 전체 게시글 리스트
 router.get('/:id/allBoards', boards.loadAllBoardsList);
 // 모집중인 스터디 게시글 리스트

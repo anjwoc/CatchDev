@@ -7,6 +7,7 @@ const _13ed9833 = () => interopDefault(import('..\\pages\\login.vue' /* webpackC
 const _1fbe29e8 = () => interopDefault(import('..\\pages\\posting.vue' /* webpackChunkName: "pages_posting" */))
 const _8f95f1cc = () => interopDefault(import('..\\pages\\setting.vue' /* webpackChunkName: "pages_setting" */))
 const _93c14984 = () => interopDefault(import('..\\pages\\signup.vue' /* webpackChunkName: "pages_signup" */))
+const _cb19e210 = () => interopDefault(import('..\\pages\\study\\trending.vue' /* webpackChunkName: "pages_study_trending" */))
 const _59fc4b1e = () => interopDefault(import('..\\pages\\post\\_id\\index.vue' /* webpackChunkName: "pages_post__id_index" */))
 const _d06d596a = () => interopDefault(import('..\\pages\\profile\\_id\\index.vue' /* webpackChunkName: "pages_profile__id_index" */))
 const _4a45f51c = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
@@ -36,6 +37,10 @@ export const routerOptions = {
     path: "/signup",
     component: _93c14984,
     name: "signup"
+  }, {
+    path: "/study/trending",
+    component: _cb19e210,
+    name: "study-trending"
   }, {
     path: "/post/:id?",
     component: _59fc4b1e,

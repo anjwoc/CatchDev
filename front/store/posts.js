@@ -143,6 +143,30 @@ export const actions = {
       console.error(err);
     }
   },
+  loadTrendingPosts: throttle(async function({ commit, state}, payload){
+    console.log('loadTrendingPosts');
+    try{
+      if(payload && payload.reset) {
+        const res = await this.$axios.get(`/boards`);
+        commit('loadPosts', {
+          data: res.data,
+          reset: true,
+        });
+        return;
+      }
+      if(state.hasMorePost) {
+        const lastPost  = state.mainPosts[state.mainPosts.length - 1];
+        //lastPost가 존재하는지 체크하고 lastPost.id를 넘김
+        const res = await this.$axios.get(`/boards?lastId=${lastPost && lastPost.id}&limit=10`);
+        commit('loadPosts', {
+          data: res.data,
+        });
+        return;
+      }
+    }catch(err){
+      console.error(err);
+    }
+  }, 2000),
   loadPosts: throttle(async function({ commit, state }, payload){
     console.log('loadPosts');
     try{

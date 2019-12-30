@@ -78,12 +78,12 @@
           {
             name: '인기 스터디',
             file: 'trending',
-            to: '/trendingPosts'
+            to: 'study/trending'
           },
           {
             name: '최신 스터디',
             file: 'new',
-            to: '/newPosts'
+            to: '/new'
           },
           {
             name: '카테고리',

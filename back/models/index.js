@@ -13,6 +13,7 @@ db.Reply = require('./reply')(sequelize, Sequelize)
 db.Image = require('./image')(sequelize, Sequelize);
 db.Sns = require('./sns')(sequelize, Sequelize);
 
+
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);

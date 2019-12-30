@@ -4,10 +4,11 @@ import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
 const _9d5fd3c0 = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages_login" */))
+const _4b4f7897 = () => interopDefault(import('..\\pages\\new.vue' /* webpackChunkName: "pages_new" */))
 const _8248bc8e = () => interopDefault(import('..\\pages\\posting.vue' /* webpackChunkName: "pages_posting" */))
 const _f2208472 = () => interopDefault(import('..\\pages\\setting.vue' /* webpackChunkName: "pages_setting" */))
 const _75e6ca1e = () => interopDefault(import('..\\pages\\signup.vue' /* webpackChunkName: "pages_signup" */))
-const _2f526eb6 = () => interopDefault(import('..\\pages\\study\\trending.vue' /* webpackChunkName: "pages_study_trending" */))
+const _237de43e = () => interopDefault(import('..\\pages\\trending.vue' /* webpackChunkName: "pages_trending" */))
 const _6ee071de = () => interopDefault(import('..\\pages\\post\\_id\\index.vue' /* webpackChunkName: "pages_post__id_index" */))
 const _74ae6e78 = () => interopDefault(import('..\\pages\\profile\\_id\\index.vue' /* webpackChunkName: "pages_profile__id_index" */))
 const _30af19ee = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
@@ -26,6 +27,10 @@ export const routerOptions = {
     component: _9d5fd3c0,
     name: "login"
   }, {
+    path: "/new",
+    component: _4b4f7897,
+    name: "new"
+  }, {
     path: "/posting",
     component: _8248bc8e,
     name: "posting"
@@ -38,9 +43,9 @@ export const routerOptions = {
     component: _75e6ca1e,
     name: "signup"
   }, {
-    path: "/study/trending",
-    component: _2f526eb6,
-    name: "study-trending"
+    path: "/trending",
+    component: _237de43e,
+    name: "trending"
   }, {
     path: "/post/:id?",
     component: _6ee071de,

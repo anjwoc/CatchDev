@@ -78,7 +78,7 @@
           {
             name: '인기 스터디',
             file: 'trending',
-            to: 'study/trending'
+            to: '/trending'
           },
           {
             name: '최신 스터디',

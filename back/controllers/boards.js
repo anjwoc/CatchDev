@@ -1,12 +1,11 @@
 
 const db = require('../models');
-const { Board } = require('../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const Fn = Sequelize.fn;
 
 exports.loadAllBoards = async (req, res, next) => {
-  // res.json({'test': '1234'});
+  
   try{
     let where = {};
     if(parseInt(req.query.lastId, 10)){

@@ -4,7 +4,6 @@
       <v-col cols="12" md="2"></v-col>
       <v-col cols="12" md="8">
         <h1 id="mainTitle" style="font-size: 40px;">{{post.title}}</h1>
-
         <v-row>
           <div>
             <v-avatar v-if="this.post && this.post.user && this.post.user.imgSrc" class="mr-2 mb-6" size="60">
@@ -28,8 +27,7 @@
             <v-btn class="ma-0 pa-0"  color="blue-grey" text right>수정</v-btn>
             <v-btn class="ma-0 pa-0" @click="onDeletePost" color="blue-grey" text right>삭제</v-btn>
           </div>
-          
-          
+           
         </v-row>
         <v-row>
           <v-card class="ma-0 pa-0 elevation-0" >
@@ -53,7 +51,6 @@
           <v-btn v-if="this.post.status === 'open'" @click="onUpdateStatus" outlined color="blue-grey darken-4">모집마감</v-btn>
           <v-btn v-else disabled outlined color="blue-grey lighten-2">모집완료</v-btn>
         </div>
-        
 
         <v-divider></v-divider>
         <div class="mt-8" id="mainContent">
@@ -63,7 +60,6 @@
         
         <v-divider></v-divider>
         <comment-content :comments="post.Comments" :postId="post.id" :postCreatedAt="post.createdAt"  />
-
       </v-col>
       <v-col cols="12" md="2"></v-col>
     </v-row>
@@ -101,7 +97,6 @@
           status: this.post.status,
         })
           .then((res) => {
-
           })
 
       },
@@ -115,7 +110,8 @@
         return this.post.user && this.post.user.email.split('@')[0];
       },
       commentsLength() {
-        return this.post.Comments && this.post.Comments.length;
+        const length = this.post.Comments && this.post.Comments.length;
+        return length === 0 ? 0 : length;
       },
       hashtags() {
       if(this.post && this.post.hashtags){

@@ -12,49 +12,47 @@
       <v-list>
         <v-list-item>
           <nuxt-link to="/" style="text-decoration: none; color: black;"><h1>CatchDev</h1></nuxt-link>
-          <h1></h1>
-          <!-- <nuxt-link>About</nuxt-link> -->
         </v-list-item>
         <v-list-item>
           <v-text-field
             label="검색"
             hide-details
             prepend-inner-icon='mdi-magnify'
-            class="mt-4" 
+            class="mt-4"
             outlined
           />
         </v-list-item>
-        <v-list-item
-          class="tile"
-          v-for="item in items"
-          :key="item.title"
-          link
+
+        <v-treeview
+          v-model="tree"
+          class="font-weight-black mt-4"
+          :open="open"
+          :items="items"
+          activatable
+          item-key="name"
+          open-on-click
         >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>
-              <nuxt-link 
-                id="titleLink"
-                class="font-weight-bold pa-0 ma-0" 
-                :to = "item.to"
-                style="text-decoration: none;"
-              >
-                {{ item.title }}
-              </nuxt-link>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <template v-slot:prepend="{ item, open }">
+            <nuxt-lnik>
+              <v-icon class="mr-5" v-if="!item.file">
+                {{ open ? 'mdi-menu-open' : 'mdi-menu' }}
+              </v-icon>
+              <v-icon class="mr-5" v-else>
+                {{ files[item.file] }}
+              </v-icon>
+            </nuxt-lnik>
+          </template>
+          <template v-slot:label="{ item, open }">
+            <nuxt-link id="titleLink" :to="item.to" v-if="item.to">{{ item.name }}</nuxt-link>
+            <div v-else>{{ item.name }}</div>
+          </template>
+        </v-treeview>
       </v-list>
-
       <template v-slot:append>
         <v-divider></v-divider>
         <div align="end" justify="end">
           <p class="font-weight-black pa-2 pb-0" style="font-size: 20px;">Contact</p>
         </div>
-
       </template>
     </v-navigation-drawer>
   </v-card>
@@ -63,10 +61,66 @@
   export default {
     data () {
       return {
+        open: ['카테고리'],
+        files: {
+          trending: 'mdi-trending-up',
+          new: 'mdi-clock-outline',
+          category: 'mdi-table-of-contents',
+          language: 'mdi-alpha-l-box',
+          briefcase: 'mdi-briefcase',
+          exam: 'mdi-pencil',
+          certificate: 'mdi-certificate',
+          programming: 'mdi-language-javascript',
+          etc: 'mdi-dots-horizontal'
+        },
+        tree: [],
         items: [
-          { title: '인기 스터디', icon: 'mdi-trending-up', to: '/' },
-          { title: '최신 스터디', icon: 'mdi-clock-outline', to: '/recent' },
-          { title: '카테고리', icon: 'mdi-tag-outline', to: '/category' },
+          {
+            name: '인기 스터디',
+            file: 'trending',
+            to: '/trendingPosts'
+          },
+          {
+            name: '최신 스터디',
+            file: 'new',
+            to: '/newPosts'
+          },
+          {
+            name: '카테고리',
+            children: [
+              {
+                name: '어학',
+                file: 'language',
+                to: '/category/language'
+              },
+              {
+                name: '취업',
+                file: 'briefcase',
+                to: '/category/briefcase'
+              },
+              {
+                name: '고시',
+                file: 'exam',
+                to: '/category/exam'
+              },
+              {
+                name: '자격증',
+                file: 'certificate',
+                to: '/category/cerfificate'
+              },
+              {
+                name: '프로그래밍',
+                file: 'programming',
+                to: '/category/programming'
+              },
+              {
+                name: '기타',
+                file: 'etc',
+                to: '/category/etc'
+              },
+            ],
+          },
+          
         ],
       }
     },

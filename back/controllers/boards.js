@@ -1,6 +1,7 @@
 
 const db = require('../models');
-exports.allPosts = async (req, res, next) => {
+
+exports.loadAllBoards = async (req, res, next) => {
   // res.json({'test': '1234'});
   try{
     console.log(`loadBoards진입 req.query값: ${req.query.lastId}`)
@@ -38,5 +39,43 @@ exports.allPosts = async (req, res, next) => {
   }catch(err){
     console.error(err);
     return next(err);
+  }
+};
+
+/*
+router.get('/:id', board.loadAllBoardsList);
+router.get('/:id', board.loadAllOngoingBords);
+router.get('/:id', board.loadAllClosedBoards);
+*/
+
+exports.loadAllBoardsList = async (req, res, next) => {
+  try{
+
+
+  }catch(err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+
+exports.loadAllOngoingBoardsList = async (req, res, next) => {
+  try{
+
+    
+  }catch(err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+
+exports.loadAllClosedBoardsList = async (req, res, next) => {
+  try{
+
+    
+  }catch(err) {
+    console.error(err);
+    next(err);
   }
 };

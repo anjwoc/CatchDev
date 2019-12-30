@@ -72,7 +72,6 @@ export const actions = {
       })
       .catch((err)=>{
         if(err.response && err.response.data){
-          // console.log(err);
           // console.log(err.response);
           // return을 해야 컴포넌트에서 에러 객체를 받을 수 있다.
           return err;

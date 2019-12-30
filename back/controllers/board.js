@@ -73,7 +73,8 @@ exports.loadBoard = async (req, res, next) => {
         attributes: ['name']
       }]
     });
-    
+    await board.increment('hit');
+
     res.json(board);
   }catch(err){
     console.error(err);
@@ -117,7 +118,7 @@ exports.updateStatus = async (req, res, next) => {
 };
 exports.addLike = async (req, res, next) => {
   try{
-    const post = await db.Board.findOne({ where: { id: req.params.id }})
+    const post = await db.Board.findOne({ where: { id: req.params.id }});
 
     if(!post){
       return res.status(404).send('포스트가 존재하지 않습니다');

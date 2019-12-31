@@ -71,7 +71,8 @@
           exam: 'mdi-pencil',
           certificate: 'mdi-certificate',
           programming: 'mdi-language-javascript',
-          etc: 'mdi-dots-horizontal'
+          etc: 'mdi-dots-horizontal',
+          allContents: 'mdi-collapse-all'
         },
         tree: [],
         items: [
@@ -89,6 +90,11 @@
             name: '카테고리',
             children: [
               {
+                name: '전체 보기',
+                file: 'allContents',
+                to: '/category/all'
+              },
+              {
                 name: '어학',
                 file: 'language',
                 to: '/category/language'
@@ -96,7 +102,7 @@
               {
                 name: '취업',
                 file: 'briefcase',
-                to: '/category/briefcase'
+                to: '/category/employ'
               },
               {
                 name: '고시',
@@ -106,7 +112,7 @@
               {
                 name: '자격증',
                 file: 'certificate',
-                to: '/category/cerfificate'
+                to: '/category/certificate'
               },
               {
                 name: '프로그래밍',

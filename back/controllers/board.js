@@ -123,7 +123,6 @@ exports.addLike = async (req, res, next) => {
       return res.status(404).send('포스트가 존재하지 않습니다');
     }
     await post.addLiker(req.user.id);
-    await post.increment('like');
 
     res.json({ userId: req.user.id });
   }catch(err){
@@ -139,7 +138,6 @@ exports.removeLike = async (req, res, next) => {
       return res.status(404).send('포스트가 존재하지 않습니다');
     }
     await post.removeLiker(req.user.id);
-    await post.decrement('like');
     
     res.json({ userId: req.user.id });
   }catch(err){

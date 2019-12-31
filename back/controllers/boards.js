@@ -77,6 +77,10 @@ exports.loadTrendingBoards = async (req, res, next) => {
       },{
         model: db.Image,
       },{
+        model: db.User,
+        as: 'Likers',
+        attributes: ['id']
+      },{
         model: db.Hashtag,
         attributes: ['name']
       }],

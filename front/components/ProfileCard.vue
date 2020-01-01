@@ -4,7 +4,7 @@
       v-for="(item, index) in post[0]"
       :key="index"
       class="mx-auto mb-4"
-      :to="`/post/${item.userId}`"
+      :to="`/post/${item.id}`"
       max-height="250"
       outlined
     >

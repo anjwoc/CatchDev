@@ -1,18 +1,36 @@
 <template>
-  <v-card class="mx-auto" nuxt to="/board" max-height="250" outlined>
-    <v-container
-      v-ripple
+  <v-container>
+    <v-card
+      v-for="(item, index) in post[0]"
+      :key="index"
+      class="mx-auto mb-4"
+      :to="`/post/${item.userId}`"
+      max-height="250"
+      outlined
     >
-      <p class="font-weight-medium caption ma-0 pa-0">{{ datetime }}</p>
-      <a id="postLink" class="ma-0 pa-0">{{ title }}</a>
-      <p class="body-1" v-if="bodyText.length >= 150"> {{ lengthCheck() }} </p>
-      <p class="body-1" v-else> {{ bodyText }} </p>
-    </v-container>
-    
-  </v-card>
+      <v-container
+        v-ripple
+      >
+        <div>
+          <v-chip color="blue-grey" small outlined label>{{ item.category }}</v-chip>
+        </div>
+        <p class="font-weight-medium caption ma-0 mt-2 mb-2">{{ $moment(item.createdAt).format("YYYY년 MM월 DD일") }}</p>
+        
+        <a id="postLink" class="mb-4">{{ item.title }}</a>
+        <p class="body-1"> {{ bodyContent(item.content) }} </p>
+      </v-container>
+      
+    </v-card>
+  </v-container>
 </template>
 <script>
 export default {
+  props: {
+    post: {
+      type: Array,
+      required: true,
+    }
+  },
   data() {
     return {
       limit: 80,
@@ -25,10 +43,22 @@ export default {
     
   },
   methods: {
-    lengthCheck: function(){
-      return this.bodyText + " ...";
+    bodyContent(data){
+      const bodyText = data.replace(/(<([^>]+)>)/ig,"");
+      const result = this.lengthCheck(bodyText);
+      return result;
+    },
+    lengthCheck(bodyText){
+      let result = '';
+      if(bodyText.length >= 150){
+        result = bodyText.slice(0, 150);
+        result += " ...";
+      }else{
+        result = bodyText;
+      }
+      return result;
     }
-  }
+  },
 
 
 }

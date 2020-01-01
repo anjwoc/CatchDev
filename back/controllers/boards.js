@@ -5,7 +5,6 @@ const Op = Sequelize.Op;
 const Fn = Sequelize.fn;
 
 exports.loadAllBoards = async (req, res, next) => {
-  
   try{
     let where = {};
     if(parseInt(req.query.lastId, 10)){
@@ -49,8 +48,6 @@ exports.loadTrendingBoards = async (req, res, next) => {
   try{
     let where = {};
     if(parseInt(req.query.lastId, 10)){
-      //lastId가 있을 경우
-      console.log(parseInt(req.query.lastId, 10))
       where = {
         id: {
           //less than
@@ -95,16 +92,21 @@ exports.loadTrendingBoards = async (req, res, next) => {
   }
 };
 
-/*
-router.get('/:id', board.loadAllBoardsList);
-router.get('/:id', board.loadAllOngoingBords);
-router.get('/:id', board.loadAllClosedBoards);
-*/
-
 exports.loadAllBoardsList = async (req, res, next) => {
   try{
+    let where = {};
+    if(parseInt(req.query.lastId, 10)){
+      where = {
+        id: {
+          [Op.lt]: parseInt(req.query.lastId, 10),
+        },
+      }
+    };
 
-
+    const posts = await db.Board.findAll({
+      where,
+    })
+    res.json(posts);
   }catch(err) {
     console.error(err);
     next(err);
@@ -112,10 +114,21 @@ exports.loadAllBoardsList = async (req, res, next) => {
 };
 
 
-exports.loadAllOngoingBoardsList = async (req, res, next) => {
+exports.loadAllRecruitingBoardsList = async (req, res, next) => {
   try{
-
+    let where = { status: "open" };
+    if(parseInt(req.query.lastId, 10)){
+      where.push({
+        id: {
+          [Op.lt]: parseInt(req.query.lastId, 10),
+        },
+      }) 
+    };
     
+    const posts = await db.Board.findAll({
+      where,
+    });
+    res.json(posts);
   }catch(err) {
     console.error(err);
     next(err);
@@ -125,7 +138,19 @@ exports.loadAllOngoingBoardsList = async (req, res, next) => {
 
 exports.loadAllClosedBoardsList = async (req, res, next) => {
   try{
-
+    let where = { status: "closed" };
+    if(parseInt(req.query.lastId, 10)){
+      where.push({
+        id: {
+          [Op.lt]: parseInt(req.query.lastId, 10),
+        },
+      }) 
+    };
+    
+    const posts = await db.Board.findAll({
+      where,
+    });
+    res.json(posts);
     
   }catch(err) {
     console.error(err);

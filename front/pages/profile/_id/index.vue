@@ -61,29 +61,25 @@
         >
           <v-tabs-slider></v-tabs-slider>
             <v-tab
-              v-for="i in tabs"
-              :key="i"
-              :href="`#tab-${i}`"
+              v-for="(item, index) in tabs"
+              :key="index"
+              :href="`#tab-${index}`"
             >
-              <p class="font-weight-bold body-1 ma-0 pa-0">{{ tabNames[i] }}</p>
+              <p class="font-weight-bold body-1 ma-0 pa-0">{{ tabNames[index] }}</p>
             </v-tab>
 
             <v-tab-item
-              v-for="i in tabs"
-              :key="i"
-              :value="'tab-' + i"
+              v-for="(item, index) in profileData"
+              :key="index"
+              :value="'tab-'+ index"
             >
               <v-card
+                id="cardSection"
                 color="white"
                 flat
                 tile
               >
-              <v-container
-                v-for="i in 5"
-                :key="i"
-              >
-                <profile-card />
-              </v-container>
+                <profile-card :post="Object.values(item)" />
               </v-card>
             </v-tab-item>
 
@@ -101,13 +97,43 @@
     data() {
       return {
         tabs: 3,
-        tabNames: ['', '글','진행중인 스터디','종료된 스터디'],
+        tabNames: ['글','진행중인 스터디','종료된 스터디'],
+        profileDataNames: ['allPosts', 'recruitingPosts', 'closedPosts'],
         text: 'test',
         job: '',
         location: '',
         github: '',
         gmail: '',
         linkedIn: '',
+      }
+    },
+    async fetch({ store, params }) {
+      return await Promise.all([
+        store.dispatch('users/loadSpecificUser', {
+          id: params.id,
+        }),
+        store.dispatch('users/loadPosts', {
+          userId: params.id,
+          reset: true,
+        }),
+        store.dispatch('users/loadClosedPosts', {
+          userId: params.id,
+          reset: true,
+        }),
+        store.dispatch('users/loadRecruitingPosts', {
+          userId: params.id,
+          reset: true,
+        }),
+      ])
+       
+      // 포스팅 불러오는거도 넣어야됌
+    },
+    computed: {
+      me() { 
+        return this.$store.state.users.me;
+      },
+      profileData() {
+        return this.$store.state.users.profileData;
       }
     },
     methods: {
@@ -126,24 +152,17 @@
           });
       },
     },
-    async fetch({ store, params }) {
-      return await store.dispatch('users/loadSpecificUser', {
-        id: params.id,
-      });
-      // 포스팅 불러오는거도 넣어야됌
-    },
     components: {
       ProfileCard,
     },
-    computed: {
-      me() { 
-        return this.$store.state.users.me;
-      }
-    },
+    
     middleware: 'authenticated',
 
   }
 </script>
 
 <style scoped>
+  #cardSection{
+    min-height: 1000px;
+  }
 </style>

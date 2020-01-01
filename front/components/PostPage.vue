@@ -53,8 +53,8 @@
         </div>
 
         <v-divider></v-divider>
-        <div class="mt-8" id="mainContent">
-        </div>
+        <div class="mt-8" id="mainContent"></div>
+        
         <h2 class="mb-1">{{commentsLength}}개의 댓글</h2>
         <comment-form class="mb-6" :postId="this.post && this.post.id" />
         
@@ -97,6 +97,7 @@
           status: this.post.status,
         })
           .then((res) => {
+            
           })
 
       },

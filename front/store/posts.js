@@ -241,9 +241,7 @@ export const actions = {
       withCredentials: true,
     })
       .then((res) => {
-        console.log('updatePostStatus');
-        console.log(res);
-        console.log(res.data);
+        
         
       })
 

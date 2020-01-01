@@ -1,8 +1,13 @@
+import Vue from 'vue';
+import throttle from 'lodash.throttle';
+
 export const state = () => ({
   me: null,
-  AllPosts: [],
-  ClosedPosts: [],
-  OngoingPosts: [],
+  profileData: [
+    {allPosts: []},
+    {recruitingPosts: []},
+    {closedPosts: []},
+  ],
 });
 export const mutations = {
   setMe(state, payload){
@@ -11,26 +16,109 @@ export const mutations = {
   logOut(state){
     state.me = null;
   },
-  loadPosts({ commit }, payload){
+  loadPosts(state, payload){
     //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
-    if(payload.offset === 0) {
-      AllPosts = payload.data;
+    if(payload.reset) {
+      state.profileData[0].allPosts = payload.data;
     }else{
-      AllPosts.concat(payload.data);
+      state.profileData[0].allPosts.concat(payload.data);
+    }
+  }, 
+  loadRecruitingPosts(state, payload){
+    //진행중인 스터디만 불러옴
+    if(payload.reset) {
+      state.profileData[1].recruitingPosts = payload.data;
+    }else{
+      state.profileData[1].recruitingPosts.concat(payload.data);
     }
   },
-  loadClosedPosts({ commit }, payload){
+  loadClosedPosts(state, payload){
     //종료된 스터디만 불러옴
-
-  },
-  loadOngoingPosts({ commit }, payload){
-    //진행중인 스터디만 불러옴
-
+    if(payload.reset) {
+      state.profileData[2].closedPosts = payload.data;
+    }else{
+      state.profileData[2].closedPosts.concat(payload.data);
+    }
   }
 
 };
 
 export const actions = {
+  loadPosts: throttle(async function({ commit }, payload){
+    //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
+    console.log('loadPosts');
+    try{
+      if(payload && payload.reset) {
+        const res = await this.$axios.get(`/boards/${payload.userId}/AllBoards`);
+        commit('loadPosts', {
+          data: res.data,
+          reset: true,
+        });
+        return;
+      }
+      if(state.hasMorePost) {
+        const lastPost  = state.allPosts[state.allPosts.length - 1];
+        //lastPost가 존재하는지 체크하고 lastPost.id를 넘김
+        const res = await this.$axios.get(`/boards/${payload.userId}/AllBoards?lastId=${lastPost && lastPost.id}&limit=5`);
+        commit('loadPosts', {
+          data: res.data,
+        });
+        return;
+      }
+    }catch(err){
+      console.error(err);
+    }
+  }, 2000),
+  loadClosedPosts: throttle(async function({ commit }, payload){
+    //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
+    console.log('loadClosedPosts');
+    try{
+      if(payload && payload.reset) {
+        const res = await this.$axios.get(`/boards/${payload.userId}/allClosedBoards`);
+        commit('loadClosedPosts', {
+          data: res.data,
+          reset: true,
+        });
+        return;
+      }
+      if(state.hasMorePost) {
+        const lastPost  = state.closedPosts[state.closedPosts.length - 1];
+        //lastPost가 존재하는지 체크하고 lastPost.id를 넘김
+        const res = await this.$axios.get(`/boards/${payload.userId}/allClosedBoards?lastId=${lastPost && lastPost.id}&limit=5`);
+        commit('loadClosedPosts', {
+          data: res.data,
+        });
+        return;
+      }
+    }catch(err){
+      console.error(err);
+    }
+  }, 2000),
+  loadRecruitingPosts: throttle(async function({ commit }, payload){
+    //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
+    console.log('loadRecruitingPosts');
+    try{
+      if(payload && payload.reset) {
+        const res = await this.$axios.get(`/boards/${payload.userId}/allRecruitingBoards`);
+        commit('loadRecruitingPosts', {
+          data: res.data,
+          reset: true,
+        });
+        return;
+      }
+      if(state.hasMorePost) {
+        const lastPost  = state.recruitingPosts[state.recruitingPosts.length - 1];
+        //lastPost가 존재하는지 체크하고 lastPost.id를 넘김
+        const res = await this.$axios.get(`/boards/${payload.userId}/allRecruitingBoards?lastId=${lastPost && lastPost.id}&limit=5`);
+        commit('loadRecruitingPosts', {
+          data: res.data,
+        });
+        return;
+      }
+    }catch(err){
+      console.error(err);
+    }
+  }, 2000),
   async loadUser({ state, commit }){
     try{
       const res = await this.$axios.get('/user', {
@@ -133,18 +221,7 @@ export const actions = {
         console.error(err);
       })
   },
-  loadPosts({ commit }, payload){
-    //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
-    commit('loadPosts', payload);
-  },
-  loadClosedPosts({ commit }, payload){
-    //종료된 스터디만 불러옴
-    commit('loadClosedPosts', payload);
-  },
-  loadOngoingPosts({ commit }, payload){
-    //진행중인 스터디만 불러옴
-    commit('loadOngoingPosts', payload);
-  },
+  
   
 
 

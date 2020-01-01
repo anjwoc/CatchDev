@@ -1,60 +1,64 @@
 <template>
+
   <v-card
     class="mx-auto"
     height="100%"
     width="100%"
   >
-    <v-navigation-drawer
+    <v-lazy ssr-only>
+      <v-navigation-drawer
       class="white"
       width="100%"
       permanent
-    >
-      <v-list>
-        <v-list-item>
-          <nuxt-link to="/" style="text-decoration: none; color: black;"><h1>CatchDev</h1></nuxt-link>
-        </v-list-item>
-        <v-list-item>
-          <v-text-field
-            label="검색"
-            hide-details
-            prepend-inner-icon='mdi-magnify'
-            class="mt-4"
-            outlined
-          />
-        </v-list-item>
+      >
+        <v-list>
+          <v-list-item>
+            <nuxt-link to="/" style="text-decoration: none; color: black;"><h1>CatchDev</h1></nuxt-link>
+          </v-list-item>
+          <v-list-item>
+            <v-text-field
+              label="검색"
+              hide-details
+              prepend-inner-icon='mdi-magnify'
+              class="mt-4"
+              outlined
+            />
+          </v-list-item>
 
-        <v-treeview
-          v-model="tree"
-          class="font-weight-black mt-4"
-          :open="open"
-          :items="items"
-          activatable
-          item-key="name"
-          open-on-click
-        >
-          <template v-slot:prepend="{ item, open }">
-            <nuxt-lnik>
-              <v-icon class="mr-5" v-if="!item.file">
-                {{ open ? 'mdi-menu-open' : 'mdi-menu' }}
-              </v-icon>
-              <v-icon class="mr-5" v-else>
-                {{ files[item.file] }}
-              </v-icon>
-            </nuxt-lnik>
-          </template>
-          <template v-slot:label="{ item, open }">
-            <nuxt-link id="titleLink" :to="item.to" v-if="item.to">{{ item.name }}</nuxt-link>
-            <div v-else>{{ item.name }}</div>
-          </template>
-        </v-treeview>
-      </v-list>
-      <template v-slot:append>
-        <v-divider></v-divider>
-        <div align="end" justify="end">
-          <p class="font-weight-black pa-2 pb-0" style="font-size: 20px;">Contact</p>
-        </div>
-      </template>
-    </v-navigation-drawer>
+          <v-treeview
+            v-model="tree"
+            class="font-weight-black mt-4"
+            :open="open"
+            :items="items"
+            activatable
+            hoverable
+            item-key="name"
+            open-on-click
+          >
+            <template v-slot:prepend="{ item, open }">
+              <nuxt-lnik>
+                <v-icon class="mr-5" v-if="!item.file">
+                  {{ open ? 'mdi-menu-open' : 'mdi-menu' }}
+                </v-icon>
+                <v-icon class="mr-5" v-else>
+                  {{ files[item.file] }}
+                </v-icon>
+              </nuxt-lnik>
+            </template>
+            <template v-slot:label="{ item, open }">
+              <nuxt-link id="titleLink" :to="item.to" v-if="item.to">{{ item.name }}</nuxt-link>
+              <div v-else>{{ item.name }}</div>
+            </template>
+          </v-treeview>
+        </v-list>
+        <template v-slot:append>
+          <v-divider></v-divider>
+          <div align="end" justify="end">
+            <p class="font-weight-black pa-2 pb-0" style="font-size: 20px;">Contact</p>
+          </div>
+        </template>
+      </v-navigation-drawer>
+    </v-lazy>
   </v-card>
 </template>
 <script>

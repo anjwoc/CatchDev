@@ -241,7 +241,11 @@ export const actions = {
       withCredentials: true,
     })
       .then((res) => {
-        
+        console.log('updatePostStatus');
+        commit('updatePostStatus',{
+          postId: payload.postId,
+          status: res.data,
+        });
         
       })
 

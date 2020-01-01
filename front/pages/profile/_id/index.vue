@@ -97,7 +97,7 @@
     data() {
       return {
         tabs: 3,
-        tabNames: ['글','진행중인 스터디','종료된 스터디'],
+        tabNames: ['전체 글','진행중인 스터디','종료된 스터디'],
         profileDataNames: ['allPosts', 'recruitingPosts', 'closedPosts'],
         text: 'test',
         job: '',

@@ -36,7 +36,9 @@ export const mutations = {
     const index = state.mainPosts.findIndex(v => v.id === payload.postId);
     //post.id는 type이 Number인데 params.id로 바로 넘기면 String이 넘어오기때문에 서로 일치하지않아서
     //index를 찾지못해서 계속 에러발생
-    Vue.set(state.mainPosts[index], 'Comments', payload.data);
+    if(payload.data.length !== 0){
+      Vue.set(state.mainPosts[index], 'Comments', payload.data);
+    }
   },
   updateToggleComment(state, payload){
     const commentIdx = state.mainPosts[0].Comments.findIndex(v => v.id === payload.commentId);

@@ -55,7 +55,7 @@
         <v-divider></v-divider>
         <div class="mt-8" id="mainContent"></div>
         
-        <h2 class="mb-1">{{commentsLength}}개의 댓글</h2>
+        <h2 class="mb-1">{{ commentsLength }}개의 댓글</h2>
         <comment-form class="mb-6" :postId="this.post && this.post.id" />
         
         <v-divider></v-divider>
@@ -112,7 +112,7 @@
       },
       commentsLength() {
         const length = this.post.Comments && this.post.Comments.length;
-        return length === 0 ? 0 : length;
+        return length === undefined ? 0 : length;
       },
       hashtags() {
       if(this.post && this.post.hashtags){

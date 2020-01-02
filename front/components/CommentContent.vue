@@ -10,10 +10,11 @@
         <div>
 
           <v-avatar v-if="c.user && c.user.imgSrc" class="mr-2 mb-6" size="60">
-            <img
-              :src="c.user.imgSrc"
+            <v-img
+              :src="c.user && c.user.imgSrc"
+              :lazy-src="c.user && c.user.imgSrc"
               alt="profileImage"
-            >
+            ></v-img>
           </v-avatar>
           <v-avatar v-else color="grey" class="mr-2 mb-6" size="60">
             <v-icon size="50">mdi-account</v-icon>
@@ -26,7 +27,7 @@
         </div>
 
         <!-- <div v-if="c.updateOpened">여기 업데이트</div> -->
-        <div>{{ c.content }}</div>
+        <v-container class="pb-0 pt-0">{{ c.content }}</v-container>
         <div align="end">
           <v-btn class="ma-0 pa-0" @click="onToggleUpdate(c.content, c.id, c.updateOpened)" color="blue-grey" text bottom right>수정</v-btn>
           <v-btn class="ma-0 pa-0" color="red" text bottom right>삭제</v-btn>
@@ -112,5 +113,12 @@
 <style scoped>
   #bottomSpace {
     min-height: 200px;
+  }
+  .v-lazy-image {
+  filter: blur(10px);
+  transition: filter 0.7s;
+  }
+  .v-lazy-image-loaded {
+    filter: blur(0);
   }
 </style>

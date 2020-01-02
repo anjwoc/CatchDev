@@ -48,8 +48,7 @@
         
       </v-col>
       <v-col cols="12" md="1"></v-col>
-  </v-row>
-
+    </v-row>
     <v-row no-gutters style="background-color:white;">
       <v-col cols="12" md="1"></v-col>
       <v-col cols="12" md="10">
@@ -69,10 +68,10 @@
             </v-tab>
 
             <v-tab-item
-              v-for="(item, index) in profileData"
+              v-for="(item, index) in Object.values(profileData)"
               :key="index"
               :value="'tab-'+ index"
-            >
+            > 
               <v-card
                 id="cardSection"
                 color="white"
@@ -80,9 +79,9 @@
                 tile
               >
                 <profile-card :post="Object.values(item)" />
+                
               </v-card>
             </v-tab-item>
-
           </v-tabs>
       </v-col>
       <v-col cols="12" md="1"></v-col>
@@ -109,7 +108,7 @@
     },
     async fetch({ store, params }) {
       return await Promise.all([
-        store.dispatch('users/loadSpecificUser', {
+        store.dispatch('users/loadConnectionUser', {
           id: params.id,
         }),
         store.dispatch('users/loadPosts', {
@@ -124,9 +123,7 @@
           userId: params.id,
           reset: true,
         }),
-      ])
-       
-      // 포스팅 불러오는거도 넣어야됌
+      ])       
     },
     computed: {
       me() { 
@@ -151,11 +148,24 @@
             console.error(err);
           });
       },
+      onScroll() {
+        console.log('scroll');
+        if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
+          if (this.hasMorePost){
+            this.$store.dispatch('posts/loadPosts');
+          }
+        }
+      }
+    },
+    mounted() {
+      window.addEventListener('scroll', this.onScroll);
+    },
+    beforeDestroy() {
+      window.removeEventListener('scroll', this.onScroll);
     },
     components: {
       ProfileCard,
     },
-    
     middleware: 'authenticated',
 
   }

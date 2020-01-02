@@ -2,14 +2,13 @@ const db = require('../models');
 
 exports.addBoard = async (req, res, next)=>{
   try{
-    const { title, content, location, category, hashtags } = req.body; 
+    const { title, content, location, category } = req.body; 
     const newPost = await db.Board.create({
       title: title,
       content: content,
       location: location,
       category: category,
       userId: req.user.id,
-      hit: 1,
     });
 
     if(hashtags){
@@ -18,8 +17,7 @@ exports.addBoard = async (req, res, next)=>{
       })));
       await newPost.addHashtags(result.map(r => r[0]));
     };
-    console.log("이미지 여부");
-    console.log(req.body.image);
+
     if(req.body.image){ //이미지가 있다면
       if(Array.isArray(req.body.image)){ //이미자가 여러개이면
         await Promise.all(req.body.image.map((image)=>{
@@ -49,38 +47,7 @@ exports.addBoard = async (req, res, next)=>{
   }
 };  
 
-//이미지 업로드
-exports.uploadImage = (req, res, next) => {
-  console.log(req.files);
-  res.json(req.files.map(v => v.filename));
-};
 
-exports.loadBoard = async (req, res, next) => {
-  try{
-    const board = await db.Board.findOne({
-      where: { id: req.params.id },
-      include: [{
-        model: db.User,
-        attributes: ['id', 'email', 'name', 'imgSrc', 'about']
-      },{
-        model: db.Image
-      },{
-        model: db.User,
-        as: 'Likers',
-        attributes: ['id']
-      },{
-        model: db.Hashtag,
-        attributes: ['name']
-      }]
-    });
-    await board.increment('hit');
-
-    res.json(board);
-  }catch(err){
-    console.error(err);
-    return next(err);
-  };
-};
 exports.deleteBoard = async (req, res, next) => {
   try{
     await db.Board.destroy({
@@ -116,14 +83,61 @@ exports.updateStatus = async (req, res, next) => {
     next(err);
   }
 };
+
+//이미지 업로드
+exports.uploadImage = (req, res, next) => {
+  console.log(req.files);
+  res.json(req.files.map(v => v.filename));
+};
+
+exports.loadBoard = async (req, res, next) => {
+  try{
+    const board = await db.Board.findOne({
+      where: { id: req.params.id },
+      include: [{
+        model: db.User,
+        attributes: ['id', 'email', 'name', 'imgSrc', 'about']
+      },{
+        model: db.Image
+      },{
+        model: db.User,
+        as: 'Likers',
+        attributes: ['id']
+      },{
+        model: db.Hashtag,
+        attributes: ['name']
+      }]
+    });
+    res.json(board);
+  }catch(err){
+    console.error(err);
+    return next(err);
+  };
+};
+
+exports.getLastId = async (req, res, next) => {
+  try{
+    const post = await db.Board.findOne({ 
+      attributes: ['id'],
+      order: [['createdAt', 'DESC']],
+    });
+    res.json(post);
+  }catch(err){
+    console.error(err);
+    next(err);
+  }
+};
+
+
+
 exports.addLike = async (req, res, next) => {
   try{
-    const post = await db.Board.findOne({ where: { id: req.params.id }});
+    const post = await db.Board.findOne({ where: { id: req.params.id }})
+
     if(!post){
       return res.status(404).send('포스트가 존재하지 않습니다');
     }
     await post.addLiker(req.user.id);
-
     res.json({ userId: req.user.id });
   }catch(err){
     console.error(err);
@@ -138,7 +152,6 @@ exports.removeLike = async (req, res, next) => {
       return res.status(404).send('포스트가 존재하지 않습니다');
     }
     await post.removeLiker(req.user.id);
-    
     res.json({ userId: req.user.id });
   }catch(err){
     console.error(err);
@@ -150,7 +163,6 @@ exports.countLike = async (req, res, next) => {
   try{
     const allCount = await db.Board.findOne({
       where: { id: req.params.id },
-      attributes: [],
       include: [{
         model: db.User,
         as: 'Likers', 

@@ -18,9 +18,9 @@
       post() {
         return this.$store.state.posts.mainPosts.find(v => v.id === parseInt(this.$route.params.id, 10));
       },
-      me() {
+      me(){
         return this.$store.state.users.me;
-      },
+      }
     },
     fetch({ store, params }) {
       return Promise.all([

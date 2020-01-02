@@ -3,15 +3,18 @@ import throttle from 'lodash.throttle';
 
 export const state = () => ({
   me: null,
-  profileData: [
-    {allPosts: []},
-    {recruitingPosts: []},
-    {closedPosts: []},
-  ],
+  profileData: {
+    allPosts: [],
+    recruitingPosts: [],
+    closedPosts: [],
+  },
 });
 export const mutations = {
   setMe(state, payload){
     state.me = payload;
+  },
+  updateImagePaths(state, payload) {
+    state.imagePaths = payload;
   },
   logOut(state){
     state.me = null;
@@ -19,25 +22,25 @@ export const mutations = {
   loadPosts(state, payload){
     //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
     if(payload.reset) {
-      state.profileData[0].allPosts = payload.data;
+      state.profileData.allPosts = payload.data;
     }else{
-      state.profileData[0].allPosts.concat(payload.data);
+      state.profileData.allPosts.concat(payload.data);
     }
   }, 
   loadRecruitingPosts(state, payload){
     //진행중인 스터디만 불러옴
     if(payload.reset) {
-      state.profileData[1].recruitingPosts = payload.data;
+      state.profileData.recruitingPosts = payload.data;
     }else{
-      state.profileData[1].recruitingPosts.concat(payload.data);
+      state.profileData.recruitingPosts.concat(payload.data);
     }
   },
   loadClosedPosts(state, payload){
     //종료된 스터디만 불러옴
     if(payload.reset) {
-      state.profileData[2].closedPosts = payload.data;
+      state.profileData.closedPosts = payload.data;
     }else{
-      state.profileData[2].closedPosts.concat(payload.data);
+      state.profileData.closedPosts.concat(payload.data);
     }
   }
 
@@ -109,7 +112,7 @@ export const actions = {
       if(state.hasMorePost) {
         const lastPost  = state.recruitingPosts[state.recruitingPosts.length - 1];
         //lastPost가 존재하는지 체크하고 lastPost.id를 넘김
-        const res = await this.$axios.get(`/boards/${payload.userId}/allRecruitingBoards?lastId=${lastPost && lastPost.id}&limit=5`);
+        const res = await this.$axios.get(`/boards/${payload.userId}/allRecruitingBoards?lastId=${ lastPost && lastPost.id }&limit=5`);
         commit('loadRecruitingPosts', {
           data: res.data,
         });
@@ -130,18 +133,6 @@ export const actions = {
       console.error(err);
     };
   },
-  async loadSpecificUser({ state, commit }, payload){
-    try{
-      const res = await this.$axios.get(`/user/${payload.id}`, {
-        withCredentials: true,
-      });
-      console.log("loadSpecificUser 진입");
-      commit('setMe', res.data);
-    }catch(err){
-      console.error(err);
-    };
-  },
-  
   async signUp({ commit }, payload){
     return await this.$axios.post('/user', {
       email: payload.email,
@@ -160,8 +151,8 @@ export const actions = {
       })
       .catch((err)=>{
         if(err.response && err.response.data){
+          // console.log(err);
           // console.log(err.response);
-          // return을 해야 컴포넌트에서 에러 객체를 받을 수 있다.
           return err;
         }
       });
@@ -191,6 +182,17 @@ export const actions = {
         console.error(err);
       })
   },
+  async loadConnectionUser({ state, commit }, payload){
+    try{
+      const res = await this.$axios.get(`/user/${payload.id}`, {
+        withCredentials: true,
+      });
+      console.log("loadSpecificUser 진입");
+      commit('setMe', res.data);
+    }catch(err){
+      console.error(err);
+    };
+  },
   addAdditionalInfo({ commit }, payload){
     //프로필페이지에서 직무나 지역정보를 수정하고 
     //github, gmail, linkedIn의 정보를 표시
@@ -210,6 +212,7 @@ export const actions = {
       userId: payload.userId,
       job: payload.job,
       location: payload.location,
+      imgSrc: state.imagePaths,
     }, {
       withCredentials: true,
     })
@@ -221,7 +224,6 @@ export const actions = {
         console.error(err);
       })
   },
-  
   
 
 

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card
-      v-for="(item, index) in post[0]"
+      v-for="(item, index) in post"
       :key="index"
       class="mx-auto mb-4"
       :to="`/post/${item.id}`"

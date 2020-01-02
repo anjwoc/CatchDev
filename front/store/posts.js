@@ -10,10 +10,6 @@ export const mutations = {
   addMainPost(state, payload){
     state.mainPosts.unshift(payload);
   },
-  removeMainPost(state, payload){
-    const index = state.mainPosts.findIndex(v => v.id === payload.postId);
-    state.mainPosts.splice(index, 1);
-  },
   concatImagePaths(state, payload) {
     state.imagePaths = state.imagePaths.concat(payload);
   },
@@ -36,9 +32,7 @@ export const mutations = {
     const index = state.mainPosts.findIndex(v => v.id === payload.postId);
     //post.id는 type이 Number인데 params.id로 바로 넘기면 String이 넘어오기때문에 서로 일치하지않아서
     //index를 찾지못해서 계속 에러발생
-    if(payload.data.length !== 0){
-      Vue.set(state.mainPosts[index], 'Comments', payload.data);
-    }
+    Vue.set(state.mainPosts[index], 'Comments', payload.data);
   },
   updateToggleComment(state, payload){
     const commentIdx = state.mainPosts[0].Comments.findIndex(v => v.id === payload.commentId);
@@ -69,7 +63,6 @@ export const mutations = {
     const index = state.mainPosts.findIndex(v => v.id === payload.postId);
     state.mainPosts[index].status = payload.status;
   },
-
 };
 
 export const actions = {
@@ -86,22 +79,7 @@ export const actions = {
     })
       .then((res)=> {
         commit('addMainPost', res.data);
-        //컴포넌트 내부에서 사용할 id값 리턴
         return res.data.id;
-      })
-      .catch((err)=>{
-        console.error(err);
-      });
-  },
-  remove({ commit }, payload){
-    console.log('deletePost');
-    this.$axios.delete(`/board/${payload.postId}`,{
-      hashtags: payload.hashtags,
-    }, {
-      withCredentials: true,
-    })
-      .then((res) => {
-        commit('removeMainPost', payload);
       })
       .catch((err)=>{
         console.error(err);
@@ -136,6 +114,7 @@ export const actions = {
         console.error(err);
       })
   },
+  
   async loadPost({ commit, state }, payload){
     try{
       console.log("loadPost 페이로드");
@@ -252,6 +231,7 @@ export const actions = {
       })
 
   },
+  
   
 
 

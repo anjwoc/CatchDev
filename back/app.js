@@ -12,6 +12,7 @@ const passportConfig = require('./passport');
 
 
 const app = express();
+
 db.sequelize.sync({  });
 dotenv.config();
 passportConfig();
@@ -23,7 +24,6 @@ app.use(cors({
 
 app.use('/', express.static('uploads'));
 app.use('/profile/', express.static('uploads/profileImage'));
-
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

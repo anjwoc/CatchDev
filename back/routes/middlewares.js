@@ -23,7 +23,8 @@ exports.uploadProfileImage = multer({
     },
     filename(req, file, done){
       const ext = path.extname(file.originalname);
-      done(null, 'profileImage-'+ req.body.userId + ext);
+      const basename = path.basename(file.originalname, ext); // test.png, basename = test, ext = .png
+      done(null, basename + Date.now() + ext);
     },
   }),
   limit: { fileSize: 22 * 1024 * 1024 },

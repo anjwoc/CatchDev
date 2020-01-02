@@ -139,7 +139,7 @@
         alertType: '',
         type: '',
         msg: '',
-        userId: 0,
+        userId: '',
         password: '',
         passwordCheck: '',
         about: '',

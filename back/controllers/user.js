@@ -15,7 +15,8 @@ exports.loadUser = async (req, res, next) => {
   }
 };
 
-exports.loadSpecificUser = async (req, res, next) => {
+
+exports.loadConnectionUser = async (req, res, next) => {
   try{
     const user = await db.User.findOne({
       where : { id: req.params.id},
@@ -127,6 +128,7 @@ exports.test = (req, res, next) => {
   res.json('test router');
 };
 
+
 exports.uploadProfileImage = async (req, res, next) => {
   try{
     const user = await db.User.findOne({ where : { id: req.body.userId }});
@@ -162,13 +164,13 @@ exports.profileUpdate = async (req, res, next) => {
     if(!user){
       return res.status(404).send('회원이 존재하지 않습니다.');
     }
-    const updatedUser = await db.User.update({
+    const newUser = await db.User.update({
       job: req.body.job,
       location: req.body.location,
-    },{
+      imgSrc: req.body.imgSrc, 
       where: { id : req.params.id },
     })
-    return res.json(updatedUser);
+    return res.json(newUser);
   }catch(err){
     console.error(err);
   }

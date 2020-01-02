@@ -9,6 +9,7 @@ exports.addBoard = async (req, res, next)=>{
       location: location,
       category: category,
       userId: req.user.id,
+      hit: 1,
     });
 
     if(hashtags){
@@ -108,26 +109,14 @@ exports.loadBoard = async (req, res, next) => {
         attributes: ['name']
       }]
     });
+    board.increment('hit');
+
     res.json(board);
   }catch(err){
     console.error(err);
     return next(err);
   };
 };
-
-exports.getLastId = async (req, res, next) => {
-  try{
-    const post = await db.Board.findOne({ 
-      attributes: ['id'],
-      order: [['createdAt', 'DESC']],
-    });
-    res.json(post);
-  }catch(err){
-    console.error(err);
-    next(err);
-  }
-};
-
 
 
 exports.addLike = async (req, res, next) => {

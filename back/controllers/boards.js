@@ -1,6 +1,7 @@
 
 const db = require('../models');
 const Sequelize = require('sequelize');
+const queryString = require('querystring');
 exports.allPosts = async (req, res, next) => {
   // res.json({'test': '1234'});
   try{
@@ -55,7 +56,7 @@ exports.loadTrendingBoards = async (req, res, next) => {
       where = {
         id: {
           //less than
-          [Op.lt]: parseInt(req.query.lastId, 10), 
+          [db.Sequelize.Op.lt]: parseInt(req.query.lastId, 10), 
         }
       }
     }
@@ -103,12 +104,15 @@ exports.loadAllBoardsList = async (req, res, next) => {
     if(parseInt(req.query.lastId, 10)){
       where = {
         id: {
-          [Op.lt]: parseInt(req.query.lastId, 10),
+          [db.Sequelize.Op.lt]: parseInt(req.query.lastId, 10),
         },
+        userId: req.params.id
       }
     };
     const posts = await db.Board.findAll({
       where,
+      order: [['createdAt', 'DESC']],
+      limit: parseInt(req.query.limit, 10) || 10,
     })
     res.json(posts);
   }catch(err) {
@@ -125,15 +129,19 @@ exports.loadAllRecruitingBoardsList = async (req, res, next) => {
       status: "open"
     };
     if(parseInt(req.query.lastId, 10)){
-      where.push({
+      where = {
         id: {
-          [Op.lt]: parseInt(req.query.lastId, 10),
+          [db.Sequelize.Op.lt]: parseInt(req.query.lastId, 10),
         },
-      }) 
+        userId: req.params.id,
+        status: "open"
+      } 
     };
     
     const posts = await db.Board.findAll({
       where,
+      order: [['createdAt', 'DESC']],
+      limit: parseInt(req.query.limit, 10) || 10,
     });
     res.json(posts);
   }catch(err) {
@@ -150,19 +158,55 @@ exports.loadAllClosedBoardsList = async (req, res, next) => {
       status: "closed"
     };
     if(parseInt(req.query.lastId, 10)){
-      where.push({
+      where = {
         id: {
-          [Op.lt]: parseInt(req.query.lastId, 10),
+          [db.Sequelize.Op.lt]: parseInt(req.query.lastId, 10),
         },
-      }) 
+        userId: req.params.id,
+        status: "closed"
+      } 
     };
     
     const posts = await db.Board.findAll({
       where,
+      order: [['createdAt', 'DESC']],
+      limit: parseInt(req.query.limit, 10) || 10,
     });
     res.json(posts);
     
   }catch(err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.loadCategoryItem = async (req, res, next) => {
+  try{
+    const item = req.query.item;
+    const lastId = req.query.lastId;
+    
+    if(!item){
+      res.status(403).send('카테고리 분류가 없습니다.');
+    }
+
+    let where = { category: item };
+    
+    if(parseInt(lastId, 10)){
+      where = {
+        id: {
+          [db.Sequelize.Op.lt]: parseInt(lastId, 10),
+        },
+        category: item
+      }
+    }
+
+    const categoryPosts = await db.Board.findAll({
+      where,
+      order: [['createdAt', 'DESC']],
+      limit: parseInt(req.query.limit, 10) || 10,
+    })
+    res.json(categoryPosts);
+  }catch(err){
     console.error(err);
     next(err);
   }

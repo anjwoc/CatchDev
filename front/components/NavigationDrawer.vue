@@ -90,11 +90,6 @@
             name: '카테고리',
             children: [
               {
-                name: '전체 보기',
-                file: 'allContents',
-                to: '/category/all'
-              },
-              {
                 name: '어학',
                 file: 'language',
                 to: '/category/language'

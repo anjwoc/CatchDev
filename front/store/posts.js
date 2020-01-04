@@ -124,6 +124,42 @@ export const actions = {
       console.error(err);
     }
   },
+  loadCategoryPosts: throttle(async function({ commit, state }, payload){
+    console.log('loadCategoryPosts');
+    try{
+      let item = payload.item;
+      if(payload.item){
+        if(item === 'programming'){ item = '프로그래밍' }
+        else if(item === 'exam'){ item = '고시'}
+        else if(item === 'language'){ item = '어학'}
+        else if(item === 'certificate'){ item = '자격증'}
+        else if(item === 'employ'){ item = '취업'}
+        else{ item = '기타'}
+      }else{
+        item = null;
+      }
+      console.log(`item: ${item}`);
+      if(payload && payload.reset) {
+        const res = await this.$axios.get(`/boards/categoryPosts?item=${item}`);
+        commit('loadPosts', {
+          data: res.data,
+          reset: true,
+        });
+        return;
+      }
+      if(state.hasMorePost) {
+        const lastPost  = state.mainPosts[state.mainPosts.length - 1];
+        //lastPost가 존재하는지 체크하고 lastPost.id를 넘김
+        const res = await this.$axios.get(`/boards/categoryPosts?item=${item}&lastId=${lastPost && lastPost.id}&limit=10`);
+        commit('loadPosts', {
+          data: res.data,
+        });
+        return;
+      }
+    }catch(err){
+      console.error(err);
+    }
+  }, 2000),
   loadTrendingPosts: throttle(async function({ commit, state}, payload){
     console.log('loadTrendingPosts');
     try{

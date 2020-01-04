@@ -109,7 +109,7 @@ export default {
     return {
       mainContent: null,
       postUrl: '/post/'+this.post.id,
-      profileUrl: '/profile/' + this.post.user.id,
+      profileUrl: '/profile/' + this.post.userId,
     }
   },
   methods: {

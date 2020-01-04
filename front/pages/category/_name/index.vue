@@ -1,12 +1,84 @@
 <template>
-  <div>
-    {{this.$route.params.name}}
-    
-  </div>
+  <v-lazy ssr-only>
+    <div v-if="mainPosts.length !== 0">
+      <v-container />
+      <v-container />
+      <v-container />
+      <v-container class="ma-0 pa-0 ml-4">
+        <h2>{{this.mainPosts[0] && this.mainPosts[0].category}} 카테고리</h2>
+      </v-container>
+      <v-row>
+        <v-col v-for="p in mainPosts" :key="p.id" cols="12" xl="3" lg="4" md="6" sm="6" xs="12" class="ma-0 pa-0">
+          <v-container>
+            <v-hover
+              v-slot:default="{ hover }"
+              :open-delay="openDelay"
+              :close-delay="closeDelay"
+              :disabled="disabled"
+              :value="value"
+            >
+              <post-card :hover="hover" :post=p />
+            </v-hover>
+          </v-container>
+        </v-col>
+      </v-row>
+    </div>
+    <h1 v-else>
+      게시물이 존재하지 않습니다.
+    </h1>
+  </v-lazy>
 </template>
 
 <script>
+import PostCard from '~/components/PostCard'
   export default {
+    data() {
+      return { 
+        disabled: false,
+        openDelay: '0',
+        closeDelay: '0',
+        value: false,
+      }
+    },
+    components: {
+      PostCard,
+    },
+    computed: {
+      me() {
+        return this.$store.state.users.me;
+      },
+      hasMorePost() {
+        return this.$store.state.posts.hasMorePost;
+      },
+      mainPosts() {
+        return this.$store.state.posts.mainPosts;
+      },
+      
+    },
+    methods: {
+      onScroll() {
+        console.log('scroll');
+        if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
+          if (this.hasMorePost){
+            this.$store.dispatch('posts/loadPosts');
+          }
+        }
+      }
+    },
+    fetch({ store, params }) {
+      return store.dispatch('posts/loadCategoryPosts', {
+        item: params.name,
+        reset: true,
+      });
+    },
+    mounted() {
+      window.addEventListener('scroll', this.onScroll);
+    },
+    beforeDestroy() {
+      window.removeEventListener('scroll', this.onScroll);
+    },
+    middleware: 'authenticated'
+    
     
   }
 </script>

@@ -1,4 +1,4 @@
 node_modules
 .env
+# Nuxt generated folder
 .nuxt
-front/.nuxt

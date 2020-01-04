@@ -21,7 +21,7 @@ router.get('/:id/allClosedBoards', boards.loadAllClosedBoardsList);
 
 
 /* 카테고리 관련 라우터 */
-router.get('/category', boards.loadCategoryItem);
+router.get('/categoryPosts', boards.loadCategoryPosts);
 
 
 

@@ -9,12 +9,6 @@ const _8248bc8e = () => interopDefault(import('..\\pages\\posting.vue' /* webpac
 const _f2208472 = () => interopDefault(import('..\\pages\\setting.vue' /* webpackChunkName: "pages_setting" */))
 const _75e6ca1e = () => interopDefault(import('..\\pages\\signup.vue' /* webpackChunkName: "pages_signup" */))
 const _237de43e = () => interopDefault(import('..\\pages\\trending.vue' /* webpackChunkName: "pages_trending" */))
-const _119b4eb0 = () => interopDefault(import('..\\pages\\category\\all\\index.vue' /* webpackChunkName: "pages_category_all_index" */))
-const _32aea81c = () => interopDefault(import('..\\pages\\category\\certificate\\index.vue' /* webpackChunkName: "pages_category_certificate_index" */))
-const _d08d0386 = () => interopDefault(import('..\\pages\\category\\employ\\index.vue' /* webpackChunkName: "pages_category_employ_index" */))
-const _a4fa3a56 = () => interopDefault(import('..\\pages\\category\\etc\\index.vue' /* webpackChunkName: "pages_category_etc_index" */))
-const _bf1da968 = () => interopDefault(import('..\\pages\\category\\exam\\index.vue' /* webpackChunkName: "pages_category_exam_index" */))
-const _1c93cf70 = () => interopDefault(import('..\\pages\\category\\programming\\index.vue' /* webpackChunkName: "pages_category_programming_index" */))
 const _5750537f = () => interopDefault(import('..\\pages\\category\\_name\\index.vue' /* webpackChunkName: "pages_category__name_index" */))
 const _6ee071de = () => interopDefault(import('..\\pages\\post\\_id\\index.vue' /* webpackChunkName: "pages_post__id_index" */))
 const _74ae6e78 = () => interopDefault(import('..\\pages\\profile\\_id\\index.vue' /* webpackChunkName: "pages_profile__id_index" */))
@@ -53,30 +47,6 @@ export const routerOptions = {
     path: "/trending",
     component: _237de43e,
     name: "trending"
-  }, {
-    path: "/category/all",
-    component: _119b4eb0,
-    name: "category-all"
-  }, {
-    path: "/category/certificate",
-    component: _32aea81c,
-    name: "category-certificate"
-  }, {
-    path: "/category/employ",
-    component: _d08d0386,
-    name: "category-employ"
-  }, {
-    path: "/category/etc",
-    component: _a4fa3a56,
-    name: "category-etc"
-  }, {
-    path: "/category/exam",
-    component: _bf1da968,
-    name: "category-exam"
-  }, {
-    path: "/category/programming",
-    component: _1c93cf70,
-    name: "category-programming"
   }, {
     path: "/category/:name?",
     component: _5750537f,

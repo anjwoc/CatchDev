@@ -180,7 +180,7 @@ exports.loadAllClosedBoardsList = async (req, res, next) => {
   }
 };
 
-exports.loadCategoryItem = async (req, res, next) => {
+exports.loadCategoryPosts = async (req, res, next) => {
   try{
     const item = req.query.item;
     const lastId = req.query.lastId;

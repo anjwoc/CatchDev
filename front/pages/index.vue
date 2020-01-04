@@ -5,7 +5,7 @@
       <v-container />
       <v-container />
       <v-container class="ma-0 pa-0 ml-4">
-        <h2>지금 뜨고 있는 스터디</h2>
+        <h2>전체 스터디</h2>
       </v-container>
       <v-row>
         <v-col v-for="p in mainPosts" :key="p.id" cols="12" xl="3" lg="4" md="6" sm="6" xs="12" class="ma-0 pa-0">

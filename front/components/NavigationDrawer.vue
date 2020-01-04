@@ -38,7 +38,7 @@
             <v-icon class="mr-5" v-if="!item.file">
               {{ open ? 'mdi-menu-open' : 'mdi-menu' }}
             </v-icon>
-            <v-icon class="mr-5" v-else>
+            <v-icon class="mr-5" style="opacity: 0.75;" v-else>
               {{ files[item.file] }}
             </v-icon>
           </template>

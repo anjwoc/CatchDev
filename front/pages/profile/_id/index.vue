@@ -22,29 +22,54 @@
       </v-col>
       <v-col cols="12" md="5">
         <v-container class="mt-4"></v-container>
-        <p style="color: #1A237E" class="ma-0 pa-0">{{ me && me.email }}</p>
+        <p style="color: #1A237E" class="ma-0 mb-2">{{ me && me.email }}</p>
         <v-divider></v-divider>
-        <h2>{{ me && me.name }}</h2>
-        <div>
-          {{ me.job === null ? '직업을 추가해주세요' : me.job }}
+        <h2 class="mt-2">{{ me && me.name }}</h2>
+        <div v-if="me.job">
+          me.job
+        </div>
+        <div class="font-weight-black d-flex row ml-0 mr-0 mt-2" v-else>
+          직업을 추가해주세요
         </div>
         
-        <div style="font-size: 13px; margin: 0px 0px 0px 0px;">
-          <v-icon v-if="me.location" regular>mdi-map-marker</v-icon>
-          {{ me.location === null ? '지역을 추가해주세요' : me.location }}
+        
+        <div class="d-flex row mt-3" style="font-size: 13px; margin: 0px 0px 0px 0px;">
+          <v-icon regular>mdi-map-marker</v-icon>
+          <div v-if="me.loaction">
+            me.location
+          </div>
+          <div class="font-weight-black ma-0 pa-0" v-else>
+            지역을 추가해주세요
+          </div>
         </div>
         <v-divider></v-divider>
         <div class="black--text mt-2">
           {{ me.about }}
         </div>
       </v-col>
-      <v-col cols="12" md="3">
+      <v-col class="mt-6" cols="12" md="3">
         <v-container></v-container>
         <v-container></v-container>
         
-        <v-btn icon><v-icon color="black">mdi-github-box</v-icon></v-btn>
-        <v-btn icon><v-icon color="black">mdi-google-plus-box</v-icon></v-btn>
-        <v-btn icon><v-icon color="indigo">mdi-linkedin-box</v-icon></v-btn>
+        <div>
+          <v-btn @click="moveToLink(github)" icon>
+            <v-icon large color="black">mdi-github-box</v-icon>
+            <div class="textTransform ma-0 pa-0">http://www.github.com/anjwoc</div>
+          </v-btn>
+        </div>
+        <div>
+          <v-btn icon>
+            <v-icon large color="black">mdi-google-plus-box</v-icon>
+            <div class="textTransform ma-0 pa-0">anjwoc@gmail.com</div>
+          </v-btn>
+        </div>
+        <div>
+          <v-btn icon>
+            <v-icon large color="indigo">mdi-linkedin-box</v-icon>
+            <div class="textTransform ma-0 pa-0">anjwoc@gmail.com</div>
+          </v-btn>
+        </div>
+        
         
       </v-col>
       <v-col cols="12" md="1"></v-col>
@@ -101,7 +126,7 @@
         text: 'test',
         job: '',
         location: '',
-        github: '',
+        github: 'http://www.github.com/anjwoc',
         gmail: '',
         linkedIn: '',
       }
@@ -148,6 +173,11 @@
             console.error(err);
           });
       },
+      moveToLink(link){
+        console.log("moveToLink");
+        console.log(link);
+        window.open(link, '_blank');
+      },
       onScroll() {
         console.log('scroll');
         if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
@@ -174,5 +204,8 @@
 <style scoped>
   #cardSection{
     min-height: 1000px;
+  }
+  .textTransform{
+    text-transform: lowercase;
   }
 </style>

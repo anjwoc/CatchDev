@@ -138,7 +138,6 @@ export const actions = {
       }else{
         item = null;
       }
-      console.log(`item: ${item}`);
       if(payload && payload.reset) {
         const res = await this.$axios.get(`/boards/categoryPosts?item=${item}`);
         commit('loadPosts', {

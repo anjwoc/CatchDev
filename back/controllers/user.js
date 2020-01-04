@@ -20,7 +20,7 @@ exports.loadConnectionUser = async (req, res, next) => {
   try{
     const user = await db.User.findOne({
       where : { id: req.params.id},
-      attributes: ['id', 'about', 'job', 'location', 'imgSrc', 'name']
+      attributes: ['id','email', 'about', 'job', 'location', 'imgSrc', 'name']
     });
     res.json(user);
   }catch(err) {

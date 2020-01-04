@@ -3,7 +3,7 @@
     <v-card
       :elevation="hover ? 13 : 2"
       max-width="410"
-      max-height="450"
+      max-height="600"
       height="450"
       :ripple="false"
       :to="postUrl"
@@ -38,14 +38,14 @@
       <v-list-item three-line>
         <v-list-item-content>
           <!-- this.post.user가 없을때 email프로퍼티에 접근할 수도 있어서 and연산으로 user가 있는지 체크 -->
-          <div class="mb-3 font-weight-regular" style="color: #7986CB;">{{id}}</div>
-
-          <h2 class="mb-1" style="font-size: 25px;">{{post.title}}</h2>
+          <div class="mb-4 font-weight-regular" style="color: #7986CB;">{{id}}</div>
+          <div><v-chip class="mb-2" color="blue-grey" small label outlined>{{ post.category }}</v-chip></div>
+          <h2 class="mb-3" style="font-size: 1.3em;">{{post.title}}</h2>
           <!-- 게시글 페이지에 들어가야 Comments가 생성이 되서 length값을 어떻게 받아올지 생각해야함 -->
           <v-list-item-subtitle style="color: #90A4AE; ">{{diffTime}}일 전 / {{ post.Comments && post.Comments.length }}개의 댓글</v-list-item-subtitle>
           <div id="heart" bottom class="ma-0 pa-0 d-flex align-end" style="display: inline-block;">
             <v-chip
-            class="ma-0 mt-4"
+            class="ma-0 mt-3 mr-1"
             :color="statusColor"
             text-color="white"
             to="/"
@@ -76,7 +76,7 @@
             <v-chip
               v-for="(tag, index) in hashtags"
               :key="index"
-              class="ma-0 mt-4 ml-1 mr-1 font-weight-regular"
+              class="ma-0 ml-1 mr-1 font-weight-regular"
               color="grey lighten-4" 
               outlined
               text-color="blue-grey"

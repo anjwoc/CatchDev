@@ -86,9 +86,9 @@
       },
       profileUrl() {
         if(this.me && this.me.id){
-          return 'profile/' + this.me.id;
+          return '/profile/' + this.me.id;
         }
-        return 'profile/'
+        return '/profile/'
       }
     },
     methods: {

@@ -60,7 +60,7 @@ import PostCard from '~/components/PostCard'
         console.log('scroll');
         if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
           if (this.hasMorePost){
-            this.$store.dispatch('posts/loadPosts');
+            this.$store.dispatch('loadCategoryPosts');
           }
         }
       }

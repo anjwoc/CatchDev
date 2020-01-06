@@ -5,13 +5,9 @@
       <v-col cols="12" md="2"></v-col>
       <v-col cols="12" md="8">
         <h1 id="mainTitle" style="font-size: 40px;">{{post.title}}</h1>
-
-        
-
-
         <v-row>
           <div>
-            <v-avatar class="mr-2 mb-6" size="60">
+            <v-avatar class="mr-2 mb-8" size="60">
               <v-img
                 :src="this.post.user && this.post.user.imgSrc"
                 :lazy-src="this.post.user && this.post.user.imgSrc"
@@ -26,8 +22,8 @@
           <v-spacer></v-spacer>
           <div v-if="this.isMe">
             <!-- 내가 작성한 게시글일 때만 버튼 표시 -->
-            <v-btn class="ma-0 pa-0"  color="blue-grey" text right>수정</v-btn>
-            <v-btn class="ma-0 pa-0" @click="onDeletePost" color="blue-grey" text right>삭제</v-btn>
+            <v-btn class="ma-0 pa-0"  color="blue-grey" text outlined right>수정</v-btn>
+            <v-btn class="ma-0 pa-0" @click="onDeletePost" color="blue-grey" text outlined right>삭제</v-btn>
           </div>
 
         </v-row>

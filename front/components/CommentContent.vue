@@ -29,8 +29,7 @@
         <!-- <div v-if="c.updateOpened">여기 업데이트</div> -->
         <v-container class="pb-0 pt-0">{{ c.content }}</v-container>
         <div align="end">
-          <v-btn class="ma-0 pa-0" @click="onToggleUpdate(c.content, c.id, c.updateOpened)" color="blue-grey" text bottom right>수정</v-btn>
-          <v-btn class="ma-0 pa-0" color="red" text bottom right>삭제</v-btn>
+          <v-btn class="ma-0 pa-0" color="red darken-3" text outlined bottom right>삭제</v-btn>
         </div>
       </v-container>
     </v-card>

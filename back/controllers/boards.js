@@ -202,6 +202,30 @@ exports.loadCategoryPosts = async (req, res, next) => {
 
     const categoryPosts = await db.Board.findAll({
       where,
+      attributes: [
+        'id',
+        'title',
+        'content',
+        'category',
+        'hit',
+        'status',
+        'createdAt',
+        'userId',
+        [Sequelize.literal('(SELECT COUNT(*) FROM `Like` WHERE Like.boardId = id)'), `LikeCount`],
+      ],
+      include: [{
+        model: db.User,
+        attributes: ['id', 'email', 'name', 'imgSrc']
+      },{
+        model: db.Image,
+      },{
+        model: db.User,
+        as: 'Likers',
+        attributes: ['id']
+      },{
+        model: db.Hashtag,
+        attributes: ['name']
+      }],
       order: [['createdAt', 'DESC']],
       limit: parseInt(req.query.limit, 10) || 10,
     })

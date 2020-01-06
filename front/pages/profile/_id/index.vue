@@ -26,26 +26,27 @@
         <v-divider></v-divider>
         <h2 class="mt-2">{{ me && me.name }}</h2>
         <div v-if="me.job">
-          me.job
+          {{me.job}}
         </div>
         <div class="font-weight-black d-flex row ml-0 mr-0 mt-2" v-else>
           직업을 추가해주세요
         </div>
         
-        
-        <div class="d-flex row mt-3" style="font-size: 13px; margin: 0px 0px 0px 0px;">
+        <div class="d-flex row font-weight-black ma-0 mt-3" style="font-size: 13px;">
           <v-icon regular>mdi-map-marker</v-icon>
-          <div v-if="me.loaction">
-            me.location
+          <div class="mt-1" v-if="me && me.location">
+            {{me.location}}
           </div>
-          <div class="font-weight-black ma-0 pa-0" v-else>
+          <div v-else>
             지역을 추가해주세요
           </div>
         </div>
+
         <v-divider></v-divider>
         <div class="black--text mt-2">
           {{ me.about }}
         </div>
+        
       </v-col>
       <v-col class="mt-6" cols="12" md="3">
         <v-container></v-container>

@@ -10,8 +10,6 @@
         <nuxt />
       </v-col>
     </v-row> 
-
-
   </v-app>
 </template>
 
@@ -22,22 +20,12 @@
   export default {
     data() {
       return {
-        profile: true,
       }
     },
     methods: {
 
     },
     watch: {
-      $route (to, from){
-        // 경로 변경되었을 때
-        if(to.name === 'profile'){
-          this.profile = false;
-        }else{
-          this.profile = true;
-        }
-
-      }
     },
     computed:{ 
       me(){

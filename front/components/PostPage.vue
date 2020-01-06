@@ -25,7 +25,7 @@
             <v-btn class="ma-0 pa-0"  color="blue-grey" text outlined right>수정</v-btn>
             <v-btn class="ma-0 pa-0" @click="onDeletePost" color="blue-grey" text outlined right>삭제</v-btn>
           </div>
-
+          
         </v-row>
         <v-row>
           <v-card class="ma-0 pa-0 elevation-0" >
@@ -43,7 +43,11 @@
           </v-card>
         </v-row>
 
-        <v-subheader class="ma-0 pa-0" style="font-size: 18px;">{{ $moment(post.createdAt).format("YYYY년 MM월 DD일") }}</v-subheader>
+        <div class="d-flex row">
+          <v-subheader class="ma-0 pa-0" style="font-size: 18px;">{{ $moment(post.createdAt).format("YYYY년 MM월 DD일") }}</v-subheader>
+          <v-spacer></v-spacer>
+          <v-btn v-if="this.isMe" @click="onUpdateStatus" text outlined color="blue-grey">모집 완료</v-btn>
+        </div>
         <v-divider></v-divider>
         <div class="mt-8" id="mainContent">
         </div>

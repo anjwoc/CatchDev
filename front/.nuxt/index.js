@@ -12,9 +12,9 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
-import nuxt_plugin_plugin_c3df1188 from 'nuxt_plugin_plugin_c3df1188' // Source: .\\vuetify\\plugin.js (mode: 'all')
-import nuxt_plugin_axios_24f967db from 'nuxt_plugin_axios_24f967db' // Source: .\\axios.js (mode: 'all')
-import nuxt_plugin_moment_ee41b5c6 from 'nuxt_plugin_moment_ee41b5c6' // Source: .\\moment.js (mode: 'all')
+import nuxt_plugin_plugin_e09abaec from 'nuxt_plugin_plugin_e09abaec' // Source: .\\vuetify\\plugin.js (mode: 'all')
+import nuxt_plugin_axios_3e9ea666 from 'nuxt_plugin_axios_3e9ea666' // Source: .\\axios.js (mode: 'all')
+import nuxt_plugin_moment_44107e6b from 'nuxt_plugin_moment_44107e6b' // Source: .\\moment.js (mode: 'all')
 import nuxt_plugin_nuxtquillplugin_3ab6ceae from 'nuxt_plugin_nuxtquillplugin_3ab6ceae' // Source: ..\\plugins\\nuxt-quill-plugin.js (mode: 'client')
 import nuxt_plugin_vueinputtag_060a5384 from 'nuxt_plugin_vueinputtag_060a5384' // Source: ..\\plugins\\vue-input-tag.js (mode: 'client')
 
@@ -173,16 +173,16 @@ async function createApp (ssrContext) {
 
   // Plugin execution
 
-  if (typeof nuxt_plugin_plugin_c3df1188 === 'function') {
-    await nuxt_plugin_plugin_c3df1188(app.context, inject)
+  if (typeof nuxt_plugin_plugin_e09abaec === 'function') {
+    await nuxt_plugin_plugin_e09abaec(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_axios_24f967db === 'function') {
-    await nuxt_plugin_axios_24f967db(app.context, inject)
+  if (typeof nuxt_plugin_axios_3e9ea666 === 'function') {
+    await nuxt_plugin_axios_3e9ea666(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_moment_ee41b5c6 === 'function') {
-    await nuxt_plugin_moment_ee41b5c6(app.context, inject)
+  if (typeof nuxt_plugin_moment_44107e6b === 'function') {
+    await nuxt_plugin_moment_44107e6b(app.context, inject)
   }
 
   if (process.client && typeof nuxt_plugin_nuxtquillplugin_3ab6ceae === 'function') {

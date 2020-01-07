@@ -10,6 +10,10 @@ export const mutations = {
   addMainPost(state, payload){
     state.mainPosts.unshift(payload);
   },
+  removeMainPost(state, payload){
+    const index = state.mainPosts.findIndex(v => v.id === payload.postId);
+    state.mainPosts.splice(index, 1);
+  },
   concatImagePaths(state, payload) {
     state.imagePaths = state.imagePaths.concat(payload);
   },
@@ -80,6 +84,18 @@ export const actions = {
       .then((res)=> {
         commit('addMainPost', res.data);
         return res.data.id;
+      })
+      .catch((err)=>{
+        console.error(err);
+      });
+  },
+  remove({ commit }, payload){
+    console.log('deletePost');
+    this.$axios.delete(`/board/${payload.postId}`, {
+      withCredentials: true,
+    })
+      .then((res) => {
+        commit('removeMainPost', payload);
       })
       .catch((err)=>{
         console.error(err);

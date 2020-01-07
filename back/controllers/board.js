@@ -2,7 +2,7 @@ const db = require('../models');
 
 exports.addBoard = async (req, res, next)=>{
   try{
-    const { title, content, location, category } = req.body; 
+    const { title, content, location, hashtags, category } = req.body; 
     const newPost = await db.Board.create({
       title: title,
       content: content,

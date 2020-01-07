@@ -90,16 +90,46 @@
                 >
                 </v-text-field>
               </v-col>
-              
+              <v-col cols="12">
+                <p class="font-weight-bold title ma-0 pa-0">Github</p>
+                <v-text-field 
+                  v-model="github"
+                  outlined
+                  clearable
+                  dense
+                  placeholder="https://www.github.com/"
+                >
+                </v-text-field>
 
-              
+                <p class="font-weight-bold title ma-0 pa-0">Gmail</p>
+                <v-text-field 
+                  v-model="gmail"
+                  outlined
+                  clearable
+                  dense
+                  placeholder="example@gmail.com"
+                >
+                </v-text-field>
+
+                <p class="font-weight-bold title ma-0 pa-0">LinkedIn</p>
+                <v-text-field
+                  v-model="linkedIn"
+                  outlined
+                  clearable
+                  dense
+                  placeholder="https://www.github.com/"
+                >
+                </v-text-field>
+              </v-col>
             </v-row>
+
+            
           </div>
           <v-row class="ma-0 pa-0 d-flex row">
             <v-btn
               v-if="this.alertType === 'signup' && this.type === 'success'"
               color="info"
-              @click="onProfileUpdate"
+              @click="onSubmitForm"
               text
             >
               추가 정보 반영하기
@@ -157,6 +187,9 @@
         files: [],
         job: '',
         location: '',
+        github:'https://www.github.com/',
+        gmail: '',
+        linkedIn: 'https://www.linkedin.com/in',
         imageRules: [
         value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
       ],
@@ -197,24 +230,38 @@
         })
           .then((files) => {
           });
-      }, 
-      onProfileUpdate() {
+      },
+      onUpdateSns(){
+        this.$store.dispatch('users/updateSns', {
+          userId: this.userId,
+          github: this.github,
+          gmail: this.gmail,
+          linkedIn: this.linkedIn
+        },{
+          withCredentials: true,
+        })
+          .then((res) => {
+            this.github = 'https://www.github.com/';
+            this.linkedIn = 'https://www.linkedin.com/in';
+          })
+      },
+      onUpdateProfile() {
         console.log(this.files);
         this.$store.dispatch('users/updateProfile', {
           userId: this.userId,
           job: this.job,
-          location: this.location
+          location: this.location,
         })
           .then((res)=>{
             this.job = '';
             this.location = '';
             this.files = [];
-            this.$router.push({ path: '/' });
           })
-          .catch((err)=>{
-            console.log(err);
-          });
-        
+      },
+      async onSubmitForm() {
+        await this.onUpdateProfile();
+        await this.onUpdateSns();
+        this.$router.push({ path: '/' });
       }
 
     }
@@ -222,5 +269,7 @@
 </script>
 
 <style scoped>
-
+.title{
+  color: #455A64;
+}
 </style>

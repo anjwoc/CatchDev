@@ -158,16 +158,24 @@ exports.uploadProfileImage = async (req, res, next) => {
   }
 };
 
-exports.profileUpdate = async (req, res, next) => {
+exports.updateProfile = async (req, res, next) => {
   try{ 
+
     const user = await db.User.findOne({ where: { id: req.params.id }});
     if(!user){
       return res.status(404).send('회원이 존재하지 않습니다.');
     }
+    const { job, location, github, gmail, linkedIn, imgSrc } = req.body;
+    
     const newUser = await db.User.update({
-      job: req.body.job,
-      location: req.body.location,
-      imgSrc: req.body.imgSrc, 
+      job: job,
+      location: location,
+      github: github,
+      gmail: gmail,
+      linkedIn: linkedIn,
+      imgSrc: imgSrc, 
+      
+    },{
       where: { id : req.params.id },
     })
     return res.json(newUser);

@@ -14,6 +14,6 @@ router.post('/', isNotLoggedIn, user.signUp);
 router.post('/login', isNotLoggedIn, user.logIn);
 router.post('/logout', isLoggedIn, user.logOut);
 router.post('/image', uploadProfileImage.fields([{name: 'image'}, {name: 'userId'}]), user.uploadProfileImage);
-router.post('/profileUpdate/:id', user.profileUpdate);
+router.post('/updateProfile/:id', user.updateProfile);
 
 module.exports = router

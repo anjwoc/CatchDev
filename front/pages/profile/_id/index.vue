@@ -51,11 +51,11 @@
       <v-col class="mt-6" cols="12" md="3">
         <v-container></v-container>
         <v-container></v-container>
-        
+        <div>{{me}}</div>
         <div>
           <v-btn @click="moveToLink(github)" icon>
             <v-icon large color="black">mdi-github-box</v-icon>
-            <div class="textTransform ma-0 pa-0">http://www.github.com/anjwoc</div>
+            <div class="textTransform ma-0 pa-0">{{me.github}}</div>
           </v-btn>
         </div>
         <div>

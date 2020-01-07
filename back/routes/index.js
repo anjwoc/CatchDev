@@ -5,7 +5,7 @@ router.use('/board', require('./board'));
 router.use('/boards', require('./boards'));
 // router.use('/reply', require('./reply'));
 router.use('/comment', require('./comment'));
-// router.use('/sns', require('./sns'));
+router.use('/sns', require('./sns'));
 //router.use('/image', require('./image'));
 
 module.exports = router;

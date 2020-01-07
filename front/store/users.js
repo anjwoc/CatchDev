@@ -193,25 +193,14 @@ export const actions = {
       console.error(err);
     };
   },
-  addAdditionalInfo({ commit }, payload){
-    //프로필페이지에서 직무나 지역정보를 수정하고 
-    //github, gmail, linkedIn의 정보를 표시
-    this.$axios.post('/user/info', {
-    },{
-      withCredentials: true,
-    })
-      .then((res)=>{
-
-      })
-      .catch((err)=>{
-        console.error(err);
-      });
-  },
   updateProfile({ commit, state }, payload){
-    this.$axios.post(`/user/profileUpdate/${payload.userId}`, {
+    this.$axios.post(`/user/updateProfile/${payload.userId}`, {
       userId: payload.userId,
       job: payload.job,
       location: payload.location,
+      github: payload.github,
+      gmail: payload.gmail,
+      linkedIn: payload.linkedIn,
       imgSrc: state.imagePaths,
     }, {
       withCredentials: true,
@@ -223,7 +212,26 @@ export const actions = {
       .catch((err) => {
         console.error(err);
       })
+    
   },
+  updateSns({ commit, state}, payload){
+    this.$axios.post(`/sns/user/${payload.userId}`,{
+      github: payload.github,
+      gmail: payload.gmail,
+      linkedIn: payload.linkedIn,
+    },{
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log("updateSns");
+        console.log(res.data);
+
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
+  }
+  
   
 
 

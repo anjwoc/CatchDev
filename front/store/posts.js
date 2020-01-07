@@ -69,6 +69,7 @@ export const mutations = {
   },
 };
 
+
 export const actions = {
   add({ commit, state }, payload){
     return this.$axios.post('/board', {
@@ -101,6 +102,7 @@ export const actions = {
         console.error(err);
       });
   },
+
   async addComment({ commit }, payload){
     await this.$axios.post(`/comment/${payload.postId}`,{
       postId: payload.postId,

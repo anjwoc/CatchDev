@@ -5,8 +5,6 @@ exports.addSns = async (req, res, next) => {
   try{
     const id = req.params.id;
     const { github, gmail, linkedIn } = req.body;
-    console.log(req.body);
-    const sns = await db.Sns.findOne({ where: { userId: req.params.id }});
 
     await db.Sns.findOrCreate({
       where: { userId: id },
@@ -30,7 +28,10 @@ exports.addSns = async (req, res, next) => {
     },{
       where: { userId: id }
     });
-    return res.json(ret);
+    
+    const sns = await db.Sns.findOne({ where: { userId: id }});
+
+    return res.json(sns);
     
   }catch(err) {
     console.error(err);

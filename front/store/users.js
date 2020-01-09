@@ -3,6 +3,7 @@ import throttle from 'lodash.throttle';
 
 export const state = () => ({
   me: null,
+  imagePaths: '',
   profileData: {
     allPosts: [],
     recruitingPosts: [],
@@ -13,8 +14,8 @@ export const mutations = {
   setMe(state, payload){
     state.me = payload;
   },
-  updateImagePaths(state, payload) {
-    state.imagePaths = payload;
+  updateProfileImage(state, payload) {
+    state.me.imgSrc = payload;
   },
   logOut(state){
     state.me = null;
@@ -211,7 +212,16 @@ export const actions = {
       .catch((err) => {
         console.error(err);
       })
-    
+  },
+  updateProfileImage({commit, state}, payload){
+    return this.$axios.post(`/user/image`, payload, {
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log(res.data);
+        commit('updateProfileImage', res.data);
+        return res.data;
+      });
   },
   updateSns({ commit, state}, payload){
     return this.$axios.post(`/sns/user/${payload.userId}`,{

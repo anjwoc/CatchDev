@@ -33,6 +33,23 @@ exports.loadConnectionUser = async (req, res, next) => {
   }
 };
 
+exports.updatePassword = async (req, res, next) => {
+  try{
+    const hash = await bcrypt.hash(req.body.password, 12);
+    const result = await db.User.update({
+      password: hash,
+    },{
+      where: {
+        id: req.body.id,
+      }
+    });
+    res.json(result);
+  }catch(err) {
+    console.error(err);
+    next(err);
+  }
+};
+
  // post 회원가입
 exports.signUp = async (req, res, next) => {
   try{
@@ -146,19 +163,18 @@ exports.uploadProfileImage = async (req, res, next) => {
       res.status(404).send('회원이 존재하지 않습니다');
     }
     if(req.files.image !== undefined){
-      console.log(user.dataValues.imgSrc);
       //일단 개발 중엔 하드코딩하고 나중에 dotenv로 가저올 예정
       const serverName = 'http://localhost:4000/profile/';
       const imageName = req.files.image[0].filename || '';
       const filename = serverName + imageName;
 
       if(filename !== user.dataValues.imgSrc && imageName !== ''){
-        const updatedUser = await db.User.update({
+        await db.User.update({
           imgSrc: filename,
         },{
           where: { id: req.body.userId },
         });
-        return res.json(updatedUser);
+        return res.json(filename);
       }
     }        
     return res.json("No Change");
@@ -170,24 +186,17 @@ exports.uploadProfileImage = async (req, res, next) => {
 
 exports.updateProfile = async (req, res, next) => {
   try{ 
-    const user = await db.User.findOne({ where: { id: req.params.id }});
-    if(!user){
-      return res.status(404).send('회원이 존재하지 않습니다.');
-    }
     let { job, location, imgSrc } = req.body;
-    imgSrc = imgSrc === undefined ? user.dataValues.imgSrc : imgSrc;
     await db.User.update({
       job: job,
       location: location,
       imgSrc: imgSrc, 
     },{
       where: { id : req.params.id },
-      returning: true,
-      plain: true,
     })
-      .then((data) => {
-        return res.json(data);
-      })
+    
+    const user = await db.User.findOne({ where: { id: req.params.id }});
+    res.json(user);
 
   }catch(err){
     console.error(err);

@@ -224,11 +224,14 @@
       onChangeImage(){
         const imageFormData = new FormData();
         imageFormData.append('userId', this.userId);
+        console.log(`userId: ${this.userId} , type: ${typeof(this.userId)}`)
         imageFormData.append('image', this.files);
+
         this.$axios.post(`/user/image`,imageFormData, {
           withCredentials: true,
         })
-          .then((files) => {
+          .then((image) => {
+
           });
       },
       onUpdateSns(){

@@ -51,7 +51,6 @@
       </div>
     </template>
   </v-navigation-drawer>
-  
 </template>
 <script>
   export default {

@@ -21,11 +21,12 @@
                     class="mb-2"
                     contain
                     aspect-ratio="1.5"
-                    src="https://images.velog.io/images/anjwoc/profile/8646dff0-23c6-11ea-a50b-95f7993a19a1/cat-13903441920.png"
-                    lazy-src="https://images.velog.io/images/anjwoc/profile/8646dff0-23c6-11ea-a50b-95f7993a19a1/cat-13903441920.png"
+                    :src="me.imgSrc"
+                    :lazy-src="me.imgSrc"
                   >
                   </v-img>
-                  <v-btn width="100%" dark color="blue-grey darken-2">프로필 사진 변경</v-btn>
+                  <v-btn width="100%" @click="onClickImageUpload" dark color="blue-grey darken-2">프로필 사진 변경</v-btn>
+                  <input ref="imageInput" type="file" hidden @change="onChangeImage">
                 </v-card>
               </v-col>
               <v-col cols="12" md="8">
@@ -164,7 +165,6 @@
             </v-btn>
           </v-card>
         </v-form>
-        {{me}}
       </v-col>
     </v-row>
     <div class="bottomSpace"></div>
@@ -182,6 +182,7 @@
         name: '',
         valid: false,
         job: '',
+        imgSrc: '',
         location: '',
         about: '',
         github: '',
@@ -208,12 +209,22 @@
       this.github = this.me.sn ? this.me.sn.github : 'https://www.github.com/';
       this.gmail = this.me.sn ? this.me.sn.gmail : 'example@gmail.com';
       this.linkedIn = this.me.sn ? this.me.sn.linkedIn : 'https://www.linkedin.com/in';
-      
-      
-      
-
     },
     methods: {
+      onChangeImage(e){
+        const imageFormData = new FormData();
+        imageFormData.append('userId', this.me.id);
+        console.log(`userId: ${this.me.id} , type: ${typeof(this.me.id)}`)
+        imageFormData.append('image', e.target.files[0]);
+        this.$store.dispatch('users/updateProfileImage', imageFormData)
+          .then((data) => {
+            this.imgSrc = data;
+          })
+        
+      },
+      onClickImageUpload() {
+        this.$refs.imageInput.click();
+      },  
       onUpdateSns(){
         this.$store.dispatch('users/updateSns', {
           userId: this.me.id,
@@ -226,12 +237,10 @@
           .then((res) => {
             console.log(res);
             const { github, gmail, linkedIn } = res;
-            
             this.github = github;
             this.gmail = gmail;
             this.linkedIn = linkedIn;
-            
-          })
+          });
       },
       onUpdateProfile() {
         console.log(this.files);
@@ -255,10 +264,21 @@
         await this.onUpdateProfile();
         await this.onUpdateSns();
       },
-
       onUpdatePassword(){
-        
+        this.$axios.post('user/password', {
+          password: this.password,
+          id: this.me.id,
+        },{
+          withCredentials: true,
+        })
+          .then((res)=>{
+            if(res.status === 200){
+              this.isChanged = false;
+            }
+          })
       }
+
+
     },
     computed: {
       me(){

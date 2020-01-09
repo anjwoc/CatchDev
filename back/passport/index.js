@@ -19,6 +19,9 @@ module.exports = () => {
         include: [{
           model: db.Board,
           attributes: ['id'],
+        },{
+          model: db.Sns,
+          attributes: ['github', 'gmail', 'linkedIn', 'userId']
         }],
       });
       return done(null, user); // req.user, req.isAuthenticated() === true,

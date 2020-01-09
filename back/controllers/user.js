@@ -20,7 +20,11 @@ exports.loadConnectionUser = async (req, res, next) => {
   try{
     const user = await db.User.findOne({
       where : { id: req.params.id},
-      attributes: ['id','email', 'about', 'job', 'location', 'imgSrc', 'name']
+      attributes: ['id','email', 'about', 'job', 'location', 'imgSrc', 'name'],
+      include: [{
+        model: db.Sns,
+        attributes: ['github', 'gmail', 'linkedIn', 'userId']
+      }]
     });
     res.json(user);
   }catch(err) {
@@ -70,6 +74,9 @@ exports.signUp = async (req, res, next) => {
           include: [{
             model: db.Board,
             attributes: ['id'],
+          },{
+            model: db.Sns,
+            attributes: ['github', 'gmail', 'linkedIn', 'userId']
           }],
         });
         return res.json(fullUser);
@@ -103,6 +110,9 @@ exports.logIn = async (req, res, next) => {
         include: [{
           model: db.Board,
           attributes: ['id'],
+        },{
+          model: db.Sns,
+          attributes: ['github', 'gmail', 'linkedIn', 'userId']
         }],
       });
       return res.json(fullUser);
@@ -160,25 +170,25 @@ exports.uploadProfileImage = async (req, res, next) => {
 
 exports.updateProfile = async (req, res, next) => {
   try{ 
-
     const user = await db.User.findOne({ where: { id: req.params.id }});
     if(!user){
       return res.status(404).send('회원이 존재하지 않습니다.');
     }
-    const { job, location, github, gmail, linkedIn, imgSrc } = req.body;
-    
-    const newUser = await db.User.update({
+    let { job, location, imgSrc } = req.body;
+    imgSrc = imgSrc === undefined ? user.dataValues.imgSrc : imgSrc;
+    await db.User.update({
       job: job,
       location: location,
-      github: github,
-      gmail: gmail,
-      linkedIn: linkedIn,
       imgSrc: imgSrc, 
-      
     },{
       where: { id : req.params.id },
+      returning: true,
+      plain: true,
     })
-    return res.json(newUser);
+      .then((data) => {
+        return res.json(data);
+      })
+
   }catch(err){
     console.error(err);
   }

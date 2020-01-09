@@ -216,7 +216,7 @@
     },
     methods: {
       updateStatus(){ 
-        this.$emit('update', this.dialog);
+        this.$emit('update', !this.dialog);
         if(this.type === 'success' && this.alertType === 'signup'){
           this.$router.push({ path: '/' });
         }

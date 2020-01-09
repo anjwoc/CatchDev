@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true, 
     },
   },{
+    freezeTableName: true,
     charset: 'utf8',
     collate: 'utf8_general_ci' //한글 저장
   })

@@ -38,12 +38,11 @@
             <v-subheader class="pa-0">프로필의 내용을 수정해주십시오.</v-subheader>
             <p class="font-weight-bold title ma-0 pa-0">Email</p>
             <v-text-field
-              v-model="email"
               outlined
               clearable
               disabled
+              :placeholder="me && me.email"
               dense
-              :value="me.email"
             >
             </v-text-field>
 
@@ -53,9 +52,33 @@
               outlined
               clearable
               dense
-              :value="me.name"
             >
             </v-text-field>
+            <v-row>
+              <v-col cols="6">
+                <p class="font-weight-bold title ma-0 pa-0">Job</p>
+                <v-text-field
+                  v-model="job"
+                  width="48%"
+                  outlined
+                  clearable
+                  dense
+                >
+                </v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <p class="font-weight-bold title ma-0 pa-0">Location</p>
+                <v-text-field
+                  v-model="location"
+                  width="48%"
+                  outlined
+                  clearable
+                  dense
+                >
+                </v-text-field>
+              </v-col>
+            </v-row>
+            
 
             <p class="font-weight-bold title ma-0 pa-0">About</p>
             <v-textarea
@@ -64,7 +87,6 @@
               clearable
               dense
               :rules="aboutRules"
-              :value="me.about"
             >
             </v-textarea>
 
@@ -129,7 +151,6 @@
               label="passwordCheck"
               type="password"
               dense
-              :value="me.password"
             >
             </v-text-field>
             <v-btn
@@ -159,6 +180,7 @@
         passwordCheck: '',
         email: '',
         name: '',
+        valid: false,
         job: '',
         location: '',
         about: '',
@@ -178,28 +200,62 @@
 
       }
     },
-    methods: {
-      onSubmitForm() {
-        if(this.$refs.form.validate()){
-          this.$store.dispatch('users/updateProfile', {
-            id: this.me.id,
-            email: this.email,
-            name: this.name,
-            job: this.job,
-            location: this.location,
-            about: this.about,
-            github: this.github,
-            gmail: this.gmail,
-            linkedIn: this.linkedIn,
-          })
-            .then((res) => {
+    mounted() {
+      this.name = this.me && this.me.name;
+      this.about = this.me && this.me.about;
+      this.job = this.me.job || '';
+      this.location = this.me.location || '';
+      this.github = this.me.sn ? this.me.sn.github : 'https://www.github.com/';
+      this.gmail = this.me.sn ? this.me.sn.gmail : 'example@gmail.com';
+      this.linkedIn = this.me.sn ? this.me.sn.linkedIn : 'https://www.linkedin.com/in';
+      
+      
+      
 
-            })
-            .catch((err) => {
-              console.error(err);
-            })
-        }
+    },
+    methods: {
+      onUpdateSns(){
+        this.$store.dispatch('users/updateSns', {
+          userId: this.me.id,
+          github: this.github,
+          gmail: this.gmail,
+          linkedIn: this.linkedIn
+        },{
+          withCredentials: true,
+        })
+          .then((res) => {
+            console.log(res);
+            const { github, gmail, linkedIn } = res;
+            
+            this.github = github;
+            this.gmail = gmail;
+            this.linkedIn = linkedIn;
+            
+          })
       },
+      onUpdateProfile() {
+        console.log(this.files);
+        this.$store.dispatch('users/updateProfile', {
+          userId: this.me.id,
+          name: this.name,
+          job: this.job,
+          location: this.location,
+          about: this.about,
+        })
+          .then((res)=>{
+            console.log(res);
+            const { name, job, location, imgSrc } = res;
+            this.name = name;
+            this.job = job;
+            this.location = location;
+            this.imgSrc = imgSrc;
+          })
+      },
+      async onSubmitForm() {
+        await this.onUpdateProfile();
+        await this.onUpdateSns();
+      },
+
       onUpdatePassword(){
         
       }
@@ -208,7 +264,8 @@
       me(){
         return this.$store.state.users.me;
       }
-    }
+    },
+    middleware: 'authenticated',
     
   }
 </script>

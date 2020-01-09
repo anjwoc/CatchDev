@@ -51,23 +51,22 @@
       <v-col class="mt-6" cols="12" md="3">
         <v-container></v-container>
         <v-container></v-container>
-        <div>{{me}}</div>
         <div>
           <v-btn @click="moveToLink(github)" icon>
             <v-icon large color="black">mdi-github-box</v-icon>
-            <div class="textTransform ma-0 pa-0">{{me.github}}</div>
+            <div class="textTransform ma-0 pa-0">{{me.sn.github}}</div>
           </v-btn>
         </div>
         <div>
-          <v-btn icon>
+          <v-btn class="disabled-events" icon>
             <v-icon large color="black">mdi-google-plus-box</v-icon>
-            <div class="textTransform ma-0 pa-0">anjwoc@gmail.com</div>
+            <div class="textTransform ma-0 pa-0">{{me.sn.gmail}}</div>
           </v-btn>
         </div>
         <div>
           <v-btn icon>
             <v-icon large color="indigo">mdi-linkedin-box</v-icon>
-            <div class="textTransform ma-0 pa-0">anjwoc@gmail.com</div>
+            <div class="textTransform ma-0 pa-0">{{me.sn.linkedIn}}</div>
           </v-btn>
         </div>
         
@@ -208,5 +207,8 @@
   }
   .textTransform{
     text-transform: lowercase;
+  }
+  .disabled-events{
+    pointer-events: none;
   }
 </style>

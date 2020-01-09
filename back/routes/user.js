@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', isLoggedIn, user.loadUser);
 router.get('/test', user.test);
-router.get('/:id', isLoggedIn, user.loadConnectionUser);
+router.get('/:id', user.loadConnectionUser);
 
 
 router.post('/', isNotLoggedIn, user.signUp);

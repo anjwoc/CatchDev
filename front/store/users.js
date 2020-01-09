@@ -194,20 +194,19 @@ export const actions = {
     };
   },
   updateProfile({ commit, state }, payload){
-    this.$axios.post(`/user/updateProfile/${payload.userId}`, {
+    return this.$axios.post(`/user/updateProfile/${payload.userId}`, {
       userId: payload.userId,
+      name: payload.name,
       job: payload.job,
       location: payload.location,
-      github: payload.github,
-      gmail: payload.gmail,
-      linkedIn: payload.linkedIn,
-      imgSrc: state.imagePaths,
+      about: payload.about,
     }, {
       withCredentials: true,
     })
       .then((res) => {
-        console.log("updateProfile response");
-        console.log(res);
+        console.log('updateProfile');
+        console.log(res.data);
+        return res.data;
       })
       .catch((err) => {
         console.error(err);
@@ -215,7 +214,7 @@ export const actions = {
     
   },
   updateSns({ commit, state}, payload){
-    this.$axios.post(`/sns/user/${payload.userId}`,{
+    return this.$axios.post(`/sns/user/${payload.userId}`,{
       github: payload.github,
       gmail: payload.gmail,
       linkedIn: payload.linkedIn,
@@ -225,7 +224,7 @@ export const actions = {
       .then((res) => {
         console.log("updateSns");
         console.log(res.data);
-
+        return res.data;
       })
       .catch((err)=>{
         console.error(err);

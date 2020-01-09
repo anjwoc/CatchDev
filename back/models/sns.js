@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     github: {
       type: DataTypes.STRING(40), //40자 이내
-      allowNull: true, 
+      allowNull: true,
     },
     linkedIn: {
       type: DataTypes.STRING(40), //40자 이내

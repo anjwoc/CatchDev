@@ -175,14 +175,14 @@
               if(res.response && wildcard('40*', res.response.status.toString())){
                 console.log("회원가입 실패");
                 this.dialog = true;
-                this.userId = res.data.id;
+                this.userId = parseInt(res.data.id);
                 this.alertType = 'signup'
                 this.type = 'error'
                 this.msg = "회원가입에 실패했습니다."
               }else if(res.status && wildcard('20*', res.status.toString())){
                 console.log("회원가입 성공");
                 this.dialog = true;
-                this.userId = res.data.id;
+                this.userId = parseInt(res.data.id);
                 this.alertType = 'signup'
                 this.type = 'success'
                 this.msg = "회원가입에 성공했습니다";

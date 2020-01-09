@@ -52,24 +52,23 @@
         <v-container></v-container>
         <v-container></v-container>
         <div>
-          <v-btn @click="moveToLink(github)" icon>
+          <v-btn @click="moveToLink()" icon>
             <v-icon large color="black">mdi-github-box</v-icon>
-            <div class="textTransform ma-0 pa-0">{{me.sn.github}}</div>
+            <div class="textTransform ma-0 pa-0">{{ this.github }}</div>
           </v-btn>
         </div>
         <div>
           <v-btn class="disabled-events" icon>
             <v-icon large color="black">mdi-google-plus-box</v-icon>
-            <div class="textTransform ma-0 pa-0">{{me.sn.gmail}}</div>
+            <div class="textTransform ma-0 pa-0">{{ this.gmail }}</div>
           </v-btn>
         </div>
         <div>
           <v-btn icon>
             <v-icon large color="indigo">mdi-linkedin-box</v-icon>
-            <div class="textTransform ma-0 pa-0">{{me.sn.linkedIn}}</div>
+            <div class="textTransform ma-0 pa-0">{{ this.linkedIn }}</div>
           </v-btn>
         </div>
-        
         
       </v-col>
       <v-col cols="12" md="1"></v-col>
@@ -126,9 +125,6 @@
         text: 'test',
         job: '',
         location: '',
-        github: 'http://www.github.com/anjwoc',
-        gmail: '',
-        linkedIn: '',
       }
     },
     async fetch({ store, params }) {
@@ -156,7 +152,27 @@
       },
       profileData() {
         return this.$store.state.users.profileData;
-      }
+      },
+      github() {
+        if(!this.me.sn){
+          return '';
+        }
+        return this.me.sn.github;
+      },
+      gmail() {
+        if(!this.me.sn){
+          return '';
+        }
+        return this.me.sn.gmail;
+      },
+      linkedIn() {
+        if(!this.me.sn){
+          return '';
+        }
+        return this.me.sn.linkedIn;
+      },
+      
+
     },
     methods: {
       addInfo() {

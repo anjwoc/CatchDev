@@ -233,7 +233,6 @@ export const actions = {
     })
       .then((res) => {
         console.log("updateSns");
-        console.log(res.data);
         return res.data;
       })
       .catch((err)=>{

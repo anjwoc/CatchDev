@@ -6,13 +6,14 @@ const cookie = require('cookie-parser');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const db = require('./models');
+const dotenv = require('dotenv').config();
 const routes = require('./routes');
 
 const passportConfig = require('./passport');
 
 
 const app = express();
-
+const port = process.env.PORT || 4000;
 db.sequelize.sync({  });
 dotenv.config();
 passportConfig();
@@ -46,6 +47,6 @@ app.get('/', (req, res) => {
 });
 
 
-app.listen(4000, () => {
-  console.log(`백엔드 서버 ${app.get.PORT}번 포트에서 작동중.`);
+app.listen(port, () => {
+  console.log(`백엔드 서버 ${port}번 포트에서 작동중.`);
 });

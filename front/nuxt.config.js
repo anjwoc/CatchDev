@@ -7,22 +7,25 @@ module.exports = {
       charset: 'utf-8',
     },{
       name: 'viewport',
-      content: 'width=device-width, initial-scale=1.0, minimum-scale=1.0,user-scalabel=yes, viewport-fit=cover',
+      content: 'width=device-width, initial-scale=1.0, minimum-scale=1.0,user-scalable=yes, viewport-fit=cover',
     },{
       'http-equiv': 'X-UA-Compatible', content:'IE-edge'
     },{
-      name: 'description', content: '스터디 플랫폼 프로젝트'
+      hid: 'desc', name: 'description', content: '스터디 플랫폼 프로젝트'
     }, {
-      name: 'og:title', content: 'CatchDev StudyPlatform'
+      hid: 'ogtitle',name: 'og:title', content: 'CatchDev StudyPlatform'
+    },{
+      hid: 'ogdesc', name: 'og:description', content: '스터디 플랫폼 프로젝트'
     }, {
-      property: 'og:type', content: 'website',
+      hid: 'ogtype',property: 'og:type', content: 'website',
     }, {
-      property: 'og:image', content: ''
+      hid: 'ogimage',property: 'og:image', content: ''
       // content에 이미지 주소를 넣으면 메인 커버이미지가 된다.
     },{
-      property: 'og:url', content: 'https://delog.net'
+      hid: 'ogurl',property: 'og:url', content: 'https://delog.net'
     }],
     link: [{
+      // 이 부분도 현재 이미지 없는데 나중에 수정하면된다.
       rel: 'shortcut icon', href: '/favicon-icon.png'
     }],    
   },

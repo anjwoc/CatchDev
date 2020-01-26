@@ -1,1 +1,0 @@
-export default {"treeshake":true,"theme":{"themes":{"light":{"primary":"#3EA0E1","accent":"#82B1FF","secondary":"#E7E7DE","info":"#1976D2","error":"#FF5252","success":"#4CAF50","warning":"#FFC107"}}}}

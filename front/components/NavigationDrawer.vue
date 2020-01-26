@@ -1,7 +1,6 @@
 <template>
   <v-navigation-drawer
     class="white nav-container"
-    width="100%"
     fluid
     left
     permanent
@@ -141,7 +140,7 @@
   .nav-container{
     margin-right: auto;
     margin-bottom: auto;
-    
+    width: 1.2rem;
   }
   
 </style>

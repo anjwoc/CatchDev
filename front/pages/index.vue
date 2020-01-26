@@ -8,7 +8,7 @@
         <h2>전체 스터디</h2>
       </v-container>
       <v-row>
-        <v-col v-for="p in mainPosts" :key="p.id" cols="12" xl="3" lg="4" md="6" sm="6" xs="12" class="ma-0 pa-0">
+        <v-col v-for="p in mainPosts" :key="p.id" cols="12" xl="3" lg="4" md="6" sm="8" xs="12" class="ma-0 pa-0">
           <v-container>
             <v-hover
               v-slot:default="{ hover }"

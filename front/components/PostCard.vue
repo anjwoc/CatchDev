@@ -1,5 +1,5 @@
 <template>
-  <v-container >
+  <v-container>
     <v-card
       :elevation="hover ? 13 : 2"
       max-width="410"
@@ -42,7 +42,7 @@
           <div><v-chip class="mb-2" color="blue-grey" small label outlined>{{ post.category }}</v-chip></div>
           <h2 class="mb-3" style="font-size: 1.3em;">{{post.title}}</h2>
           <!-- 게시글 페이지에 들어가야 Comments가 생성이 되서 length값을 어떻게 받아올지 생각해야함 -->
-          <v-list-item-subtitle style="color: #90A4AE; ">{{diffTime}}일 전 / {{ post.Comments && post.Comments.length }}개의 댓글</v-list-item-subtitle>
+          <v-list-item-subtitle style="color: #90A4AE; ">{{ $moment(post.createdAt).fromNow() }} / {{ post.Comments && post.Comments.length }}개의 댓글</v-list-item-subtitle>
           <div id="heart" bottom class="ma-0 pa-0 d-flex align-end" style="display: inline-block;">
             <v-chip
             class="ma-0 mt-3 mr-1"
@@ -159,13 +159,6 @@ export default {
       }
       return null;
     },
-    diffTime() {
-      const postDate = new Date(this.post.createdAt);
-      const curDate = new Date();
-      const diffTime = parseInt(curDate.getTime() - postDate.getTime()) / (1000*60*60*24);
-      //floor는 반올림 버리기
-      return Math.floor(diffTime);
-    },
   },
 }
 </script>
@@ -175,6 +168,9 @@ export default {
   }
   #heart {
     z-index: 40;
+  }
+  .cardContents{
+    float: left;
   }
 
 </style>

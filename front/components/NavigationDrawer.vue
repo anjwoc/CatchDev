@@ -1,12 +1,12 @@
 <template>
   <v-navigation-drawer
-  class="white"
-  app
-  left
-  permanent
-  fixed
+    class="white nav-container"
+    width="100%"
+    fluid
+    left
+    permanent
   >
-    <v-list>
+    <v-list nav>
       <v-list-item>
         <nuxt-link to="/" style="text-decoration: none; color: black;"><h1>CatchDev</h1></nuxt-link>
       </v-list-item>
@@ -38,10 +38,11 @@
             {{ files[item.file] }}
           </v-icon>
         </template>
-        <template v-slot:label="{ item, open }">
+        <template v-slot:label="{ item }">
           <nuxt-link id="titleLink" :to="item.to" v-if="item.to">{{ item.name }}</nuxt-link>
           <div v-else>{{ item.name }}</div>
         </template>
+        
       </v-treeview>
     </v-list>
     <template v-slot:append>
@@ -133,4 +134,14 @@
   #titleLink:active{
     color: #1565C0;
   }
+  #test{
+    position: relative;
+    float: left;
+  }
+  .nav-container{
+    margin-right: auto;
+    margin-bottom: auto;
+    
+  }
+  
 </style>

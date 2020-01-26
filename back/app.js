@@ -6,20 +6,18 @@ const cookie = require('cookie-parser');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const db = require('./models');
-const dotenv = require('dotenv').config();
 const routes = require('./routes');
 
 const passportConfig = require('./passport');
 
-
 const app = express();
-const port = process.env.PORT || 4000;
 db.sequelize.sync({  });
 dotenv.config();
+const port = process.env.PORT || 4000;
 passportConfig();
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://www.delog.net',
   credentials: true,
 }));
 

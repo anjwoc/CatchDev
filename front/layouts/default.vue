@@ -1,14 +1,13 @@
 <template>
-  
   <v-app> 
     <v-row no-gutters>
       <v-col cols="12" xs="12" md="2">
-        <navigation-drawer />
+        <navigation-drawer/>
         <floating-button />
       </v-col>
       <v-col cols="12" xs="12" md="10">
         <nuxt />
-      </v-col>
+      </v-col>    
     </v-row> 
   </v-app>
 </template>
@@ -41,5 +40,5 @@
 </script>
 
 <style scoped>
-  
+
 </style>

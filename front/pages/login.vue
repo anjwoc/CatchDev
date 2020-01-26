@@ -1,7 +1,7 @@
 <template >
   <v-app>
     <v-container
-      class="fill-height blue-grey lighten-4"
+      class="fill-height ma-0 pa-0 blue-grey lighten-4"
       fluid
     >
       <v-row

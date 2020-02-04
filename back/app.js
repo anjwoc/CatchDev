@@ -19,25 +19,22 @@ dotenv.config();
 const port = process.env.PORT || 4000;
 passportConfig();
 
-// if (prod) {
-//   app.use(helmet());
-//   app.use(hpp());
-//   app.use(morgan('combined'));
-//   app.use(cors({
-//     origin: 'https://www.delog.net',
-//     credentials: true,
-//   }));
-// } else{
-//   app.use(morgan('dev'));
-//   app.use(cors({
-//     origin: 'http://localhost:3000',
-//     credentials: true,
-//   }));
-// }
-app.use(cors({
-  origin: 'https://www.delog.net',
-  credentials: true,
-}));
+if (prod) {
+  console.log("asdf")
+  app.use(helmet());
+  app.use(hpp());
+  app.use(morgan('combined'));
+  app.use(cors({
+    origin: 'https://www.delog.net',
+    credentials: true,
+  }));
+} else{
+  app.use(morgan('dev'));
+  app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  }));
+}
 
 app.use('/', express.static('uploads'));
 app.use('/profile/', express.static('uploads/profileImage'));
@@ -51,7 +48,7 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: false,
-    domain: prod && '.delog.net',
+    // domain: prod && '.delog.net',
   },
 }));
 app.use(passport.initialize());

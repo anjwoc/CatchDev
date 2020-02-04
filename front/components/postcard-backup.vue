@@ -1,7 +1,6 @@
 <template>
-  <v-container>
+  <v-container >
     <v-card
-      align="start"
       :elevation="hover ? 13 : 2"
       max-width="410"
       max-height="600"
@@ -11,13 +10,11 @@
       outlined
     >
       <v-img
-        v-if="coverImg"
-        :src="coverImg"
-        :lazy-src="coverImg"
+        src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+        lazy-src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
         height="170px"
+        
       ></v-img>
-      
-      
       <v-card-text class="pa-1" text style="position: relative">
         <v-btn
           id="profileButton"
@@ -41,17 +38,16 @@
       <v-list-item three-line>
         <v-list-item-content>
           <!-- this.post.user가 없을때 email프로퍼티에 접근할 수도 있어서 and연산으로 user가 있는지 체크 -->
-          <div class="mb-2 font-weight-regular" style="color: #7986CB;">{{id}}</div>
+          <div class="mb-4 font-weight-regular" style="color: #7986CB;">{{id}}</div>
           <div><v-chip class="mb-2" color="blue-grey" small label outlined>{{ post.category }}</v-chip></div>
           <h2 class="mb-3" style="font-size: 1.3em;">{{post.title}}</h2>
           <!-- 게시글 페이지에 들어가야 Comments가 생성이 되서 length값을 어떻게 받아올지 생각해야함 -->
-          <v-list-item-subtitle style="color: #90A4AE; ">{{$moment(post.createdAt).fromNow()}} / {{ post.Comments && post.Comments.length }}개의 댓글</v-list-item-subtitle>
+          <v-list-item-subtitle style="color: #90A4AE; ">{{diffTime}}일 전 / {{ post.Comments && post.Comments.length }}개의 댓글</v-list-item-subtitle>
           
-          <div bottom class="ma-0 pa-0 d-flex align-end" style="display: inline-block;">
+          <div id="heart" bottom class="ma-0 pa-0 d-flex align-end" style="display: inline-block;">
             <v-chip
             class="ma-0 mt-3 mr-1"
             :color="statusColor"
-            small
             text-color="white"
             to="/"
             >
@@ -64,7 +60,6 @@
             class="ma-0 mt-4"
             color="green"
             @click="onClickHeart"
-            small
             text-color="white"
             to="/"
             >
@@ -82,7 +77,6 @@
             <v-chip
               v-for="(tag, index) in hashtags"
               :key="index"
-              small
               class="ma-0 ml-1 mr-1 font-weight-regular"
               color="grey lighten-4" 
               outlined
@@ -99,11 +93,8 @@
     </v-card>
         
   </v-container>
-    
-  
 </template>
 <script>
-
 export default {
   props: {
     post: {
@@ -113,9 +104,6 @@ export default {
     hover: {
       type: Boolean,
       required: true,
-    },
-    styleNumber: {
-      type: Number,
     }
   },
   data() {
@@ -126,21 +114,6 @@ export default {
     }
   },
   methods: {
-    bodyContent(data){
-      const bodyText = data.replace(/(<([^>]+)>)/ig,"");
-      const result = this.lengthCheck(bodyText);
-      return result;
-    },
-    lengthCheck(bodyText){
-      let result = '';
-      if(bodyText.length >= 150){
-        result = bodyText.slice(0, 150);
-        result += " ...";
-      }else{
-        result = bodyText;
-      }
-      return result;
-    },
     onClickHeart() {
       if(!this.me){
         return alert('로그인이 필요합니다');
@@ -188,55 +161,21 @@ export default {
       return null;
     },
     diffTime() {
-      const postDate = new Date(this.post.createdAt).toISOString();
-      return postDate.split('T')[0];
-      // const curDate = new Date();
-      // const diffTime = parseInt(curDate.getTime() - postDate.getTime()) / (1000*60*60*24);
-      // //floor는 반올림 버리기
-      // return Math.floor(diffTime);
+      const postDate = new Date(this.post.createdAt);
+      const curDate = new Date();
+      const diffTime = parseInt(curDate.getTime() - postDate.getTime()) / (1000*60*60*24);
+      //floor는 반올림 버리기
+      return Math.floor(diffTime);
     },
-    coverImg() {
-      const isPresent = this.post.images[0] && this.post.images[0].src;
-      const image = `${process.env.baseUrl}/${this.post.images[0] && this.post.images[0].src}`;
-      if(!isPresent){
-        return null;
-      }
-      return image;
-    },
-    test() {
-      return process.env.VUE_APP_SERVER_HOST;
-    }
   },
 }
 </script>
-<style lang="scss" scoped>
-#test{
-  color: 'white';
-  background-color: rgba(66, 239, 149, 0.8);
-  
-}
-#profileButton > img {
-  z-index: 10;
-}
-#post-link{
-  color: black;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 20px;
-}
-#point-color{
-  color: #b79b5f;
-}
-#background{
-  background-color: #38424B;
-}
-#card-title{
-  background: rgba(121, 85, 72, 0.7);
-  color: white;
-}
+<style scoped>
+  #profileButton > img {
+    z-index: 10;
+  }
+  #heart {
+    z-index: 40;
+  }
 
-#card-text{
-  background: rgba(121, 85, 72, 0.3);
-  color: white;
-}
 </style>

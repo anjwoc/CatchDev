@@ -77,8 +77,7 @@
           updateOpened: updateOpened,
         });
       },
-    
-
+      
     },
     
 

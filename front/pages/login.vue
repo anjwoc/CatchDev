@@ -1,7 +1,7 @@
 <template >
   <v-app>
     <v-container
-      class="fill-height ma-0 pa-0 blue-grey lighten-4"
+      class="fill-height blue-grey lighten-4"
       fluid
     >
       <v-row
@@ -51,19 +51,19 @@
 
                 <v-row align="center" justify="center" style="margin-bottom: 20px; margin-top:20px;">
                   <v-btn x-large color="grey lighten-2" width="90%" dark style="color: black;">
-                    <v-icon left x-large color="black">mdi-github-box</v-icon>&nbsp
+                    <v-icon left x-large color="black">mdi-github-box</v-icon>&nbsp;
                     Github 로그인
                   </v-btn>
                 </v-row>
                 <v-row align="center" justify="center" style="margin-bottom: 20px;"> 
                   <v-btn x-large color="red" width="90%" dark>
-                    <v-icon left large>mdi-google</v-icon>&nbsp
+                    <v-icon left large>mdi-google</v-icon>&nbsp;
                     Google 로그인
                   </v-btn>
                 </v-row>
                 <v-row align="center" justify="center" style="margin-bottom: 20px;">
                   <v-btn x-large color="blue" width="90%" dark>
-                  <v-icon left large>mdi-facebook-box</v-icon>&nbsp
+                  <v-icon left large>mdi-facebook-box</v-icon>&nbsp;
                     Facebook 로그인
                   </v-btn>
                 </v-row>

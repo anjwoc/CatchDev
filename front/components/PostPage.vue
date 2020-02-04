@@ -1,8 +1,7 @@
 <template>
   <v-app>
-    
     <v-row id="test" class="fill-height white ma-0 pa-0">
-      <v-col cols="12" md="2"></v-col>
+      <v-col cols="12" md="2" class="ma-0 pa-0"></v-col>
       <v-col cols="12" md="8">
         <h1 id="mainTitle" style="font-size: 40px;">{{post.title}}</h1>
         <v-row>
@@ -58,7 +57,7 @@
         <comment-content :comments="post.Comments" :postId="post.id" :postCreatedAt="post.createdAt"  />
 
       </v-col>
-      <v-col cols="12" md="2"></v-col>
+      <v-col cols="12" md="2" class="ma-0 pa-0"></v-col>
     </v-row>
   </v-app>
 </template>
@@ -74,9 +73,9 @@
         required: true,
       },
       me: {
-      type: Object,
-      required: true,
-      }
+        type: Object,
+        required: true,
+      },
     },
     mounted() {
       this.content = document.querySelector('#mainContent');
@@ -122,6 +121,7 @@
         // 해당 게시글이 내가 쓴 게시글인지 판단
         return this.post.user.id === this.me.id;
       },
+      
     },
     components: {
       CommentForm,

@@ -1,7 +1,7 @@
 <template >
   <v-app>
     <v-container
-      class="fill-height blue-grey lighten-4"
+      class="fill-height background"
       fluid
     >
       <v-row
@@ -50,7 +50,7 @@
                 </v-card-actions>
 
                 <v-row align="center" justify="center" style="margin-bottom: 20px; margin-top:20px;">
-                  <v-btn x-large color="grey lighten-2" width="90%" dark style="color: black;">
+                  <v-btn x-large color="grey lighten-2" width="90%" dark style="color: black;" @click="githubLogin">
                     <v-icon left x-large color="black">mdi-github-box</v-icon>&nbsp;
                     Github 로그인
                   </v-btn>
@@ -86,6 +86,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   export default {
     data() {
       return {
@@ -102,6 +103,15 @@
       }
     },
     methods: {
+      githubLogin() {
+        axios.get(`http://localhost:4000/user/githubAuthUrl`)
+          .then((res) => {
+            window.location.href = res.data;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      },
       onSubmitForm() {
         if(this.$refs.form.validate()){
           this.$store.dispatch('users/logIn', {
@@ -111,9 +121,9 @@
             .then(()=>{
               this.$router.push({ path: '/' });
             })
-            // .catch((err)=>{
-            //   console.error(err)
-            // })
+            .catch((err)=>{
+              console.error(err)
+            })
         }
       },
       onTemporaryUser() {
@@ -136,7 +146,9 @@
 </script>
 
 <style scoped>
-  
+.background{
+  background-color: #38424B;
+}
 
   
 </style>

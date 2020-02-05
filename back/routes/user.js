@@ -6,13 +6,18 @@ const router = express.Router();
 
 //접속 유저 정보 반환(로그인 유지할 때 사용)
 router.get('/', isLoggedIn, user.loadUser);
-//특정 회원 정보 반환
-router.get('/:id', user.loadConnectionUser);
+
 
 //회원가입
 router.post('/', isNotLoggedIn, user.signUp);
-//로그인
+
+/* 로그인 */
 router.post('/login', isNotLoggedIn, user.logIn);
+router.get('/githubAuthUrl', user.githubAuthUrl);
+router.get('/githubLogin', user.githubLogin);
+router.get('/githubUser', user.githubUser);
+
+
 //로그아웃
 router.post('/logout', isLoggedIn, user.logOut);
 //비밀번호 변경
@@ -22,5 +27,7 @@ router.post('/image', uploadProfileImage.fields([{name: 'image'}, {name: 'userId
 //프로필 정보 업데이트
 router.post('/updateProfile/:id', user.updateProfile);
 
+//특정 회원 정보 반환
+router.get('/:id', user.loadConnectionUser);
 
 module.exports = router

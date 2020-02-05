@@ -40,8 +40,9 @@
             align="center"
           >
             <v-col cols="6">
-              <v-subheader id="main-color" style="font-size: 15px;" v-if="item.heading">
-                <v-icon id="main-color" class="mr-2">{{item.icon}}</v-icon>{{ item.heading }}
+              <v-subheader class="menu-text" style="font-size: 15px;" v-if="item.heading">
+                <v-icon class="amber--text mr-2">{{item.icon}}</v-icon>
+                <div class="amber--text">{{ item.heading }}</div>
               </v-subheader>
             </v-col>
           </v-row>
@@ -58,14 +59,13 @@
             :key="i"
             :to="item.to"
             active-class="yellow--text menu"
-            exact-active-class="menu"
             link
           >
             <v-list-item-action>
-              <v-icon style="color: rgb(216, 168, 19);">{{ item.icon }}</v-icon>
+              <v-icon class="amber--text">{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title class="menu-text">
+              <v-list-item-title class="amber--text">
                 {{ item.text }}
               </v-list-item-title>
             </v-list-item-content>

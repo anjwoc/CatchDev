@@ -16,6 +16,13 @@
         :lazy-src="coverImg"
         height="170px"
       ></v-img>
+      <!-- <v-card
+        v-else
+        color="primary"
+        elevation="0"
+        height="170px"
+      >
+      </v-card> -->
       
       <v-card-text class="pa-1" text style="position: relative">
         <v-btn

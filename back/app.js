@@ -4,6 +4,8 @@ const passport = require('passport');
 const session = require('express-session');
 const cookie = require('cookie-parser');
 const morgan = require('morgan');
+const randomString = require('randomstring');
+const connectHistoryFallBack = require('connect-history-api-fallback');
 const prod = process.env.NODE_ENV === 'production';
 const hpp = require('hpp');
 const helmet = require('helmet');
@@ -24,12 +26,14 @@ if (prod) {
   app.use(helmet());
   app.use(hpp());
   app.use(morgan('combined'));
+  app.use(connectHistoryFallBack());
   app.use(cors({
     origin: 'https://www.delog.net',
     credentials: true,
   }));
 } else{
   app.use(morgan('dev'));
+  app.use(connectHistoryFallBack());
   app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true,

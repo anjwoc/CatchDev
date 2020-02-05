@@ -1,6 +1,85 @@
 const db = require('../models');
 const bcrypt = require('bcrypt');
+const rs = require('randomstring');
+const qs = require('querystring');
+const axios = require('axios');
 const passport = require('passport');
+require('dotenv').config();
+
+exports.githubUser = async (req, res, next) => {
+  try{
+    const config = {
+      headers: {
+        Authorization: `token ${req.query.token}`,
+        'User-Agent': 'CatchDev'
+      }
+    }
+
+    axios.get(`https://api.github.com/user`, config)
+      .then((res) => {
+        res.send(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }catch(err){
+    console.error(err);
+  }
+};
+
+// github access_token 요청 컨트롤러
+exports.githubLogin = async (req, res, next) => {
+  try{
+    const { code, state } = req.query;
+    console.log(code, state);
+    if(state != state){
+      res.send(false);
+    };
+
+    const host = 'https://github.com/login/oauth/access_token?'
+    const querystring = qs.stringify({
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
+      code: code,
+      redirect_uri: `${process.env.CLIENT_HOST}/login/github`,
+      state: state
+    });
+    const authUrl = host + querystring;
+    axios.post(authUrl)
+      .then((res) => {
+        const token = qs.parse(res.data).access_token;
+        res.send(token);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+  }catch(err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+// githubAuthUrl 요청 컨트롤러
+exports.githubAuthUrl = async (req, res, next) => {
+  try{
+    state = rs.generate();
+    const url = 'https://github.com/login/oauth/authorize?';
+    const query = qs.stringify({
+      client_id: process.env.CLIENT_ID,
+      redirect_uri: process.env.CLIENT_HOST + '/login/github',
+      state: state,
+      scope: 'user'
+    });
+    const cl = process.env.CLIENT_HOST + '/login/github';
+    console.log(cl)
+    const githubAuthUrl = url + query;
+    res.send(githubAuthUrl);
+  }catch(err){
+    console.error(err);
+    next(err);
+  }
+};
 
 
 //로그인이 새로고침되도 유지하기 위해서 사용하는 get요청
@@ -14,7 +93,6 @@ exports.loadUser = async (req, res, next) => {
     next(err);
   }
 };
-
 
 exports.loadConnectionUser = async (req, res, next) => {
   try{
@@ -33,6 +111,7 @@ exports.loadConnectionUser = async (req, res, next) => {
   }
 };
 
+// Password Update하는 컨트롤러
 exports.updatePassword = async (req, res, next) => {
   try{
     const hash = await bcrypt.hash(req.body.password, 12);
@@ -106,6 +185,7 @@ exports.signUp = async (req, res, next) => {
   };
 };
 
+// 로그인하는 컨트롤러
 exports.logIn = async (req, res, next) => {
   //done(에러, 성공, 실패)
   passport.authenticate('local', (err, user, info) => {
@@ -137,7 +217,7 @@ exports.logIn = async (req, res, next) => {
   })(req, res, next);
 };
 
-
+// 로그아웃하는 컨트롤러
 exports.logOut = async (req, res, next) => {
   try{
     if (req.isAuthenticated()) {
@@ -151,11 +231,7 @@ exports.logOut = async (req, res, next) => {
   }
 };
 
-exports.test = (req, res, next) => {
-  res.json('test router');
-};
-
-
+// 프로필 이미지를 업로드하는 컨트롤러
 exports.uploadProfileImage = async (req, res, next) => {
   try{
     const user = await db.User.findOne({ where : { id: req.body.userId }});
@@ -184,6 +260,7 @@ exports.uploadProfileImage = async (req, res, next) => {
   }
 };
 
+// 프로필을 업데이트하는 컨트롤러
 exports.updateProfile = async (req, res, next) => {
   try{ 
     let { job, location, imgSrc } = req.body;

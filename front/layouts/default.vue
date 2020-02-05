@@ -57,15 +57,15 @@
             v-else
             :key="i"
             :to="item.to"
-            active-class="tile"
-            exact-active-class="tile-active"
+            active-class="yellow--text menu"
+            exact-active-class="menu"
             link
           >
-            <v-list-item-action active-class="tile">
-              <v-icon id="main-color">{{ item.icon }}</v-icon>
+            <v-list-item-action>
+              <v-icon style="color: rgb(216, 168, 19);">{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title active-class="tile" id="main-color">
+              <v-list-item-title class="menu-text">
                 {{ item.text }}
               </v-list-item-title>
             </v-list-item-content>
@@ -117,13 +117,12 @@
   color: #A1A8B0;
   text-decoration: none;
 }
-.tile:hover{
-  color: #b79b5f;
-}
-
-.tile-active{  
+.menu{
   background-color: rgb(77, 85, 92);
-  color: #b79b5f;
+  color: rgb(216, 168, 19);
+}
+.menu-text{
+  color: rgb(216, 168, 19);
 }
 
 #keep .v-navigation-drawer__border {
@@ -135,7 +134,8 @@
 #background{
   background-color: #38424B;
 }
-#main-color{
+.main-color{
+  text-decoration: none;
   color: #A1A8B0;
 }
 .card{

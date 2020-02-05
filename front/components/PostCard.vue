@@ -17,7 +17,6 @@
         height="170px"
       ></v-img>
       
-      
       <v-card-text class="pa-1" text style="position: relative">
         <v-btn
           id="profileButton"

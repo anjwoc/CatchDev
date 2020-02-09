@@ -4,27 +4,44 @@ const passport = require('passport');
 const session = require('express-session');
 const cookie = require('cookie-parser');
 const morgan = require('morgan');
+const randomString = require('randomstring');
+const connectHistoryFallBack = require('connect-history-api-fallback');
+const prod = process.env.NODE_ENV === 'production';
+const hpp = require('hpp');
+const helmet = require('helmet');
 const dotenv = require('dotenv');
 const db = require('./models');
 const routes = require('./routes');
 
 const passportConfig = require('./passport');
 
-
 const app = express();
-
 db.sequelize.sync({  });
 dotenv.config();
+const port = process.env.PORT || 4000;
 passportConfig();
 
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true,
-}));
+if (prod) {
+  console.log("asdf")
+  app.use(helmet());
+  app.use(hpp());
+  app.use(morgan('combined'));
+  app.use(connectHistoryFallBack());
+  app.use(cors({
+    origin: 'https://www.delog.net',
+    credentials: true,
+  }));
+} else{
+  app.use(morgan('dev'));
+  app.use(connectHistoryFallBack());
+  app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  }));
+}
 
 app.use('/', express.static('uploads'));
 app.use('/profile/', express.static('uploads/profileImage'));
-app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookie(process.env.COOKIE_SECRET));
@@ -35,6 +52,7 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: false,
+    // domain: prod && '.delog.net',
   },
 }));
 app.use(passport.initialize());
@@ -46,6 +64,6 @@ app.get('/', (req, res) => {
 });
 
 
-app.listen(4000, () => {
-  console.log(`백엔드 서버 ${app.get.PORT}번 포트에서 작동중.`);
+app.listen(port,  () => {
+  console.log(`백엔드 서버 ${port}번 포트에서 작동중.`);
 });

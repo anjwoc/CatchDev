@@ -17,22 +17,50 @@
         </v-toolbar>
       </v-row>
 
-      <div></div>
-      <v-row>
-        <v-col align="center" v-for="p in mainPosts" :key="p.id" cols="12" xs="12" sm="6" md="4" lg="3" >
-          <v-container >
-            <v-hover
-              v-slot:default="{ hover }"
-              :open-delay="openDelay"
-              :close-delay="closeDelay"
-              :disabled="disabled"
-              :value="value"
-            >
-              <post-card :hover="hover" :post=p />
-            </v-hover>
+
+      <v-row justify="center" align="center">
+        <v-container class="ma-6 pa-6">
+          <v-container
+            id="card-box"
+            fluid
+            outlined
+            elevation="0"
+            min-width="90%"
+            height="100vh"
+
+          >
+            <v-row class="mr-8" justify="end">
+              <v-toolbar dense id="card-color" elevation="0">
+              <v-spacer />
+                <v-toolbar-items id="main-color">
+                  <p class="amber--text mt-3">Home</p>
+                  <v-icon id="main-color" small>mdi-chevron-right</v-icon>
+                  <p class="amber--text mt-3">{{routeName}}</p> 
+                </v-toolbar-items>
+              </v-toolbar>
+            </v-row>
+            <v-row>
+              <v-col justify="center" align="center" v-for="p in mainPosts" :key="p.id" cols="12" class="ma-0 pa-0">
+                <v-container>
+                  <v-hover
+                    v-slot:default="{ hover }"
+                    :open-delay="openDelay"
+                    :close-delay="closeDelay"
+                    :disabled="disabled"
+                    :value="value"
+                  >
+                    <post-card :hover="hover" :post=p />
+                  </v-hover>
+                </v-container>
+              </v-col>
+            </v-row>
           </v-container>
-        </v-col>
+        </v-container>
       </v-row>
+
+      
+
+      
     </div>
   </v-lazy>
 </template>
@@ -46,7 +74,6 @@ import PostCard from '~/components/PostCard'
         openDelay: '0',
         closeDelay: '0',
         value: false,
-        
       }
     },
     components: {
@@ -64,7 +91,7 @@ import PostCard from '~/components/PostCard'
       },
       routeName(){
         return this.$route.name;
-      },
+      }
     },
     methods: {
       onScroll() {
@@ -92,7 +119,6 @@ import PostCard from '~/components/PostCard'
 </script>
 
 <style scoped>
-
 
 #point-color{
   color: #b79b5f;

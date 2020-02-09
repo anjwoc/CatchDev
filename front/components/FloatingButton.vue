@@ -4,9 +4,9 @@
     fab
     fixed
     absolute
-    top
+    bottom
     right
-    direction="bottom"
+    direction="top"
     transition="slide-y-transition"
   >
     <template v-slot:activator>

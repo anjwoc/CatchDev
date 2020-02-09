@@ -23,6 +23,9 @@ module.exports = {
   ],
   vuetify: {
   },
+  moment: {
+    locales: ['ko']
+  },
   axios: {
     browserBaseURL: 'http://localhost:4000',
     baseURL: 'http://localhost:4000',
@@ -47,6 +50,9 @@ module.exports = {
       'vue-quill-editor',
     ]
   },
+  env: {
+    baseUrl: 'http://localhost:4000'
+  }
 
 
 

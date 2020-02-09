@@ -310,4 +310,13 @@
 .title{
   color: #455A64;
 }
+#tab-color{
+  background-color: #343D46;
+}
+#background{
+  background-color: #38424B;
+}
+#main-color{
+  color: #A1A8B0;
+}
 </style>

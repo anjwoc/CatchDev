@@ -22,7 +22,7 @@
 
           <div style="display: inline-block;">
             <p class="ma-0 pa-0 subtitle-1 font-weight-black">{{ c.user && c.user.email && c.user.email.split('@')[0]  }}</p>
-            <p class="ma-0 pa-0 subtitle-2" style="opacity: 0.5;">{{diffTime(c.createdAt)}}</p>
+            <p class="ma-0 pa-0 subtitle-2" style="opacity: 0.5;">{{$moment(c.createdAt).fromNow()}}</p>
           </div>
         </div>
 
@@ -77,32 +77,7 @@
           updateOpened: updateOpened,
         });
       },
-      diffTime(commentDate) {
-        const first = this.$moment();
-        const second = this.$moment(commentDate);
-        const diffTime = first.diff(second);
-        const duration = this.$moment.duration(diffTime);
-        const years = duration.years(),
-        months = duration.months(),
-        days = duration.days(),
-        hours = duration.hours(),
-        minutes = duration.minutes(),
-        seconds = duration.seconds();
-        if(years) {
-          return `${year}년 ${month}개월 전`
-        }else if(years === 0 && months){
-          return `${motnh}개월 전`
-        }else if(years === 0 && months ===0 && days) {
-          return `${days}일 전`
-        }else if(months ===0 && days===0 && hours){
-          return `${hours}시간 전`
-        }else if(days===0 && hours ===0 && minutes){
-          return `${minutes}분 전`
-        }else{
-          return `방금 전`
-        }
-      },
-
+      
     },
     
 

@@ -144,7 +144,6 @@ export const actions = {
       withCredentials: true,
     })
       .then((res)=>{
-        // console.log(res.status);
         if(res.status === 200){
           commit('setMe', res.data);
           return res;
@@ -152,8 +151,6 @@ export const actions = {
       })
       .catch((err)=>{
         if(err.response && err.response.data){
-          // console.log(err);
-          // console.log(err.response);
           return err;
         }
       });

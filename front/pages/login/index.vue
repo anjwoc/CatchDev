@@ -106,6 +106,7 @@
       githubLogin() {
         axios.get(`http://localhost:4000/user/githubAuthUrl`)
           .then((res) => {
+            console.log(res.data);
             window.location.href = res.data;
           })
           .catch((err) => {

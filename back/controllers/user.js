@@ -8,16 +8,10 @@ require('dotenv').config();
 
 exports.githubUser = async (req, res, next) => {
   try{
-    const config = {
-      headers: {
-        Authorization: `token ${req.query.token}`,
-        'User-Agent': 'CatchDev'
-      }
-    }
-
-    axios.get(`https://api.github.com/user`, config)
-      .then((res) => {
-        res.send(res.data);
+    await axios.get(`https://api.github.com/user?access_token=${req.query.token}`)
+      .then((result) => {
+        console.log(result.data);
+        return res.send(result.data);
       })
       .catch((err) => {
         console.log(err);
@@ -31,9 +25,8 @@ exports.githubUser = async (req, res, next) => {
 exports.githubLogin = async (req, res, next) => {
   try{
     const { code, state } = req.query;
-    console.log(code, state);
     if(state != state){
-      res.send(false);
+      return res.send(false);
     };
 
     const host = 'https://github.com/login/oauth/access_token?'
@@ -45,10 +38,19 @@ exports.githubLogin = async (req, res, next) => {
       state: state
     });
     const authUrl = host + querystring;
-    axios.post(authUrl)
-      .then((res) => {
-        const token = qs.parse(res.data).access_token;
-        res.send(token);
+    await axios.post(host,{
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
+      code: code,
+      redirect_uri: `${process.env.CLIENT_HOST}/login/github`,
+      state: state
+    })
+      .then((result) => {
+        console.log("-------------access_token 요청---------------");
+        const parseData = qs.parse(result.data);
+        const access_token = parseData.access_token;
+        console.log(`access_token: ${access_token}`);
+        return res.send(access_token);
       })
       .catch((err) => {
         console.error(err);
@@ -71,10 +73,8 @@ exports.githubAuthUrl = async (req, res, next) => {
       state: state,
       scope: 'user'
     });
-    const cl = process.env.CLIENT_HOST + '/login/github';
-    console.log(cl)
     const githubAuthUrl = url + query;
-    res.send(githubAuthUrl);
+    return res.send(githubAuthUrl);
   }catch(err){
     console.error(err);
     next(err);

@@ -104,11 +104,7 @@
     },
     methods: {
       githubLogin() {
-<<<<<<< HEAD:front/pages/login/index.vue
         axios.get(`http://localhost:4000/auth/githubAuthUrl`)
-=======
-        axios.get(`http://localhost:4000/user/githubAuthUrl`)
->>>>>>> 91788550f2775ff97dc4e98cf448b4662b2c8504:front/pages/login/index.vue
           .then((res) => {
             console.log(res.data);
             window.location.href = res.data;

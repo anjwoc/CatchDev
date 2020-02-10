@@ -8,7 +8,13 @@ require('dotenv').config();
 
 exports.githubUser = async (req, res, next) => {
   try{
-    await axios.get(`https://api.github.com/user?access_token=${req.query.token}`)
+    const config = {
+      headers: {
+        Authorization: `token ${req.query.token}`,
+        'User-Agent': 'CatchDev'
+      }
+    }
+    await axios.get(`https://api.github.com/user`, config)
       .then((result) => {
         console.log(result.data);
         return res.send(result.data);

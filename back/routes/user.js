@@ -17,13 +17,6 @@ router.post('/', isNotLoggedIn, user.signUp);
 
 /* 로그인 */
 router.post('/login', isNotLoggedIn, user.logIn);
-<<<<<<< HEAD
-
-=======
-router.get('/githubAuthUrl', user.githubAuthUrl);
-router.get('/githubLogin', user.githubLogin);
-router.get('/githubUser', user.githubUser);
->>>>>>> 91788550f2775ff97dc4e98cf448b4662b2c8504
 
 
 //로그아웃

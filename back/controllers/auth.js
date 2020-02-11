@@ -38,9 +38,19 @@ exports.githubCallback = async (req, res, next) => {
         job: userInfo.job,
       });
       // fullUser 처리해서 보내야됌
-      
+      const fullUser = await db.User.findOne({
+        where: { id: exUser.id },
+        attributes: ['id', 'email', 'about', 'job', 'location', 'imgSrc', 'name'],
+        include: [{
+          model: db.Board,
+          attributes: ['id']
+        },{
+          model: db.Sns,
+          attributes: ['github', 'gmail', 'facebook', 'userId']
+        }]
+      })
     };
-    
+
     res.json(userInfo);
   }catch(err){
     console.error(err);

@@ -5,9 +5,23 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false, // 필수
       unique: true, // 중복 금지
     },
+    openId: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      unique: true,
+    },
+    socialType: {
+      type: DataTypes.ENUM,
+      values: [
+        'github',
+        'google',
+        'facebook'
+      ],
+      allowNull: true
+    },
     password: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     name: {
       type: DataTypes.STRING(20),

@@ -7,7 +7,6 @@ const passport = require('passport');
 require('dotenv').config();
 
 
-
 //로그인이 새로고침되도 유지하기 위해서 사용하는 get요청
 exports.loadUser = async (req, res, next) => {
   try{

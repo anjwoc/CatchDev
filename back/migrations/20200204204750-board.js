@@ -2,9 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.addColumn('boards', 'coverImg', {
-      type: Sequelize.STRING
-    });
+    
     /*
       Add altering commands here.
       Return a promise to correctly handle asynchronicity.
@@ -15,6 +13,7 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
+    return queryInterface.removeColumn('boards', 'coverImg');
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.

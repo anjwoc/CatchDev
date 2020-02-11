@@ -12,10 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(20),
       allowNull: false
     },
-    coverImg: { // 게시글 커버 이미지
-      type: DataTypes.STRING(255),
-      allowNull: true,
-    },
     like: {
       type: DataTypes.INTEGER,
       allowNull: true,

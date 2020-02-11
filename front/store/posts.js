@@ -148,10 +148,10 @@ export const actions = {
       let item = payload.item;
       if(payload.item){
         if(item === 'programming'){ item = '프로그래밍' }
-        else if(item === 'exam'){ item = '고시'}
+        else if(item === 'examination'){ item = '고시'}
         else if(item === 'language'){ item = '어학'}
         else if(item === 'certificate'){ item = '자격증'}
-        else if(item === 'employ'){ item = '취업'}
+        else if(item === 'employment'){ item = '취업'}
         else{ item = '기타'}
       }else{
         item = null;

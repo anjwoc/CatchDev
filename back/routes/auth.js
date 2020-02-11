@@ -1,13 +1,22 @@
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const express = require('express');
+const passport = require('passport');
 const auth = require('../controllers/auth');
 const router = express.Router();
 
-router.get('/githubAuthUrl', auth.githubAuthUrl);
-router.get('/githubLogin', auth.githubLogin);
-router.get('/githubUser', auth.githubUser);
-// router.get('/google', auth.googleLogin);
-// router.get('/google/callback', auth.googleLoginCallBack);
+
+router.get('/github', passport.authenticate('github'));
+router.get('/github/callback',
+ passport.authenticate('github', { failureRedirect: '/login' }),
+ auth.githubCallback
+);
+
+router.get('/google', passport.authenticate('google'));
+router.get('/google/callback',
+  passport.authenticate('google', {
+  failureRedirect: '/login'}),
+  auth.googleCallback
+);
 
 
 module.exports = router

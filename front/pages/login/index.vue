@@ -50,13 +50,13 @@
                 </v-card-actions>
 
                 <v-row align="center" justify="center" style="margin-bottom: 20px; margin-top:20px;">
-                  <v-btn x-large color="grey lighten-2" width="90%" dark style="color: black;" @click="githubLogin">
+                  <v-btn x-large color="grey lighten-2" width="90%" dark style="color: black;" @click="githubRedirect">
                     <v-icon left x-large color="black">mdi-github-box</v-icon>&nbsp;
                     Github 로그인
                   </v-btn>
                 </v-row>
                 <v-row align="center" justify="center" style="margin-bottom: 20px;"> 
-                  <v-btn x-large color="red" width="90%" dark>
+                  <v-btn x-large color="red" width="90%" dark >
                     <v-icon left large>mdi-google</v-icon>&nbsp;
                     Google 로그인
                   </v-btn>
@@ -93,6 +93,8 @@
         valid: '',
         email: '',
         password: '',
+        github: 'http://localhost:4000/auth/github',
+        google: '',
         emailRules: [
           v => !!v || '이메일은 필수입니다.',
           v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
@@ -103,6 +105,10 @@
       }
     },
     methods: {
+      githubRedirect() {
+        // let url = `${process.env.baseUrl}/auth/github`;
+        window.location.href = `${process.env.baseUrl}/auth/github`;
+      },
       githubLogin() {
         axios.get(`http://localhost:4000/auth/githubAuthUrl`)
           .then((res) => {
@@ -112,6 +118,12 @@
           .catch((err) => {
             console.error(err);
           });
+      },
+      googleLogin() {
+        this.$axios.get('/auth/github')
+          .then((res) => {
+            console.log(res.data);
+          })
       },
       onSubmitForm() {
         if(this.$refs.form.validate()){

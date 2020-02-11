@@ -1,15 +1,26 @@
 <template>
   <v-lazy ssr-only>
-    <div v-if="mainPosts.length !== 0">
-      <v-container />
-      <v-container />
-      <v-container />
-      <v-container class="ma-0 pa-0 ml-4">
-        <h2>{{this.mainPosts[0] && this.mainPosts[0].category}} 카테고리</h2>
-      </v-container>
+    <div>
+      <v-row class="mr-8" justify="end">
+        <v-spacer />
+        <v-toolbar dense id="background" elevation="0">
+        <v-spacer />
+          <v-toolbar-items id="main-color">
+            <div class="title mt-2">All Study</div>
+            <v-divider class="ml-3 mr-3" dark inset vertical></v-divider>
+            <v-icon id="main-color">mdi-home</v-icon>
+            <v-icon id="main-color" small>mdi-chevron-right</v-icon>
+            <p class="amber--text mt-3">Home</p>
+            <v-icon id="main-color" small>mdi-chevron-right</v-icon>
+            <p class="amber--text mt-3">{{routeName}}</p> 
+          </v-toolbar-items>
+        </v-toolbar>
+      </v-row>
+
+      <div></div>
       <v-row>
-        <v-col v-for="p in mainPosts" :key="p.id" cols="12" xl="3" lg="4" md="6" sm="6" xs="12" class="ma-0 pa-0">
-          <v-container>
+        <v-col align="center" v-for="p in mainPosts" :key="p.id" cols="12" xl="3" lg="4" md="6" sm="6" xs="12">
+          <v-container >
             <v-hover
               v-slot:default="{ hover }"
               :open-delay="openDelay"
@@ -23,11 +34,9 @@
         </v-col>
       </v-row>
     </div>
-    <h1 v-else>
-      게시물이 존재하지 않습니다.
-    </h1>
   </v-lazy>
 </template>
+
 
 <script>
 import PostCard from '~/components/PostCard'
@@ -53,6 +62,10 @@ import PostCard from '~/components/PostCard'
       mainPosts() {
         return this.$store.state.posts.mainPosts;
       },
+      routeName() {
+        
+        return this.$route.params.name;
+      }
       
     },
     methods: {
@@ -85,4 +98,23 @@ import PostCard from '~/components/PostCard'
 
 <style scoped>
 
+#point-color{
+  color: #b79b5f;
+}
+#tab-color{
+  background-color: #343D46;
+}
+#background{
+  background-color: #38424B;
+}
+#main-color{
+  color: #A1A8B0;
+}
+#card-color{
+  background-color: #434F5B;
+}
+#card-box{
+  background-color: #434F5B;
+  border-radius: 20px;
+}
 </style>

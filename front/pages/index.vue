@@ -19,7 +19,7 @@
 
       <div></div>
       <v-row>
-        <v-col align="center" v-for="p in mainPosts" :key="p.id" cols="12" xs="12" sm="6" md="4" lg="3" >
+        <v-col align="center" v-for="p in mainPosts" :key="p.id" cols="12" xs="12" sm="6" md="4">
           <v-container >
             <v-hover
               v-slot:default="{ hover }"

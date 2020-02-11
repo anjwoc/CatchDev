@@ -26,14 +26,12 @@ if (prod) {
   app.use(helmet());
   app.use(hpp());
   app.use(morgan('combined'));
-  app.use(connectHistoryFallBack());
   app.use(cors({
     origin: 'https://www.delog.net',
     credentials: true,
   }));
 } else{
   app.use(morgan('dev'));
-  app.use(connectHistoryFallBack());
   app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true,
@@ -57,11 +55,10 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/', routes)
-
-app.get('/', (req, res) => {
-  res.status(200).send('Hello World');
-});
+app.use('/', routes);
+app.get('/success', (req, res) => {
+  res.json("success");
+})
 
 
 app.listen(port,  () => {

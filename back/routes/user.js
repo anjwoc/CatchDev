@@ -11,7 +11,6 @@ router.post('/login', isNotLoggedIn, user.logIn);
 //접속 유저 정보 반환(로그인 유지할 때 사용)
 router.get('/', isLoggedIn, user.loadUser);
 
-
 //회원가입
 router.post('/', isNotLoggedIn, user.signUp);
 

@@ -94,12 +94,12 @@
               {
                 name: '취업',
                 file: 'briefcase',
-                to: '/category/employ'
+                to: '/category/employment'
               },
               {
                 name: '고시',
                 file: 'exam',
-                to: '/category/exam'
+                to: '/category/examination'
               },
               {
                 name: '자격증',

@@ -111,9 +111,9 @@
             >
             </v-text-field>
 
-            <p class="font-weight-bold title ma-0 pa-0">LinkedIn</p>
+            <p class="font-weight-bold title ma-0 pa-0">facebook</p>
             <v-text-field
-              v-model="linkedIn"
+              v-model="facebook"
               outlined
               clearable
               dense
@@ -186,7 +186,7 @@
         location: '',
         about: '',
         github: '',
-        linkedIn: '',
+        facebook: '',
         gmail: '',
         passwordRules: [
           v => !!v || '비밀번호는 필수입니다.',
@@ -208,7 +208,7 @@
       this.location = this.me.location || '';
       this.github = this.me.sn ? this.me.sn.github : 'https://www.github.com/';
       this.gmail = this.me.sn ? this.me.sn.gmail : 'example@gmail.com';
-      this.linkedIn = this.me.sn ? this.me.sn.linkedIn : 'https://www.linkedin.com/in';
+      this.facebook = this.me.sn ? this.me.sn.facebook : 'https://www.facebook.com/in';
     },
     methods: {
       onChangeImage(e){
@@ -230,16 +230,16 @@
           userId: this.me.id,
           github: this.github,
           gmail: this.gmail,
-          linkedIn: this.linkedIn
+          facebook: this.facebook
         },{
           withCredentials: true,
         })
           .then((res) => {
             console.log(res);
-            const { github, gmail, linkedIn } = res;
+            const { github, gmail, facebook } = res;
             this.github = github;
             this.gmail = gmail;
-            this.linkedIn = linkedIn;
+            this.facebook = facebook;
           });
       },
       onUpdateProfile() {

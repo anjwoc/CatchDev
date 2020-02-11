@@ -224,7 +224,7 @@ export const actions = {
     return this.$axios.post(`/sns/user/${payload.userId}`,{
       github: payload.github,
       gmail: payload.gmail,
-      linkedIn: payload.linkedIn,
+      facebook: payload.facebook,
     },{
       withCredentials: true,
     })

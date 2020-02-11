@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(40), //40자 이내
       allowNull: true,
     },
-    linkedIn: {
+    facebook: {
       type: DataTypes.STRING(40), //40자 이내
       allowNull: true, 
     },

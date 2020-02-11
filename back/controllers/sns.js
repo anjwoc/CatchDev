@@ -4,14 +4,14 @@ const db = require('../models');
 exports.addSns = async (req, res, next) => {
   try{
     const id = req.params.id;
-    const { github, gmail, linkedIn } = req.body;
+    const { github, gmail, facebook } = req.body;
 
     await db.Sns.findOrCreate({
       where: { userId: id },
       defaults: {
         github: github,
         gmail: gmail,
-        linkedIn: linkedIn || 'https://www.linkedin.com/in'
+        facebook: facebook || 'https://www.facebook.com/in'
       },
     })
       .spread((result, created) => {
@@ -24,7 +24,7 @@ exports.addSns = async (req, res, next) => {
     await db.Sns.update({
       github: github,
       gmail: gmail,
-      linkedIn: linkedIn,
+      facebook: facebook,
     },{
       where: { userId: id }
     });

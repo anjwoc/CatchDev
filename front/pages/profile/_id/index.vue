@@ -65,8 +65,8 @@
         </div>
         <div>
           <v-btn icon>
-            <v-icon large color="indigo">mdi-linkedin-box</v-icon>
-            <div class="textTransform ma-0 pa-0">{{ this.linkedIn }}</div>
+            <v-icon large color="indigo">mdi-facebook-box</v-icon>
+            <div class="textTransform ma-0 pa-0">{{ this.facebook }}</div>
           </v-btn>
         </div>
         
@@ -165,11 +165,11 @@
         }
         return this.me.sn.gmail;
       },
-      linkedIn() {
+      facebook() {
         if(!this.me.sn){
           return '';
         }
-        return this.me.sn.linkedIn;
+        return this.me.sn.facebook;
       },
       
 
@@ -181,7 +181,7 @@
           location: this.location,
           github: this.github,
           gmail: this.gmail,
-          linkedIn: this.linkedIn,
+          facebook: this.facebook,
         })
           .then(()=>{
           })

@@ -28,7 +28,7 @@ module.exports = () => {
           attributes: ['id'],
         },{
           model: db.Sns,
-          attributes: ['github', 'gmail', 'linkedIn', 'userId']
+          attributes: ['github', 'gmail', 'facebook', 'userId']
         }],
       });
       return done(null, user); // req.user, req.isAuthenticated() === true,

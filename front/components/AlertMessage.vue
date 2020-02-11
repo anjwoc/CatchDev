@@ -111,9 +111,9 @@
                 >
                 </v-text-field>
 
-                <p class="font-weight-bold title ma-0 pa-0">LinkedIn</p>
+                <p class="font-weight-bold title ma-0 pa-0">facebook</p>
                 <v-text-field
-                  v-model="linkedIn"
+                  v-model="facebook"
                   outlined
                   clearable
                   dense
@@ -189,7 +189,7 @@
         location: '',
         github:'https://www.github.com/',
         gmail: '',
-        linkedIn: 'https://www.linkedin.com/in',
+        facebook: 'https://www.facebook.com/in',
         imageRules: [
         value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
       ],
@@ -239,13 +239,13 @@
           userId: this.userId,
           github: this.github,
           gmail: this.gmail,
-          linkedIn: this.linkedIn
+          facebook: this.facebook
         },{
           withCredentials: true,
         })
           .then((res) => {
             this.github = 'https://www.github.com/';
-            this.linkedIn = 'https://www.linkedin.com/in';
+            this.facebook = 'https://www.facebook.com/in';
           })
       },
       onUpdateProfile() {

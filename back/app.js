@@ -4,8 +4,6 @@ const passport = require('passport');
 const session = require('express-session');
 const cookie = require('cookie-parser');
 const morgan = require('morgan');
-const randomString = require('randomstring');
-const connectHistoryFallBack = require('connect-history-api-fallback');
 const prod = process.env.NODE_ENV === 'production';
 const hpp = require('hpp');
 const helmet = require('helmet');
@@ -15,6 +13,7 @@ const routes = require('./routes');
 
 const passportConfig = require('./passport');
 
+
 const app = express();
 db.sequelize.sync({  });
 dotenv.config();
@@ -22,7 +21,6 @@ const port = process.env.PORT || 4000;
 passportConfig();
 
 if (prod) {
-  console.log("asdf")
   app.use(helmet());
   app.use(hpp());
   app.use(morgan('combined'));
@@ -37,6 +35,7 @@ if (prod) {
     credentials: true,
   }));
 }
+
 
 app.use('/', express.static('uploads'));
 app.use('/profile/', express.static('uploads/profileImage'));
@@ -56,6 +55,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', routes);
+
 app.get('/success', (req, res) => {
   res.json("success");
 })

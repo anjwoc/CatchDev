@@ -11,7 +11,7 @@ exports.addSns = async (req, res, next) => {
       defaults: {
         github: github,
         gmail: gmail,
-        facebook: facebook || 'https://www.facebook.com/in'
+        facebook: facebook || 'https://www.facebook.com/'
       },
     })
       .spread((result, created) => {

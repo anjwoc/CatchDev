@@ -1,7 +1,5 @@
 const db = require('../models');
 const bcrypt = require('bcrypt');
-const rs = require('randomstring');
-const qs = require('querystring');
 const axios = require('axios');
 const passport = require('passport');
 require('dotenv').config();
@@ -11,7 +9,6 @@ require('dotenv').config();
 exports.loadUser = async (req, res, next) => {
   try{
     const user = req.user;
-    console.log(user);
     res.json(user);
   }catch(err){
     console.error(err)

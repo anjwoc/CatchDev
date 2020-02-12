@@ -13,15 +13,25 @@ const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 module.exports = () => {
   passport.serializeUser((user, done) => {
     //로그인 성공했을 시
-    return done(null, user.id);
+    return done(null, user);
   });
   
-  passport.deserializeUser(async (id, done) => {
+  passport.deserializeUser(async (obj, done) => {
     //서버로 들어오는 요청마다 세션정보를 디비랑 비교
     try {
-      //
+      let where = {};
+      if(obj.provider){
+        where = {
+          socialType: obj.provider,
+          openId: obj.id,
+        }
+      }else{
+        where = {
+          id: obj.id,
+        }
+      }
       const user = await db.User.findOne({
-        where: { id },
+        where,
         attributes: ['id','email', 'name', 'about', 'job', 'location', 'imgSrc'],
         include: [{
           model: db.Board,
@@ -31,6 +41,7 @@ module.exports = () => {
           attributes: ['github', 'gmail', 'facebook', 'userId']
         }],
       });
+      
       return done(null, user); // req.user, req.isAuthenticated() === true,
     } catch (err) {
       console.error(err);

@@ -110,14 +110,20 @@
         window.location.href = `${process.env.baseUrl}/auth/github`;
       },
       githubLogin() {
-        axios.get(`http://localhost:4000/auth/githubAuthUrl`)
+        this.$store.dispatch('users/githubLogIn',{
+          withCredentials: true,
+        })
+          .then((res) => {
+            console.log(res);
+          })
+      },
+      githubTest() {
+        this.$axios.get('/auth/github', {
+          withCredentials: true,
+        })
           .then((res) => {
             console.log(res.data);
-            window.location.href = res.data;
           })
-          .catch((err) => {
-            console.error(err);
-          });
       },
       googleLogin() {
         this.$axios.get('/auth/github')

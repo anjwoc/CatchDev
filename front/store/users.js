@@ -128,7 +128,6 @@ export const actions = {
       const res = await this.$axios.get('/user', {
         withCredentials: true,
       });
-      console.log("loadUser 진입");
       commit('setMe', res.data);
     }catch(err){
       console.error(err);
@@ -154,6 +153,21 @@ export const actions = {
           return err;
         }
       });
+  },
+  async githubLogIn({ commit }, payload){
+    await this.$axios.post('/auth/githubLogin',{
+      email: payload.email,
+      socialType: payload.socialType,
+    },{
+      withCredentials: true,
+    })
+      .then((res) => {
+        commit('setMe', res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
   },
   async logIn({ commit }, payload){
     await this.$axios.post('/user/login', {

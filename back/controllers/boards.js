@@ -3,7 +3,6 @@ const db = require('../models');
 const Sequelize = require('sequelize');
 const queryString = require('querystring');
 exports.allPosts = async (req, res, next) => {
-  // res.json({'test': '1234'});
   try{
     console.log(`loadBoards진입 req.query값: ${req.query.lastId}`)
     let where = {};

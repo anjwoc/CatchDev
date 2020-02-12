@@ -1,10 +1,37 @@
 const db = require('../models');
+const qs = require('querystring');
 const axios = require('axios');
 require('dotenv').config();
 
 exports.test = (req, res, next) => {
   return res.send('test');
 }
+
+exports.githubLogin = async (req, res, next) => {
+  try{
+    const { email, socialType } = req.body;
+    const loginUser = await db.User.findOne({
+      where: {
+        email: email,
+        socialType: socialType
+      },
+      attributes: ['id', 'email', 'socialType', 'name', 'about', 'imgSrc'],
+      include: [{
+        model: db.Board,
+        attributes: ['id']
+      },{
+        model: db.Sns,
+        attributes: ['github', 'gmail', 'facebook', 'userId']
+      }]
+    });
+    res.json(loginUser);
+
+  }catch(err) {
+    console.error(err);
+    return next(err);
+  }
+};
+
 exports.githubCallback = async (req, res, next) => {
   try{
     const { id, displayName, username, profileUrl, emails, photos, provider} = res.req.user;
@@ -12,7 +39,7 @@ exports.githubCallback = async (req, res, next) => {
     const userInfo = {
       id,
       displayName,
-      username,
+      name: username,
       profileUrl,
       email: emails[0].value,
       photo: photos[0].value,
@@ -21,7 +48,11 @@ exports.githubCallback = async (req, res, next) => {
       location: data._json.location,
       job: data._json.company
     };
-
+    // console.log(userInfo);
+    const query = qs.stringify({
+      'email': userInfo.email,
+      'socialType': 'github'
+    });
     const exUser = await db.User.findOne({
       where: {
         email: userInfo.email,
@@ -32,7 +63,7 @@ exports.githubCallback = async (req, res, next) => {
       await db.User.update({
         openId: userInfo.id,
         socialType: userInfo.provider,
-        imgSrc: userInfo.profileUrl,
+        imgSrc: userInfo.photo,
         location: userInfo.location,
         about: userInfo.about,
         job: userInfo.job,
@@ -48,10 +79,33 @@ exports.githubCallback = async (req, res, next) => {
           model: db.Sns,
           attributes: ['github', 'gmail', 'facebook', 'userId']
         }]
-      })
+      });
+      const query = qs.stringify({
+        'email': fullUser.email,
+        'socialType': 'github'
+      });
+      res.redirect('http://localhost:3000/login/' + query);
     };
-
-    res.json(userInfo);
+    const openUser = await db.User.findOrCreate({
+      where: { openId: userInfo.id },
+      defaults: {
+        openId: userInfo.id,
+        name: userInfo.name,
+        email: userInfo.email,
+        socialType: userInfo.provider,
+        imgSrc: userInfo.profileUrl,
+        location: userInfo.location,
+        about: userInfo.about,
+        job: userInfo.job,
+      }
+    })
+      .spread((result, created) => {
+        if(created) {
+          return res.redirect('http://localhost:3000/login/' + query);  
+        }
+      });
+    return res.redirect('http://localhost:3000/login/' + query);  
+    
   }catch(err){
     console.error(err);
   }

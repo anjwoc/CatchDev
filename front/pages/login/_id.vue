@@ -1,6 +1,6 @@
 <template>
   <div>
-  <h1 class="amber--text">{{this.serviceName}} login</h1>
+  <h1 class="amber--text">Login...</h1>
   </div>
 </template>
 
@@ -11,7 +11,7 @@
       
       }
     },
-    fetch({ store, params }) {
+    fetch({ store, params, redirect }) {
       const paramsData = params.id.split('&');
       const email = paramsData[0].split('=')[1];
       const socialType = paramsData[1].split('=')[1];
@@ -20,7 +20,7 @@
         socialType: socialType,
       })
         .then(()=>{
-          // this.$router.push({ path: '/' });
+          return redirect('http://localhost:3000');
         })
         .catch((err)=>{
           console.error(err)  
@@ -34,15 +34,7 @@
       },
       
     },
-    methods: {
-      redirect(url) {
-        window.location.href = url;
-      }
-    },
-    mounted(){
-      
-
-    },
+    middleware: 'redirect',
   
   }
 </script>

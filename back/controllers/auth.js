@@ -112,6 +112,15 @@ exports.githubCallback = async (req, res, next) => {
 
 exports.googleCallback = async (req, res, next) => {
   try{
+    // const userInfo = { 
+    //   id,
+    //   name: displayName,
+    //   photo: photos[0].value,
+    //   provider
+    // } = res.req.user;
+
+    // console.log(Object.keys(res.req));
+    // console.log(Object.keys(res.req.user));
     console.log(res.req.user);
     res.json(res.req.user)
   }catch(err){

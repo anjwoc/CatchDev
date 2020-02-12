@@ -1,6 +1,6 @@
 <template>
   <div>
-  <h1 class="amber--text">Login...</h1>
+  
   </div>
 </template>
 

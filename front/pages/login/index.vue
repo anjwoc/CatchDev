@@ -56,7 +56,7 @@
                   </v-btn>
                 </v-row>
                 <v-row align="center" justify="center" style="margin-bottom: 20px;"> 
-                  <v-btn x-large color="red" width="90%" dark >
+                  <v-btn x-large color="red" width="90%" dark @click="googleRedirect">
                     <v-icon left large>mdi-google</v-icon>&nbsp;
                     Google 로그인
                   </v-btn>
@@ -109,27 +109,8 @@
         // let url = `${process.env.baseUrl}/auth/github`;
         window.location.href = `${process.env.baseUrl}/auth/github`;
       },
-      githubLogin() {
-        this.$store.dispatch('users/githubLogIn',{
-          withCredentials: true,
-        })
-          .then((res) => {
-            console.log(res);
-          })
-      },
-      githubTest() {
-        this.$axios.get('/auth/github', {
-          withCredentials: true,
-        })
-          .then((res) => {
-            console.log(res.data);
-          })
-      },
-      googleLogin() {
-        this.$axios.get('/auth/github')
-          .then((res) => {
-            console.log(res.data);
-          })
+      googleRedirect() {
+        window.location.href = `${process.env.baseUrl}/auth/google`;
       },
       onSubmitForm() {
         if(this.$refs.form.validate()){

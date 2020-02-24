@@ -185,10 +185,11 @@ exports.uploadProfileImage = async (req, res, next) => {
 // 프로필을 업데이트하는 컨트롤러
 exports.updateProfile = async (req, res, next) => {
   try{ 
-    let { job, location, imgSrc } = req.body;
+    let { job, about, location, imgSrc } = req.body;
     await db.User.update({
       job: job,
       location: location,
+      about: about,
       imgSrc: imgSrc, 
     },{
       where: { id : req.params.id },
@@ -196,7 +197,6 @@ exports.updateProfile = async (req, res, next) => {
     
     const user = await db.User.findOne({ where: { id: req.params.id }});
     res.json(user);
-
   }catch(err){
     console.error(err);
   }

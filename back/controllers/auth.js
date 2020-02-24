@@ -83,9 +83,9 @@ exports.githubCallback = async (req, res, next) => {
         'email': fullUser.email,
         'socialType': 'github'
       });
-      res.redirect('http://localhost:3000/login/' + query);
+      return res.redirect(`http://localhost:3000/login/${query}`);
     };
-    const openUser = await db.User.findOrCreate({
+    await db.User.findOrCreate({
       where: { openId: userInfo.id },
       defaults: {
         openId: userInfo.id,
@@ -100,7 +100,7 @@ exports.githubCallback = async (req, res, next) => {
     })
       .spread((result, created) => {
         if(created) {
-          return res.redirect('http://localhost:3000/login/' + query);  
+          return res.redirect(`http://localhost:3000/login/${query}`);
         }
       });
     return res.redirect('http://localhost:3000/login/' + query);  
@@ -112,17 +112,64 @@ exports.githubCallback = async (req, res, next) => {
 
 exports.googleCallback = async (req, res, next) => {
   try{
-    // const userInfo = { 
-    //   id,
-    //   name: displayName,
-    //   photo: photos[0].value,
-    //   provider
-    // } = res.req.user;
+    const data = res.req.user;
+    const userInfo = { 
+      id: data.id,
+      name: data.displayName,
+      photo: data.photos[0].value,
+      email: data.emails[0].value,
+      provider: data.provider
+    };
+    const query = qs.stringify({
+      'email': userInfo.email,
+      'socialType': 'google'
+    });
+    const exUser = await db.User.findOne({
+      where: {
+        email: userInfo.email,
+      },
+    });
+    if (exUser && exUser.socialType == null){
+      // 일반 회원가입으로 이미 가입했으면 socialLogin으로 update
+      await db.User.update({
+        openId: userInfo.id,
+        socialType: userInfo.provider,
+        imgSrc: userInfo.photo,
+      });
 
-    // console.log(Object.keys(res.req));
-    // console.log(Object.keys(res.req.user));
-    console.log(res.req.user);
-    res.json(res.req.user)
+      //fullUser
+      const fullUser = await db.User.findOne({
+        where: { id: exUser.id },
+        attributes: ['id', 'email', 'about', 'job', 'location', 'imgSrc', 'name'],
+        include: [{
+          model: db.Board,
+          attributes: ['id']
+        }, {
+          model: db.Sns,
+          attributes: ['github', 'gamil', 'facebook', 'userId']
+        }]
+      });
+      return res.redirect(`http://localhost:3000/login/${query}`);
+    };
+    await db.User.findOrCreate({
+      where: { openId: userInfo.id },
+      defaults: {
+        openId: userInfo.id,
+        name: userInfo.name,
+        email: userInfo.email,
+        socialType: userInfo.provider,
+        imgSrc: userInfo.photo,
+        location: "",
+        about: "",
+        job: "",
+      }
+    })
+      .spread((result, created) => {
+        if(created) {
+          return res.redirect(`http://localhost:3000/login/${query}`);
+        }
+      });
+      return res.redirect(`http://localhost:3000/login/${query}`);
   }catch(err){
     console.error(err);
   }

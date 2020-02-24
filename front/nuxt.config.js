@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+require('dotenv').config();
 
 module.exports = {
   head: {
@@ -14,6 +15,7 @@ module.exports = {
   buildModules: [
     '@nuxtjs/vuetify',
     '@nuxtjs/moment',
+    '@nuxtjs/dotenv'
     
   ],
   plugins: [
@@ -27,8 +29,8 @@ module.exports = {
     locales: ['ko']
   },
   axios: {
-    browserBaseURL: 'http://localhost:4000',
-    baseURL: 'http://localhost:4000',
+    browserBaseURL: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:4000',
+    baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:4000',
     https: false,
   },
   server: {
@@ -51,7 +53,7 @@ module.exports = {
     ]
   },
   env: {
-    baseUrl: 'http://localhost:4000'
+    baseUrl: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:4000',
   }
 
 

@@ -48,7 +48,6 @@ exports.githubCallback = async (req, res, next) => {
       location: data._json.location,
       job: data._json.company
     };
-    // console.log(userInfo);
     const query = qs.stringify({
       'email': userInfo.email,
       'socialType': 'github'

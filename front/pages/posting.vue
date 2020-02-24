@@ -174,7 +174,6 @@
         this.category = data;
       },
       onChangeImages(e){
-        console.log(e.target.files, e.target.files.forEach);
         const imageFormData = new FormData();
         [].forEach.call(e.target.files, (f) => {
           imageFormData.append('image', f);
@@ -188,7 +187,7 @@
             }
             const range = this.myQuillEditor.getSelection();
             if(files.data.length === 1) {
-              //이미지가 1개라면
+              //이미지가 1개라면 
               this.myQuillEditor.insertEmbed(range.index, 'image', `${this.serverUrl}/${files.data[0]}`);
             }
             else{
@@ -203,7 +202,10 @@
           });
       },
       updateStatus(data) {
+        console.log(`data: ${data}`);
         const status = !data;
+        console.log(`status: ${status}`);
+
         this.alertDialog = status;
       },
       onSubmitForm() {

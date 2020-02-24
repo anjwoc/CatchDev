@@ -56,6 +56,7 @@ exports.deleteBoard = async (req, res, next) => {
         id: req.params.id,
       },
     });
+    db.Board.removeHash
     res.json('삭제 성공');
   }catch(err) {
     console.error(err);
@@ -87,8 +88,9 @@ exports.updateStatus = async (req, res, next) => {
 
 //이미지 업로드
 exports.uploadImage = (req, res, next) => {
+  // v.filename이 v.location으로 변경
   console.log(req.files);
-  res.json(req.files.map(v => v.filename));
+  res.json(req.files.map(v => v.location));
 };
 
 exports.loadBoard = async (req, res, next) => {

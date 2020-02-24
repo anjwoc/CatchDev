@@ -216,8 +216,6 @@ export const actions = {
       withCredentials: true,
     })
       .then((res) => {
-        console.log('updateProfile');
-        console.log(res.data);
         return res.data;
       })
       .catch((err) => {
@@ -229,7 +227,6 @@ export const actions = {
       withCredentials: true,
     })
       .then((res) => {
-        console.log(res.data);
         commit('updateProfileImage', res.data);
         return res.data;
       });
@@ -243,7 +240,6 @@ export const actions = {
       withCredentials: true,
     })
       .then((res) => {
-        console.log("updateSns");
         return res.data;
       })
       .catch((err)=>{

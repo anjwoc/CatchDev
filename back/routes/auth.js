@@ -12,7 +12,9 @@ router.get('/github/callback',
  auth.githubCallback
 );
 
-router.get('/google', passport.authenticate('google'));
+router.get('/google', passport.authenticate('google', { scope: [
+  'openid', 'profile', 'email'
+]}));
 router.get('/google/callback',
   passport.authenticate('google', {
   failureRedirect: '/login'}),

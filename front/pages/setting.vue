@@ -235,7 +235,6 @@
           withCredentials: true,
         })
           .then((res) => {
-            console.log(res);
             const { github, gmail, facebook } = res;
             this.github = github;
             this.gmail = gmail;
@@ -252,10 +251,10 @@
           about: this.about,
         })
           .then((res)=>{
-            console.log(res);
-            const { name, job, location, imgSrc } = res;
+            const { name, job, about, location, imgSrc } = res;
             this.name = name;
             this.job = job;
+            this.about = about;
             this.location = location;
             this.imgSrc = imgSrc;
           })

@@ -31,7 +31,7 @@
               </v-col>
               <v-col cols="12" md="8">
                 <h1 class="userId">anjwoc</h1>
-                <h3 class="aboutText mt-4">한 줄 소개란</h3>
+                <h3 class="aboutText mt-4">{{ me.about }}</h3>
               </v-col>
             </v-row>
             <v-divider></v-divider>

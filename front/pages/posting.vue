@@ -191,12 +191,12 @@
             const range = this.myQuillEditor.getSelection();
             if(files.data.length === 1) {
               //이미지가 1개라면 
-              this.myQuillEditor.insertEmbed(range.index, 'image', `${this.serverUrl}/${files.data[0]}`);
+              this.myQuillEditor.insertEmbed(range.index, 'image', files.data[0]);
             }
             else{
               // 이미지가 1개 이상이면
               for (const img of files.data){
-                this.myQuillEditor.insertEmbed(range.index, 'image', `${this.serverUrl}/${img}`);
+                this.myQuillEditor.insertEmbed(range.index, 'image', img);
               }
             };
           })
@@ -205,9 +205,7 @@
           });
       },
       updateStatus(data) {
-        console.log(`data: ${data}`);
         const status = !data;
-        console.log(`status: ${status}`);
 
         this.alertDialog = status;
       },

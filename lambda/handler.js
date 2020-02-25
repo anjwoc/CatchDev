@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 const Sharp = require('sharp');
 const s3 = new AWS.S3({ region: 'ap-northeast-2' });
 
-exports.handler = async (event, context, callback) => {
+module.exports.resize = async (event, context, callback) => {
   console.log(event);
   const Bucket = event.Records[0].s3.bucket.name;
   const Key = event.Records[0].s3.object.key;
@@ -11,7 +11,7 @@ exports.handler = async (event, context, callback) => {
   console.log(Key, filename, ext);
   const requiredFormat = ext === 'jpg' ? 'jpeg' : ext; // sharp에서는 jpg 대신 jpeg사용합니다
   try {
-    const s3Object = await S3.getObject({ // S3에서 이미지를 받아 옵니다.
+    const s3Object = await s3.getObject({ // S3에서 이미지를 받아 옵니다.
       Bucket,
       Key,
     }).promise();

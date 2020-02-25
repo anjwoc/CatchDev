@@ -4,6 +4,7 @@ const Sharp = require('sharp');
 const s3 = new AWS.S3({ region: 'ap-northeast-2' });
 
 exports.handler = async (event, context, callback) => {
+  console.log(event);
   const Bucket = event.Records[0].s3.bucket.name;
   const Key = event.Records[0].s3.object.key;
   const filename = Key.split('/')[Key.split('/').length - 1];
@@ -23,7 +24,7 @@ exports.handler = async (event, context, callback) => {
       .toFormat(requiredFormat)
       .toBuffer();
     console.log('resize', resizedImage.length);
-    await S3.putObject({
+    await s3.putObject({
       Body: resizedImage,
       Bucket,
       Key: `thumb/${filename}`,

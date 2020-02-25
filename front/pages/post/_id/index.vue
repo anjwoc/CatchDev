@@ -30,6 +30,23 @@
         })
       ]);
     },
+    head(){
+      return {
+        title: `${this.post.user.nickname} 님의 게시글`,
+        meta: [{
+          hid: 'desc', name: 'description', content: this.post.content
+        }, {
+          hid: 'og:title', property: 'og:title', content: `${this.post.title}`
+        }, {
+          hid: 'og:desc', property: 'og:description', content: this.post.content
+        }, {
+          // 게시글 페이지에서 이미지를 url로 불러와서 객체에 닮겨있지 않아서 따로 추출해야 넣을 수 있다.
+          hid: 'og:image', property: 'og:image', content: ''
+        },{
+          hid: 'or:url' , property: 'og:url', content: `https://delog.net/post/${this.post.id}`
+        }],
+      }
+    },
     components: {
       PostPage,
     }

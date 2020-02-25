@@ -24,6 +24,7 @@ module.exports = {
     
   ],
   vuetify: {
+    treeshake: true,
   },
   moment: {
     locales: ['ko']
@@ -42,6 +43,12 @@ module.exports = {
     'quill/dist/quill.core.css'
   ],
   build: {
+    analyze: true,
+    extend(config, { isClient, isServer, isDev }) {
+      if (isServer && !isDev) {
+        config.devtool = 'hidden-source-map';
+      }
+    },
     plugins: [
       new webpack.ProvidePlugin({
         'window.Quill': 'quill/dist/quill.js',

@@ -48,8 +48,11 @@
           <v-btn v-if="this.isMe" @click="onUpdateStatus" text outlined color="blue-grey">모집 완료</v-btn>
         </div>
         <v-divider></v-divider>
-        <div class="mt-8" id="mainContent">
-        </div>
+        <v-row>
+          <div class="mt-8" v-html="this.post.content"></div>
+        </v-row>
+        
+
         <h2 class="mb-1">{{commentsLength}}개의 댓글</h2>
         <comment-form class="mb-6" :postId="this.post && this.post.id" />
         
@@ -78,8 +81,8 @@
       },
     },
     mounted() {
-      this.content = document.querySelector('#mainContent');
-      this.content.innerHTML = this.post.content;
+      // this.content = document.querySelector('#mainContent');
+      // this.content.innerHTML = this.post.content;
     },
     methods: {
       onDeletePost() {

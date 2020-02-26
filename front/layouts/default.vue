@@ -19,7 +19,6 @@
         label="Search"
         prepend-inner-icon="search"
       />
-
       <v-spacer />
     </v-app-bar>
 

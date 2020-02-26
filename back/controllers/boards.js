@@ -2,6 +2,8 @@
 const db = require('../models');
 const Sequelize = require('sequelize');
 const queryString = require('querystring');
+const Op = Sequelize.Op;
+
 exports.allPosts = async (req, res, next) => {
   try{
     console.log(`loadBoards진입 req.query값: ${req.query.lastId}`)
@@ -189,7 +191,6 @@ exports.loadCategoryPosts = async (req, res, next) => {
     }
 
     let where = { category: item };
-    
     if(parseInt(lastId, 10)){
       where = {
         id: {
@@ -234,3 +235,43 @@ exports.loadCategoryPosts = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.searchBoards = async (req, res, next) => {
+  try{
+    const word = req.params.word;
+    const lastId = req.query.lastId;
+    let where = { 
+      title: {
+        [Op.like]: `%${word}%`
+      }
+    };
+    if (parseInt(lastId, 10)){
+      where.push({
+        id: {
+          [Op.lt]: parseInt(lastId, 10)
+        },
+      })
+    }
+    console.log(where);
+    const searchBoards = await db.Board.findAll({
+      where,
+      include: [{
+        model: db.User,
+        attributes: ['id', 'email', 'name', 'imgSrc']
+      },{
+        model: db.User,
+        as: 'Likers',
+        attributes: ['id']
+      },{
+        model: db.Hashtag,
+        attributes: ['name']
+      }]
+    });
+    return res.json(searchBoards);
+  }catch(err) {
+    console.error(err);
+    return next(err);
+  }
+
+};
+

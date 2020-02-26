@@ -67,6 +67,7 @@ export const mutations = {
     const index = state.mainPosts.findIndex(v => v.id === payload.postId);
     state.mainPosts[index].status = payload.status;
   },
+
 };
 
 
@@ -178,7 +179,6 @@ export const actions = {
     }
   }, 2000),
   loadTrendingPosts: throttle(async function({ commit, state}, payload){
-    console.log('loadTrendingPosts');
     try{
       if(payload && payload.reset) {
         const res = await this.$axios.get(`/boards/trendingBoards`);
@@ -282,8 +282,27 @@ export const actions = {
         });
         
       })
-
   },
+  async searchPosts({ commit}, payload){
+    if(payload && payload.reset) {
+      const res = await this.$axios.get(`/boards/${payload.searchWord}`);
+      commit('loadPosts', {
+        data: res.data,
+        reset: true,
+      });
+      return;
+    }
+    if(state.hasMorePost) {
+      const lastPost  = state.mainPosts[state.mainPosts.length - 1];
+      //lastPost가 존재하는지 체크하고 lastPost.id를 넘김
+      const res = await this.$axios.get(`/boards/${payload.searchWord}?lastId=${lastPost && lastPost.id}&limit=10`);
+      commit('loadPosts', {
+        data: res.data,
+      });
+      return;
+    }
+
+  }
   
   
 

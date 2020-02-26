@@ -46,7 +46,6 @@ import PostCard from '~/components/PostCard'
         openDelay: '0',
         closeDelay: '0',
         value: false,
-        
       }
     },
     components: {

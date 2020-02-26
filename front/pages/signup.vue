@@ -131,33 +131,33 @@
   export default {
   data() {
     return {
-    activeColor: 'green',
-    valid: '',
-    name: '',
-    email: '',
-    dialog: false,
-    alertType: '',
-    type: '',
-    msg: '',
-    userId: '',
-    password: '',
-    passwordCheck: '',
-    about: '',
-    success: true,
-    emailRules: [
-      v => !!v || '이메일은 필수입니다.',
-      v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
-    ],
-    passwordRules: [
-      v => !!v || '비밀번호는 필수입니다.',
-    ], 
-    passwordCheckRules: [
-      v => !!v || '비밀번호는 필수입니다.',
-      v => v === this.password || '비밀번호가 일치하지 않습니다.'
-    ],
-    aboutRules: [
-      v => v.length <= 80 || 'Max 80 Characters',
-    ],
+      activeColor: 'green',
+      valid: '',
+      name: '',
+      email: '',
+      dialog: false,
+      alertType: '',
+      type: '',
+      msg: '',
+      userId: 0,
+      password: '',
+      passwordCheck: '',
+      about: '',
+      success: true,
+      emailRules: [
+        v => !!v || '이메일은 필수입니다.',
+        v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
+      ],
+      passwordRules: [
+        v => !!v || '비밀번호는 필수입니다.',
+      ], 
+      passwordCheckRules: [
+        v => !!v || '비밀번호는 필수입니다.',
+        v => v === this.password || '비밀번호가 일치하지 않습니다.'
+      ],
+      aboutRules: [
+        v => v.length <= 80 || 'Max 80 Characters',
+      ],
 
     }
   },
@@ -171,21 +171,23 @@
       about: this.about,
       })
       .then((res)=>{
-        console.log(res);
+        const userId = res.data && res.data.id;
+        console.log(typeof(userId));
+        console.log(userId);
         if(res.response && wildcard('40*', res.response.status.toString())){
-        console.log("회원가입 실패");
-        this.dialog = true;
-        this.userId = parseInt(res.data.id);
-        this.alertType = 'signup'
-        this.type = 'error'
-        this.msg = "회원가입에 실패했습니다."
+          console.log("회원가입 실패");
+          this.dialog = true;
+          this.userId = userId;
+          this.alertType = 'signup'
+          this.type = 'error'
+          this.msg = "회원가입에 실패했습니다."
         }else if(res.status && wildcard('20*', res.status.toString())){
-        console.log("회원가입 성공");
-        this.dialog = true;
-        this.userId = parseInt(res.data.id);
-        this.alertType = 'signup'
-        this.type = 'success'
-        this.msg = "회원가입에 성공했습니다";
+          console.log("회원가입 성공");
+          this.dialog = true;
+          this.userId = userId;
+          this.alertType = 'signup'
+          this.type = 'success'
+          this.msg = "회원가입에 성공했습니다";
         }
       })
       .catch((err)=>{

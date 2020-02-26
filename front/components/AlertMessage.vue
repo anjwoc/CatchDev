@@ -146,9 +146,6 @@
             <v-btn v-else color="info" @click="updateStatus" text>
               확인
             </v-btn>
-            <div>
-              {{this.imagePaths}}
-            </div>
             
           </v-row>
         </v-alert>
@@ -189,9 +186,9 @@
         location: '',
         github:'https://www.github.com/',
         gmail: '',
-        facebook: 'https://www.facebook.com/in',
+        facebook: 'https://www.facebook.com/',
         imageRules: [
-        value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
+          value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
       ],
       }
     },
@@ -217,6 +214,8 @@
     methods: {
       updateStatus(){ 
         this.$emit('update', this.dialog);
+        const imageFormData = new FormData();
+        imageFormData.append('image', process.env.default_img);
         if(this.type === 'success' && this.alertType === 'signup'){
           this.$router.push({ path: '/' });
         }
@@ -224,15 +223,10 @@
       onChangeImage(){
         const imageFormData = new FormData();
         imageFormData.append('userId', this.userId);
-        console.log(`userId: ${this.userId} , type: ${typeof(this.userId)}`)
         imageFormData.append('image', this.files);
-
         this.$axios.post(`/user/image`,imageFormData, {
           withCredentials: true,
-        })
-          .then((image) => {
-
-          });
+        });
       },
       onUpdateSns(){
         this.$store.dispatch('users/updateSns', {
@@ -245,7 +239,7 @@
         })
           .then((res) => {
             this.github = 'https://www.github.com/';
-            this.facebook = 'https://www.facebook.com/in';
+            this.facebook = 'https://www.facebook.com/';
           })
       },
       onUpdateProfile() {
@@ -262,6 +256,7 @@
           })
       },
       async onSubmitForm() {
+        
         await this.onUpdateProfile();
         await this.onUpdateSns();
         this.$router.push({ path: '/' });

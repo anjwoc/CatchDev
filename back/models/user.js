@@ -1,3 +1,4 @@
+require('dotenv').config();
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
     email: {
@@ -42,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     imgSrc: { //프로필 이미지
       type: DataTypes.STRING(200),
       allowNull: true,
+      defaultValue: process.env.DEFAULT_PROFILE_IMG
     },
   },{
     charset: 'utf8',

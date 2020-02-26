@@ -21,10 +21,11 @@
                     class="mb-2"
                     contain
                     aspect-ratio="1.5"
-                    :src="me.imgSrc"
-                    :lazy-src="me.imgSrc"
+                    :src="me && me.imgSrc"
+                    :lazy-src="me && me.imgSrc"
                   >
                   </v-img>
+                  
                   <v-btn width="100%" @click="onClickImageUpload" dark color="blue-grey darken-2">프로필 사진 변경</v-btn>
                   <input ref="imageInput" type="file" hidden @change="onChangeImage">
                 </v-card>
@@ -214,7 +215,6 @@
       onChangeImage(e){
         const imageFormData = new FormData();
         imageFormData.append('userId', this.me.id);
-        console.log(`userId: ${this.me.id} , type: ${typeof(this.me.id)}`)
         imageFormData.append('image', e.target.files[0]);
         this.$store.dispatch('users/updateProfileImage', imageFormData)
           .then((data) => {
@@ -242,7 +242,6 @@
           });
       },
       onUpdateProfile() {
-        console.log(this.files);
         this.$store.dispatch('users/updateProfile', {
           userId: this.me.id,
           name: this.name,
@@ -276,8 +275,6 @@
             }
           })
       }
-
-
     },
     computed: {
       me(){

@@ -283,9 +283,10 @@ export const actions = {
         
       })
   },
-  async searchPosts({ commit}, payload){
+  async loadSearchPosts({ commit}, payload){
+    console.log(payload);
     if(payload && payload.reset) {
-      const res = await this.$axios.get(`/boards/${payload.searchWord}`);
+      const res = await this.$axios.get(`/boards/search/${payload.searchWord}`);
       commit('loadPosts', {
         data: res.data,
         reset: true,
@@ -295,7 +296,7 @@ export const actions = {
     if(state.hasMorePost) {
       const lastPost  = state.mainPosts[state.mainPosts.length - 1];
       //lastPost가 존재하는지 체크하고 lastPost.id를 넘김
-      const res = await this.$axios.get(`/boards/${payload.searchWord}?lastId=${lastPost && lastPost.id}&limit=10`);
+      const res = await this.$axios.get(`/boards/search/${payload.searchWord}?lastId=${lastPost && lastPost.id}&limit=10`);
       commit('loadPosts', {
         data: res.data,
       });

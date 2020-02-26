@@ -259,6 +259,8 @@ exports.searchBoards = async (req, res, next) => {
         model: db.User,
         attributes: ['id', 'email', 'name', 'imgSrc']
       },{
+        model: db.Image
+      },{
         model: db.User,
         as: 'Likers',
         attributes: ['id']

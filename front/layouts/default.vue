@@ -18,6 +18,7 @@
         hide-details
         label="Search"
         prepend-inner-icon="search"
+        v-on:keyup.enter="onSearchPosts"
       />
       <v-spacer />
     </v-app-bar>
@@ -91,6 +92,7 @@
     },
     data: () => ({
       drawer: null,
+      searchWord: '',
       items: [
         { icon: 'mdi-home', text: 'Index', to: '/' },
         { icon: 'mdi-trending-up', text: 'Popular Study', to: '/popularStudy' },
@@ -105,6 +107,12 @@
         { icon: 'mdi-dots-horizontal', text: 'etc', to: '/category/etc' },
       ],
     }),
+    methods: {
+      onSearchPosts(event) {
+        // console.log(event.target.value);
+        this.$router.push({ path: `/post/search/${event.target.value}`});
+      }
+    },
     components: {
       FloatingButton
     }

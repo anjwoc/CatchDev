@@ -241,7 +241,6 @@
           })
       },
       onUpdateProfile() {
-        console.log(this.files);
         this.$store.dispatch('users/updateProfile', {
           userId: this.userId,
           job: this.job,

@@ -92,7 +92,6 @@ export const actions = {
       });
   },
   remove({ commit }, payload){
-    console.log('deletePost');
     this.$axios.delete(`/board/${payload.postId}`, {
       withCredentials: true,
     })
@@ -112,7 +111,6 @@ export const actions = {
       withCredentials: true,
     })
       .then((res)=>{
-        console.log("addComment");
         commit('addComment', res.data);
       })
       .catch((err)=>{
@@ -136,7 +134,6 @@ export const actions = {
   
   async loadPost({ commit, state }, payload){
     try{
-      console.log("loadPost 페이로드");
       const res = await this.$axios.get(`/board/${payload}`);
       commit('loadPost', res.data);
     }catch(err){
@@ -144,7 +141,6 @@ export const actions = {
     }
   },
   loadCategoryPosts: throttle(async function({ commit, state }, payload){
-    console.log('loadCategoryPosts');
     try{
       let item = payload.item;
       if(payload.item){
@@ -258,7 +254,6 @@ export const actions = {
       withCredentials: true,
     })
       .then((res)=>{
-        console.log('unlikePost');
         commit('unlikePost', {
           userId: res.data.userId,
           postId: payload.postId,
@@ -275,7 +270,6 @@ export const actions = {
       withCredentials: true,
     })
       .then((res) => {
-        console.log('updatePostStatus');
         commit('updatePostStatus',{
           postId: payload.postId,
           status: res.data,
@@ -284,7 +278,6 @@ export const actions = {
       })
   },
   async loadSearchPosts({ commit}, payload){
-    console.log(payload);
     if(payload && payload.reset) {
       const res = await this.$axios.get(`/boards/search/${payload.searchWord}`);
       commit('loadPosts', {

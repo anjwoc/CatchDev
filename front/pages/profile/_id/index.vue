@@ -190,12 +190,9 @@
           });
       },
       moveToLink(link){
-        console.log("moveToLink");
-        console.log(link);
         window.open(link, '_blank');
       },
       onScroll() {
-        console.log('scroll');
         if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
           if (this.hasMorePost){
             this.$store.dispatch('posts/loadPosts');

@@ -42,7 +42,6 @@
     methods: {
       onSubmitForm() {
         if (this.$refs.form.validate()) {
-          console.log(this.content);
           this.$store.dispatch('posts/addComment', {
             postId: this.postId,
             content: this.content,

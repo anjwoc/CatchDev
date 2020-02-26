@@ -82,7 +82,6 @@ import PostCard from '~/components/PostCard'
       });
     },
     mounted() {
-      console.log(this.$route);
       window.addEventListener('scroll', this.onScroll);
     },
     beforeDestroy() {

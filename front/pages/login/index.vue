@@ -135,7 +135,7 @@
             this.$router.push({ path: '/', });
           })
           .catch((err)=>{
-            console.log(err);
+            console.erorr(err);
           });
 
       }

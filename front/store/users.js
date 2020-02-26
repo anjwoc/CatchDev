@@ -50,7 +50,6 @@ export const mutations = {
 export const actions = {
   loadPosts: throttle(async function({ commit }, payload){
     //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
-    console.log('loadPosts');
     try{
       if(payload && payload.reset) {
         const res = await this.$axios.get(`/boards/${payload.userId}/AllBoards`);
@@ -75,7 +74,6 @@ export const actions = {
   }, 2000),
   loadClosedPosts: throttle(async function({ commit }, payload){
     //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
-    console.log('loadClosedPosts');
     try{
       if(payload && payload.reset) {
         const res = await this.$axios.get(`/boards/${payload.userId}/allClosedBoards`);
@@ -100,7 +98,6 @@ export const actions = {
   }, 2000),
   loadRecruitingPosts: throttle(async function({ commit }, payload){
     //내가 작성한 글만 불러옴, 진행중인것도 종료된것도 전부 불러옴
-    console.log('loadRecruitingPosts');
     try{
       if(payload && payload.reset) {
         const res = await this.$axios.get(`/boards/${payload.userId}/allRecruitingBoards`);

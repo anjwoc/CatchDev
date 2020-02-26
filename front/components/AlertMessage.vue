@@ -214,8 +214,6 @@
     methods: {
       updateStatus(){ 
         this.$emit('update', this.dialog);
-        const imageFormData = new FormData();
-        imageFormData.append('image', process.env.default_img);
         if(this.type === 'success' && this.alertType === 'signup'){
           this.$router.push({ path: '/' });
         }

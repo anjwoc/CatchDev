@@ -202,9 +202,8 @@ export default {
       // return Math.floor(diffTime);
     },
     coverImg() {
-      const isPresent = this.post.images[0] && this.post.images[0].src;
-      const image = `${this.post.images[0] && this.post.images[0].src}`;
-      if(!isPresent){
+      const image = this.post.images[0] && this.post.images[0].src;
+      if(!image){
         return null;
       }
       return image;

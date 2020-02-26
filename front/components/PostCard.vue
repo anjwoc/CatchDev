@@ -203,7 +203,7 @@ export default {
     },
     coverImg() {
       const isPresent = this.post.images[0] && this.post.images[0].src;
-      const image = `${process.env.baseUrl}/${this.post.images[0] && this.post.images[0].src}`;
+      const image = `${this.post.images[0] && this.post.images[0].src}`;
       if(!isPresent){
         return null;
       }

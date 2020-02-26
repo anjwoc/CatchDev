@@ -62,12 +62,12 @@ import PostCard from '~/components/PostCard'
         return this.$store.state.posts.mainPosts;
       },
       routeName(){
-        return this.$route.name;
+        const ret = this.$route.path.slice(1, this.$route.path.length);
+        return ret;
       },
     },
     methods: {
       onScroll() {
-        console.log('scroll');
         if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
           if (this.hasMorePost){
             this.$store.dispatch('posts/loadSearchPosts');
@@ -76,13 +76,13 @@ import PostCard from '~/components/PostCard'
       }
     },
     fetch({ store, params }) {
-      console.log(params);
       return store.dispatch('posts/loadSearchPosts', {
         reset: true,
         searchWord: params.id
       });
     },
     mounted() {
+      console.log(this.$route);
       window.addEventListener('scroll', this.onScroll);
     },
     beforeDestroy() {

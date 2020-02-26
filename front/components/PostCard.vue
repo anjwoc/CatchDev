@@ -196,10 +196,6 @@ export default {
     diffTime() {
       const postDate = new Date(this.post.createdAt).toISOString();
       return postDate.split('T')[0];
-      // const curDate = new Date();
-      // const diffTime = parseInt(curDate.getTime() - postDate.getTime()) / (1000*60*60*24);
-      // //floor는 반올림 버리기
-      // return Math.floor(diffTime);
     },
     coverImg() {
       const image = this.post.images[0] && this.post.images[0].src;

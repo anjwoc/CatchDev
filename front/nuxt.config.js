@@ -31,7 +31,7 @@ module.exports = {
   },
   axios: {
     browserBaseURL: process.env.NODE_ENV === 'production' ? 'https://api.delog.net' : 'http://localhost:4000',
-    baseURL: process.env.NODE_ENV === 'production' ? '' : 'https://api.delog.net',
+    baseURL: process.env.NODE_ENV === 'production' ? 'https://api.delog.net' : 'http://localhost:4000',
     https: false,
   },
   server: {

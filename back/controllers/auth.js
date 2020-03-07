@@ -83,7 +83,7 @@ exports.githubCallback = async (req, res, next) => {
         'email': fullUser.email,
         'socialType': 'github'
       });
-      return res.redirect(`http://localhost:3000/login/${query}`);
+      return res.redirect(`${process.env.CLIENT_HOST}/login/${query}`);
     };
     await db.User.findOrCreate({
       where: { openId: userInfo.id },
@@ -100,10 +100,10 @@ exports.githubCallback = async (req, res, next) => {
     })
       .spread((result, created) => {
         if(created) {
-          return res.redirect(`http://localhost:3000/login/${query}`);
+          return res.redirect(`${process.env.CLIENT_HOST}/login/${query}`);
         }
       });
-    return res.redirect('http://localhost:3000/login/' + query);  
+    return res.redirect('http://${process.env.CLIENT_HOST}/login/' + query);  
     
   }catch(err){
     console.error(err);
@@ -149,7 +149,7 @@ exports.googleCallback = async (req, res, next) => {
           attributes: ['github', 'gamil', 'facebook', 'userId']
         }]
       });
-      return res.redirect(`http://localhost:3000/login/${query}`);
+      return res.redirect(`${process.env.CLIENT_HOST}/login/${query}`);
     };
     await db.User.findOrCreate({
       where: { openId: userInfo.id },
@@ -166,10 +166,10 @@ exports.googleCallback = async (req, res, next) => {
     })
       .spread((result, created) => {
         if(created) {
-          return res.redirect(`http://localhost:3000/login/${query}`);
+          return res.redirect(`${process.env.CLIENT_HOST}/login/${query}`);
         }
       });
-      return res.redirect(`http://localhost:3000/login/${query}`);
+      return res.redirect(`${process.env.CLIENT_HOST}/login/${query}`);
   }catch(err){
     console.error(err);
   }

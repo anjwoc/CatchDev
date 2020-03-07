@@ -45,7 +45,7 @@ module.exports = {
     'quill/dist/quill.core.css'
   ],
   build: {
-    analyze: true,
+    analyze: false,
     extend(config, { isClient, isServer, isDev }) {
       if (isServer && !isDev) {
         config.devtool = 'hidden-source-map';

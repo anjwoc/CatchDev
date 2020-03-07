@@ -62,18 +62,14 @@
                   </v-btn>
                 </v-row>
                 <v-row align="center" justify="center" style="margin-bottom: 20px;">
-                  <v-btn x-large color="blue" width="90%" dark>
-                  <v-icon left large>mdi-facebook-box</v-icon>&nbsp;
-                    Facebook 로그인
+                  <v-btn x-large color="blue" width="90%" dark @click="onTemporaryUser">
+                    로그인하지 않고 둘러보기
                   </v-btn>
                 </v-row>
                 <v-divider></v-divider>
                 <v-row>
-                  <v-col align="left" justify="start" class="ma-0 pa-0">
-                    <v-btn text nuxt to="/signup" color="green" style="font-weight: bold;">회원가입</v-btn>
-                  </v-col>
                   <v-col align="right" justify="end" class="ma-0 pa-0">
-                    <v-btn @click="onTemporaryUser" text color="primary" style="font-weight: bold;">로그인하지 않고 둘러보기</v-btn>
+                    <v-btn text nuxt to="/signup" color="green" style="font-weight: bold;">회원가입</v-btn>
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -93,8 +89,6 @@
         valid: '',
         email: '',
         password: '',
-        github: 'http://localhost:4000/auth/github',
-        google: '',
         emailRules: [
           v => !!v || '이메일은 필수입니다.',
           v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
@@ -106,7 +100,6 @@
     },
     methods: {
       githubRedirect() {
-        // let url = `${process.env.baseUrl}/auth/github`;
         window.location.href = `${process.env.baseUrl}/auth/github`;
       },
       googleRedirect() {

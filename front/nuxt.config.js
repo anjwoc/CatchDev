@@ -37,7 +37,7 @@ module.exports = {
     https: true,
   },
   server: {
-    port: 80
+    port: 3000
   },
   css: [
     'quill/dist/quill.snow.css',

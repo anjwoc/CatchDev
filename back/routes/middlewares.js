@@ -14,21 +14,19 @@ exports.isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()){
     return next();
   }
-  return res.status(401).send('로그인이 필요합니다.');
 };
 
 exports.isNotLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()){
     return next();
   }
-  return res.status(401).send('로그인한 사람은 할 수 없습니다.');
 };
 
 exports.uploadProfileImage = multer({
   storage: multerS3({
     s3: new AWS.S3(),
     bucket: 'catchdev-bucket',
-    acl: 'public-read', // 클라이언트에서 자유롭게 가용하기 위함
+    acl: 'public-read', // 클라이언트에서 자유롭게 사용하기 위함
     key(req, file, cb) {
       cb(null, `original/profile/${Date.now()}${path.basename(file.originalname)}`)
     }
@@ -40,7 +38,7 @@ exports.upload = multer({
   storage: multerS3({
     s3: new AWS.S3(),
     bucket: 'catchdev-bucket',
-    acl: 'public-read', // 클라이언트에서 자유롭게 가용하기 위함
+    acl: 'public-read', // 클라이언트에서 자유롭게 사용하기 위함
     key(req, file, cb) {
       cb(null, `original/${Date.now()}${path.basename(file.originalname)}`)
     }

@@ -26,7 +26,7 @@ if (prod) {
   app.use(hpp());
   app.use(morgan('combined'));
   app.use(cors({
-    origin: ["http://www.delog.net", "http://delog.net"],
+    origin: ["https://www.delog.net", "https://delog.net"],
     credentials: true,
   }));
 } else{
@@ -50,7 +50,7 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: false,
-    // domain: prod && '.delog.net',
+    domain: prod && '.delog.net',
   },
 }));
 app.use(passport.initialize());

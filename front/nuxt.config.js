@@ -37,7 +37,7 @@ module.exports = {
     https: true,
   },
   server: {
-    port: 3000
+    port: 80
   },
   css: [
     'quill/dist/quill.snow.css',
@@ -65,7 +65,4 @@ module.exports = {
     baseUrl: process.env.NODE_ENV === 'production' ? 'https://api.delog.net' : 'http://localhost:4000',
     default_img: 'https://catchdev-bucket.s3.ap-northeast-2.amazonaws.com/default/default-profile-image.png',
   }
-
-
-
 };

@@ -25,7 +25,7 @@ if (prod) {
   app.use(hpp());
   app.use(morgan('combined'));
   app.use(cors({
-    origin: 'https://www.delog.net',
+    origin: ["https://www.delog.net", "https://delog.net"],
     credentials: true,
   }));
 } else{

@@ -80,10 +80,6 @@
         required: true,
       },
     },
-    mounted() {
-      // this.content = document.querySelector('#mainContent');
-      // this.content.innerHTML = this.post.content;
-    },
     methods: {
       onDeletePost() {
         this.$store.dispatch('posts/remove', {

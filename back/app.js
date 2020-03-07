@@ -21,11 +21,12 @@ const port = process.env.PORT || 4000;
 passportConfig();
 
 if (prod) {
+  
   app.use(helmet());
   app.use(hpp());
   app.use(morgan('combined'));
   app.use(cors({
-    origin: ["https://www.delog.net", "https://delog.net"],
+    origin: ["http://www.delog.net", "http://delog.net"],
     credentials: true,
   }));
 } else{

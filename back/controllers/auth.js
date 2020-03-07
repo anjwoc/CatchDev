@@ -103,7 +103,7 @@ exports.githubCallback = async (req, res, next) => {
           return res.redirect(`${process.env.CLIENT_HOST}/login/${query}`);
         }
       });
-    return res.redirect('${process.env.CLIENT_HOST}/login/' + query);  
+    return res.redirect(`${process.env.CLIENT_HOST}/login/${query}`);  
     
   }catch(err){
     console.error(err);

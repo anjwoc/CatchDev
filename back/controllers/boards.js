@@ -6,11 +6,9 @@ const Op = Sequelize.Op;
 
 exports.allPosts = async (req, res, next) => {
   try{
-    console.log(`loadBoards진입 req.query값: ${req.query.lastId}`)
     let where = {};
     if(parseInt(req.query.lastId, 10)){
       //lastId가 있을 경우
-      console.log(parseInt(req.query.lastId, 10))
       where = {
         id: {
           //less than
@@ -100,7 +98,6 @@ exports.loadTrendingBoards = async (req, res, next) => {
 
 exports.loadAllBoardsList = async (req, res, next) => {
   try{
-    console.log(req.query);
     let where = { userId: req.params.id };
     if(parseInt(req.query.lastId, 10)){
       where = {
@@ -252,7 +249,6 @@ exports.searchBoards = async (req, res, next) => {
         },
       })
     }
-    console.log(where);
     const searchBoards = await db.Board.findAll({
       where,
       include: [{

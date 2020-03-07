@@ -124,7 +124,6 @@ export const actions = {
       withCredentials: true,
     })
       .then((res)=>{
-        console.log("updateComment");
         commit('updateComment', res.data);
       })
       .catch((err)=>{
@@ -198,7 +197,6 @@ export const actions = {
     }
   }, 2000),
   loadPosts: throttle(async function({ commit, state }, payload){
-    console.log('loadPosts');
     try{
       if(payload && payload.reset) {
         const res = await this.$axios.get(`/boards`);
@@ -239,7 +237,6 @@ export const actions = {
       withCredentials: true,
     })
       .then((res) => {
-        console.log('likePost');
         commit('likePost', {
           userId: res.data.userId,
           postId: payload.postId,

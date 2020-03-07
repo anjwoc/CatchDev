@@ -30,10 +30,10 @@ module.exports = {
     locales: ['ko']
   },
   axios: {
-    browserBaseURL: 'https://api.delog.net',
-    baseURL: 'https://api.delog.net',
-    // browserBaseURL: process.env.NODE_ENV === 'production' ? 'https://api.delog.net' : 'http://localhost:4000',
-    // baseURL: process.env.NODE_ENV === 'production' ? 'https://api.delog.net' : 'http://localhost:4000',
+    // browserBaseURL: 'https://api.delog.net',
+    // baseURL: 'https://api.delog.net',
+    browserBaseURL: process.env.NODE_ENV === 'production' ? 'https://api.delog.net' : 'http://localhost:4000',
+    baseURL: process.env.NODE_ENV === 'production' ? 'https://api.delog.net' : 'http://localhost:4000',
     https: true,
   },
   server: {

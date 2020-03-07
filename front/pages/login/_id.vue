@@ -19,8 +19,8 @@
         email: email,
         socialType: socialType,
       })
-        .then(()=>{
-          return redirect('http://localhost:3000');
+        .then((res)=>{
+          return redirect(process.env.baseUrl);
         })
         .catch((err)=>{
           console.error(err)  

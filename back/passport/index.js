@@ -5,7 +5,9 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const local = require('./local');
 const dotenv = require('dotenv');
 const db = require('../models');
+
 dotenv.config();
+
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
@@ -65,7 +67,7 @@ module.exports = () => {
   passport.use(new GitHubStrategy({
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
-    callbackURL: '/auth/github/callback'
+    callbackURL: `${process.env.API_SERVER}/auth/github/callback`
   },
   (accessToken, refreshToken, profile, cb) => {
     return cb(null, profile);
@@ -74,7 +76,7 @@ module.exports = () => {
   passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: '/auth/google/callback'
+    callbackURL: `${process.env.API_SERVER}/auth/google/callback`
   }, (accessToken, refreshToken, profile, cb) => {
     return cb(null, profile);
   }));

@@ -85,11 +85,11 @@
             />
           </v-form>
           <v-card-actions class="ma-0 pa-0" style="font-weight: bold; color: black;">
-          <v-divider></v-divider>
-            OR
-          <v-divider></v-divider>
+          <v-divider class="mt-4"></v-divider>
           </v-card-actions>
-          <v-btn align="right" justify="end" nuxt to="/login" text color="primary" style="font-weight: bold;">로그인창으로 돌아가기</v-btn>
+          <v-row align="center" justify="center">
+            <v-btn nuxt to="/login" text color="primary" style="font-weight: bold;">로그인창으로 돌아가기</v-btn>  
+          </v-row>          
         </v-card-text>
 
         

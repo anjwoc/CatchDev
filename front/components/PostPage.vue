@@ -43,16 +43,16 @@
         </v-row>
 
         <div class="d-flex row">
-          <v-subheader class="ma-0 pa-0" style="font-size: 18px;">{{ $moment(post.createdAt).format("YYYY년 MM월 DD일") }}</v-subheader>
+          <v-subheader class="" style="font-size: 18px;">{{ $moment(post.createdAt).format("YYYY년 MM월 DD일") }}</v-subheader>
           <v-spacer></v-spacer>
           <v-btn v-if="this.isMe" @click="onUpdateStatus" text outlined color="blue-grey">모집 완료</v-btn>
         </div>
         <v-divider></v-divider>
         <v-row>
-          <div class="mt-8" v-html="this.post.content"></div>
+          <div class="mt-8 ml-3 mr-3" v-html="this.post.content"></div>
         </v-row>
         
-
+        <div class="emptySpace"></div>
         <h2 class="mb-1">{{commentsLength}}개의 댓글</h2>
         <comment-form class="mb-6" :postId="this.post && this.post.id" />
         
@@ -131,10 +131,10 @@
 </script>
 
 <style scoped>
-  #emptySpace {
-    min-height: 200px;
+  .emptySpace {
+    min-height: 100px;
   }
-  #mainContent {
+  .mainContent {
     min-height: 500px;
   }
   

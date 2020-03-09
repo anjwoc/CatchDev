@@ -164,11 +164,11 @@
         this.videoUrl = '';
       },
       onEditorChange({ editor, html, text }) {
-        this.editorIndex = this.myQuillEditor.getSelection().index;
+        this.editorIndex = this.myQuillEditor.getSelection();
         this.content = html
       },
       onEditorFocus(quill) {
-        this.editorIndex = this.myQuillEditor.getSelection().index;
+        this.editorIndex = this.myQuillEditor.getSelection();
       },
       onChangeLocation(data){
         this.location = data;

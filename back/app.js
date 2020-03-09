@@ -29,6 +29,8 @@ if (prod) {
     origin: ["https://www.delog.net", "https://delog.net", "https://api.github.com", "https://github.com"],
     credentials: true,
   }));
+
+  
 } else{
   app.use(morgan('dev'));
   app.use(cors({
@@ -50,7 +52,7 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: false,
-    domain: prod && '.delog.net',
+    // domain: prod && '.delog.net',
   },
 }));
 app.use(passport.initialize());

@@ -62,16 +62,12 @@
                   </v-btn>
                 </v-row>
                 <v-row align="center" justify="center" style="margin-bottom: 20px;">
-                  <v-btn x-large color="blue" width="90%" dark @click="onTemporaryUser">
-                    로그인하지 않고 둘러보기
+                  <v-btn x-large nuxt to="/signup" color="blue" width="90%" dark>
+                    회원가입
                   </v-btn>
                 </v-row>
                 <v-divider></v-divider>
-                <v-row>
-                  <v-col align="right" justify="end" class="ma-0 pa-0">
-                    <v-btn text nuxt to="/signup" color="green" style="font-weight: bold;">회원가입</v-btn>
-                  </v-col>
-                </v-row>
+                
               </v-card-text>
             </v-container>
           </v-card>
@@ -120,6 +116,9 @@
         }
       },
       onTemporaryUser() {
+        this.$store.commit('users/setMe', {
+
+        })
         this.$store.dispatch('users/signUp', {
           id: 'tempUser',
           name: 'tempUser'
@@ -130,7 +129,6 @@
           .catch((err)=>{
             console.erorr(err);
           });
-
       }
     },
     middleware: 'anonymous',

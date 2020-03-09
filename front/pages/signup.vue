@@ -84,36 +84,12 @@
             :type="type"
             />
           </v-form>
-
-          
           <v-card-actions class="ma-0 pa-0" style="font-weight: bold; color: black;">
           <v-divider></v-divider>
-          OR
+            OR
           <v-divider></v-divider>
           </v-card-actions>
-
-          <v-row justify="center" style="margin-bottom: 20px; margin-top:20px;">
-          <v-btn x-large color="grey lighten-2" width="90%" dark style="color: black;">
-            <v-icon left x-large color="black">mdi-github-box</v-icon>&nbsp;
-            Github로 가입하기
-          </v-btn>
-          </v-row>
-          <v-row justify="center" style="margin-bottom: 20px;"> 
-          <v-btn x-large color="red" width="90%" dark>
-            <v-icon left large>mdi-google</v-icon>&nbsp;
-            Google로 가입하기
-          </v-btn>
-          </v-row>
-          <v-row  justify="center" style="margin-bottom: 20px;">
-          <v-btn x-large color="blue" width="90%" dark>
-          <v-icon left large>mdi-facebook-box</v-icon>&nbsp;
-            Facebook로 가입하기
-          </v-btn>
-          </v-row>
-          <v-divider></v-divider>
-          <v-row justify="end">
-          <v-btn nuxt to="/login" text color="primary" style="font-weight: bold;">로그인창으로 돌아가기</v-btn>
-          </v-row>
+          <v-btn align="right" justify="end" nuxt to="/login" text color="primary" style="font-weight: bold;">로그인창으로 돌아가기</v-btn>
         </v-card-text>
 
         

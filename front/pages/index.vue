@@ -83,7 +83,7 @@ import PostCard from '~/components/PostCard'
     beforeDestroy() {
       window.removeEventListener('scroll', this.onScroll);
     },
-    
+    middleware: 'authenticated',
     
   }
 </script>

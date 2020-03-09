@@ -6,7 +6,9 @@
           <div>
             <p class="font-weight-black ma-0 pa-0">{{ name }}</p>
             <v-btn class="font-weight-black ma-0 pa-0 ml-4" color="black" text v-on="on">
-              {{ title === '' ? '선택' : title }}
+              <div v-if="category">{{ category }}</div>
+              <div v-if="location">{{ location }}</div>
+              <div v-if="!(category || location)">{{ title === '' ? '선택' : title }}</div>
               <v-icon>mdi-menu-swap</v-icon>
             </v-btn>
           </div>
@@ -41,7 +43,13 @@
       Items: {
         type: Array,
         required: true,
-      }
+      },
+      category: {
+        type: String
+      },
+      location: {
+        type: String
+      },
     },
     data() {
       return {

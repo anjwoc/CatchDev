@@ -130,10 +130,17 @@ export const actions = {
         console.error(err);
       })
   },
-  
   async loadPost({ commit, state }, payload){
     try{
       const res = await this.$axios.get(`/board/${payload}`);
+      commit('loadPost', res.data);
+    }catch(err){
+      console.error(err);
+    }
+  },
+  async loadUpdatePost({ commit, state }, payload){
+    try{
+      const res = await this.$axios.get(`/board/history/${payload}`);
       commit('loadPost', res.data);
     }catch(err){
       console.error(err);

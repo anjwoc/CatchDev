@@ -21,7 +21,7 @@
           <v-spacer></v-spacer>
           <div v-if="this.isMe">
             <!-- 내가 작성한 게시글일 때만 버튼 표시 -->
-            <v-btn class="ma-0 pa-0"  color="blue-grey" text outlined right>수정</v-btn>
+            <v-btn class="ma-0 pa-0" color="blue-grey" :to="updateLink"  text outlined right>수정</v-btn>
             <v-btn class="ma-0 pa-0" @click="onDeletePost" color="blue-grey" text outlined right>삭제</v-btn>
           </div>
           
@@ -120,7 +120,9 @@
         // 해당 게시글이 내가 쓴 게시글인지 판단
         return this.post.user.id === this.me.id;
       },
-      
+      updateLink() {
+        return `/write/${this.post.id}`;
+      }
     },
     components: {
       CommentForm,

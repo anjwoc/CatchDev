@@ -8,6 +8,8 @@ const router = express.Router();
 
 // 게시글 좋아요 수
 router.get('/countLike/:id', board.countLike);
+// 업데이트 할 게시물 로드(불 필요한 작업을 하지 않기 위해 별도로 분리)
+router.get('/history/:id', board.loadUpdateBoard);
 // 게시물 로드
 router.get('/:id', board.loadBoard);
 
@@ -20,6 +22,9 @@ router.post('/images', isLoggedIn, upload.array('image'), board.uploadImage);
 router.post('/:id/status', board.updateStatus);
 // 좋아요 추가
 router.post('/:id/like', isLoggedIn, board.addLike);
+
+// 게시글 수정
+router.post('/:id/update', board.updateBoard);
 
 // 게시글 삭제
 router.delete('/:id', board.deleteBoard);

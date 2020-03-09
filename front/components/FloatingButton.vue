@@ -35,7 +35,7 @@
       dark
       small
       color="green"
-      nuxt to="/posting"
+      nuxt to="/write"
     >
       <v-icon>mdi-pencil</v-icon>
     </v-btn>

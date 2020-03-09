@@ -12,6 +12,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(20),
       allowNull: false
     },
+    location: {
+      type: DataTypes.STRING(20),
+      allowNull: false
+    },
+    numComments: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
     like: {
       type: DataTypes.INTEGER,
       allowNull: true,

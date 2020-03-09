@@ -64,6 +64,18 @@ exports.deleteBoard = async (req, res, next) => {
   }
 };
 
+exports.updateBoard = async (req, res, next) => {
+  try{
+    await db.Board.update({
+      ...data
+    });
+
+  }catch(err) {
+    console.error(err);
+    next(err);
+  }
+};
+
 exports.updateStatus = async (req, res, next) => {
   try{
     let status = req.body.status;
@@ -91,6 +103,31 @@ exports.uploadImage = (req, res, next) => {
   // v.filename이 v.location으로 변경
   res.json(req.files.map(v => v.location));
 };
+
+exports.loadUpdateBoard = async (req, res, next) => {
+  try{
+    const board = await db.Board.findOne({
+      where: { id: req.params.id },
+      include: [{
+        model: db.User,
+        attributes: ['id', 'email', 'name', 'imgSrc', 'about']
+      },{
+        model: db.Image
+      },{
+        model: db.User,
+        as: 'Likers',
+        attributes: ['id']
+      },{
+        model: db.Hashtag,
+        attributes: ['name']
+      }]
+    });
+    res.json(board);
+  }catch(err){
+    console.error(err);
+    return next(err);
+  };
+}
 
 exports.loadBoard = async (req, res, next) => {
   try{

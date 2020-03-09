@@ -72,13 +72,13 @@
 </template>
  
 <script>
-  // import hljs from 'highlight.js/lib/highlight.js'
+  import hljs from 'highlight.js/lib/highlight.js'
   import PostOptionModal from '~/components/PostOptionModal'
   import AlertMessage from '~/components/AlertMessage'
   import { mapState } from 'vuex';
   
-  // hljs.registerLanguage('javascript', require('highlight.js/lib/languages/javascript'))
-  // hljs.registerLanguage('css', require('highlight.js/lib/languages/css'))
+  hljs.registerLanguage('javascript', require('highlight.js/lib/languages/javascript'))
+  hljs.registerLanguage('css', require('highlight.js/lib/languages/css'))
 
   const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],
@@ -99,7 +99,7 @@
   export default {
     data () {
       return {
-        content: '<p>Initial Content</p>',
+        content: '',
         title: '',
         hideDetails: true,
         valid: false,
@@ -142,7 +142,7 @@
               }
             },
             syntax: {
-              // highlight: text => hljs.highlightAuto(text).value
+              highlight: text => hljs.highlightAuto(text).value
             },
             imageResize: true,
           },
@@ -164,11 +164,11 @@
         this.videoUrl = '';
       },
       onEditorChange({ editor, html, text }) {
-        this.editorIndex = this.myQuillEditor.getSelection();
+        this.editorIndex = this.myQuillEditor.getSelection().index;
         this.content = html
       },
       onEditorFocus(quill) {
-        this.editorIndex = this.myQuillEditor.getSelection();
+        this.editorIndex = this.myQuillEditor.getSelection().index;
       },
       onChangeLocation(data){
         this.location = data;

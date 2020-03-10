@@ -194,10 +194,11 @@ exports.loadBoard = async (req, res, next) => {
 exports.addLike = async (req, res, next) => {
   try{
     const post = await db.Board.findOne({ where: { id: req.params.id }})
-
+    
     if(!post){
       return res.status(404).send('포스트가 존재하지 않습니다');
     }
+    post.increment('like');
     await post.addLiker(req.user.id);
     res.json({ userId: req.user.id });
   }catch(err){
@@ -212,6 +213,7 @@ exports.removeLike = async (req, res, next) => {
     if(!post){
       return res.status(404).send('포스트가 존재하지 않습니다');
     }
+    post.decrement('like');
     await post.removeLiker(req.user.id);
     res.json({ userId: req.user.id });
   }catch(err){

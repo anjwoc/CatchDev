@@ -15,7 +15,7 @@ const passportConfig = require('./passport');
 
 
 const app = express();
-db.sequelize.sync({ force:true });
+db.sequelize.sync({  });
 dotenv.config();
 const port = process.env.PORT || 4000;
 passportConfig();

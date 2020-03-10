@@ -10,6 +10,12 @@ export const mutations = {
   addMainPost(state, payload){
     state.mainPosts.unshift(payload);
   },
+  updateMainPost(state, payload) {
+    console.log(payload);
+    const postIndex = state.mainPosts.findIndex(v => v.id === payload.id);
+    console.log(postIndex);
+    Vue.set(state.mainPosts[postIndex], postIndex, payload);
+  },
   removeMainPost(state, payload){
     const index = state.mainPosts.findIndex(v => v.id === payload.postId);
     state.mainPosts.splice(index, 1);
@@ -85,6 +91,29 @@ export const actions = {
     })
       .then((res)=> {
         commit('addMainPost', res.data);
+        return res.data.id;
+      })
+      .catch((err)=>{
+        console.error(err);
+      });
+  },
+  update({ commit, state }, payload){
+    return this.$axios.post(`/board/${payload.id}/update`, {
+      title: payload.title,
+      content: payload.content,
+      hashtags: payload.hashtags,
+      tagHistory: payload.tagHistory,
+      location: payload.location,
+      category: payload.category,
+      image: state.imagePaths
+    }, {
+      withCredentials: true,
+    })
+      .then((res)=> {
+        console.log("----posts--------");
+        console.log(res.data);
+        console.log("-----posts-------");
+        commit('updateMainPost', res.data);
         return res.data.id;
       })
       .catch((err)=>{

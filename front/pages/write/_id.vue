@@ -108,6 +108,7 @@
         category: '',
         videoUrl: '',
         editorIndex: '',
+        tagHistory: '',
         msg: '',
         type: 'fail',
         alertDialog: false,
@@ -160,13 +161,13 @@
       },
     },
     created() {
-      this.hashtags = this.post.hashtags.map(h => h.name);
+      const tags = this.post.hashtags.map(h => h.name);
+      this.hashtags = tags;
+      this.tagHistory = tags;
       this.content = this.post.content;
       this.title = this.post.title;
       this.category = this.post.category;
       this.location = this.post.location;
-      console.log(this.category);
-      console.log(this.location);
     },
     fetch({ store, params }) {
       store.dispatch('posts/loadUpdatePost', params.id);
@@ -223,7 +224,6 @@
       },
       updateStatus(data) {
         const status = !data;
-
         this.alertDialog = status;
       },
       onSubmitForm() {
@@ -233,18 +233,20 @@
             this.alertDialog = true;
             this.msg = '카테고리 혹은 지역은 필수입니다.';
             return;
-          }
-          this.$store.dispatch('posts/add', {
+          };
+          this.$store.dispatch('posts/update', {
+            id: this.post.id,
             title: this.title,
             content: this.content,
             hashtags: this.hashtags,
+            tagHistory: this.tagHistory,
             location: this.location,
             category: this.category,
           })
           .then((res)=>{
+            console.log(res);
             this.content = '';
             this.$store.commit('posts/concatImagePaths', []);
-            const lastId = '';
             this.$router.push({ path: `/post/${res}` });
           })
           .catch((err)=>{

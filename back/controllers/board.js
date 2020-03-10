@@ -66,10 +66,44 @@ exports.deleteBoard = async (req, res, next) => {
 
 exports.updateBoard = async (req, res, next) => {
   try{
+    const { title, content, location, hashtags, tagHistory, category, image } = req.body;
     await db.Board.update({
-      ...data
+      title: title,
+      content: content,
+      location: location,
+      category: category,
+    },{
+      where: {
+        id: req.params.id
+      }
     });
+    const updatedPost = await db.Board.findOne({ where: { id: req.params.id }});
+    // 만약 기존의 해시태그에서 줄어들었다면 filter로 삭제된 태그를 찾아서 디비에서 제거
+    const deleteTags = tagHistory.filter(v => !hashtags.includes(v));
+    if (deleteTags) {
+      const result = await updatedPost.removeHashtags(deleteTags.map(r => {
+        db.Hashtag.destroy({
+          where: { name: r }
+        });
+      }));
+    }
+    if(hashtags){
+      const result = await Promise.all(hashtags.map(tag => db.Hashtag.findOrCreate({
+        where: { name: tag },
+      })));
+      await updatedPost.addHashtags(result.map(r => r[0]));
+    };
 
+    if(image){ //이미지가 있다면
+      if(Array.isArray(image)){ //이미자가 여러개이면
+        await Promise.all(image.map((image)=>{
+          return db.Image.create({ src: image, boardId: updatedPost.id });
+        }));
+      } else{ //하나일 때
+        await db.Image.create({ src: imgae, boardId: updatedPost.id });
+      }
+    }
+    res.json(updatedPost);
   }catch(err) {
     console.error(err);
     next(err);

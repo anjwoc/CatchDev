@@ -85,7 +85,7 @@ exports.loadTrendingBoards = async (req, res, next) => {
         model: db.Hashtag,
         attributes: ['name']
       }],
-      order: [[Sequelize.literal('LikeCount'), 'DESC']],
+      order: [['like', 'DESC']],
       limit: parseInt(req.query.limit, 10) || 10,
     });
     res.json(posts);

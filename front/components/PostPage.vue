@@ -96,6 +96,7 @@
           status: this.post.status,
         })
           .then((res) => {
+            this.$router.push('/');
           })
 
       },

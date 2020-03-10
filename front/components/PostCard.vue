@@ -52,7 +52,7 @@
           <div><v-chip class="mb-2" color="blue-grey" small label outlined>{{ post.category }}</v-chip></div>
           <h2 class="mb-3" style="font-size: 1.3em;">{{post.title}}</h2>
           <!-- 게시글 페이지에 들어가야 Comments가 생성이 되서 length값을 어떻게 받아올지 생각해야함 -->
-          <v-list-item-subtitle style="color: #90A4AE; ">{{$moment(post.createdAt).fromNow()}} / {{ post.Comments && post.Comments.length }}개의 댓글</v-list-item-subtitle>
+          <v-list-item-subtitle style="color: #90A4AE; ">{{$moment(post.createdAt).fromNow()}} / {{ post.numComments }}개의 댓글</v-list-item-subtitle>
           
           <div bottom class="ma-0 pa-0 d-flex align-end" style="display: inline-block;">
             <v-chip
@@ -78,7 +78,7 @@
             <v-avatar left>
               <v-icon>{{heartIcon}}</v-icon>
             </v-avatar>
-              좋아요 {{ this.post.LikeCount }}
+              좋아요 {{ this.post.like }}
             </v-chip>
           </div>
           
@@ -101,7 +101,8 @@
           </div>
         </v-list-item-content>
       </v-list-item>
-      
+      <div>
+      </div>
 
     </v-card>
         

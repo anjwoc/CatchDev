@@ -244,7 +244,6 @@
             category: this.category,
           })
           .then((res)=>{
-            console.log(res);
             this.content = '';
             this.$store.commit('posts/concatImagePaths', []);
             this.$router.push({ path: `/post/${res}` });

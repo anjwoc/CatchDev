@@ -19,8 +19,7 @@ exports.allPosts = async (req, res, next) => {
     const posts = await db.Board.findAll({
       where,
       attributes: [
-        'id', 'title', 'category', 'content', 'hit', 'status', 'createdAt', 'userId',
-        [Sequelize.literal('(SELECT COUNT(*) FROM `Like` WHERE Like.boardId = board.id)'), `LikeCount`],
+        'id', 'title', 'category', 'content', 'hit', 'status', 'createdAt', 'userId', 'like', 'numComments'
       ],
       include: [{
         model: db.User,
@@ -70,7 +69,8 @@ exports.loadTrendingBoards = async (req, res, next) => {
         'status',
         'createdAt',
         'userId',
-        [Sequelize.literal('(SELECT COUNT(*) FROM `Like` WHERE Like.boardId = id)'), `LikeCount`],
+        'like',
+        'numComments'
       ],
       include: [{
         model: db.User,
@@ -202,13 +202,13 @@ exports.loadCategoryPosts = async (req, res, next) => {
       attributes: [
         'id',
         'title',
-        'content',
         'category',
         'hit',
         'status',
         'createdAt',
         'userId',
-        [Sequelize.literal('(SELECT COUNT(*) FROM `Like` WHERE Like.boardId = id)'), `LikeCount`],
+        'like',
+        'numComments'
       ],
       include: [{
         model: db.User,
@@ -253,7 +253,7 @@ exports.searchBoards = async (req, res, next) => {
       where,
       include: [{
         model: db.User,
-        attributes: ['id', 'email', 'name', 'imgSrc']
+        attributes: ['id', 'email', 'name', 'imgSrc', 'like', 'numComments']
       },{
         model: db.Image
       },{

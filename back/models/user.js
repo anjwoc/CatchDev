@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     imgSrc: { //프로필 이미지
       type: DataTypes.STRING(200),
-      allowNull: true,
+      allowNull: false,
       defaultValue: process.env.DEFAULT_PROFILE_IMG
     },
   },{

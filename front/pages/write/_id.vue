@@ -12,7 +12,6 @@
     >
         <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
           <section class="container">
-            <div>{{this.post}}</div>
           <div class="d-flex flex-row text-center">
             <PostOptionModal style="width: 100%;" @receive="onChangeCategory" :category="this.post.category" name="Category" :Items="categoryItems" />
             <PostOptionModal style="width: 100%;" @receive="onChangeLocation" :location="this.post.location" name="Location" :Items="locationItems" />

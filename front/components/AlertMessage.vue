@@ -111,7 +111,7 @@
                 >
                 </v-text-field>
 
-                <p class="font-weight-bold title ma-0 pa-0">facebook</p>
+                <p class="font-weight-bold title ma-0 pa-0">Facebook</p>
                 <v-text-field
                   v-model="facebook"
                   outlined
@@ -129,19 +129,19 @@
             <v-btn
               v-if="this.alertType === 'signup' && this.type === 'success'"
               color="info"
-              @click="onSubmitForm"
+              @click="updateStatus"
               text
             >
-              추가 정보 반영하기
+              나중에 하기
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn
               v-if="this.alertType === 'signup' && this.type === 'success'"
               color="info"
-              @click="updateStatus"
+              @click="onSubmitForm"
               text
             >
-              나중에 하기
+              추가 정보 반영하기
             </v-btn>
             <v-btn v-else color="info" @click="updateStatus" text>
               확인
@@ -254,7 +254,6 @@
           })
       },
       async onSubmitForm() {
-        
         await this.onUpdateProfile();
         await this.onUpdateSns();
         this.$router.push({ path: '/' });

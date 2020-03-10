@@ -65,8 +65,6 @@
             required
             outlined
           />
-          
-
           <v-btn 
             x-large width="100%"
             type="submit"
@@ -77,6 +75,7 @@
             회원가입
           </v-btn>
           <alert-message
+            @update="onUpdateStatus"
             :dialog="dialog"
             :userId="userId"
             :alertType="alertType"
@@ -153,7 +152,7 @@
           this.userId = userId;
           this.alertType = 'signup'
           this.type = 'error'
-          this.msg = "회원가입에 실패했습니다."
+          this.msg = "이미 있는 회원이거나 중복된 이메일 입니다."
         }else if(res.status && wildcard('20*', res.status.toString())){
           this.dialog = true;
           this.userId = userId;
@@ -166,6 +165,9 @@
         console.error(err);
       });
     }
+    },
+    onUpdateStatus(status){
+      this.dialog = !status;
     }
 
   },

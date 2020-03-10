@@ -160,16 +160,9 @@ exports.uploadProfileImage = async (req, res, next) => {
     if(!user){ 
       res.status(404).send('회원이 존재하지 않습니다');
     };
-    console.log(Object.keys(req));
-    console.log(Object.keys(req.files));
-    console.log(req.body.userId);
     if(req.files.image){
       //일단 개발 중엔 하드코딩하고 나중에 dotenv로 가저올 예정
-      const serverName = `${process.env.S3_URI}/profile/`;
-      const imageName = req.files.image[0].filename || '';
-      const filename = serverName + imageName;
-      const path = req.files[0].location;
-      console.log(path);
+      const path = req.files.image[0].location;
       if(filename !== user.dataValues.imgSrc && path){
         await db.User.update({
           imgSrc: path,
@@ -197,10 +190,8 @@ exports.updateProfile = async (req, res, next) => {
       imgSrc: imgSrc, 
     },{
       where: { id : req.params.id },
-    })
-    
-    const user = await db.User.findOne({ where: { id: req.params.id }});
-    res.json(user);
+    })    
+    res.status(200);
   }catch(err){
     console.error(err);
   }

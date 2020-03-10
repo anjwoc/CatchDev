@@ -29,9 +29,8 @@ exports.addSns = async (req, res, next) => {
       where: { userId: id }
     });
     
-    const sns = await db.Sns.findOne({ where: { userId: id }});
-
-    return res.json(sns);
+    await db.Sns.findOne({ where: { userId: id }});
+    return res.status(200);
     
   }catch(err) {
     console.error(err);

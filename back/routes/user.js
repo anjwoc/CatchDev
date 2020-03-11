@@ -19,7 +19,7 @@ router.post('/login', isNotLoggedIn, user.logIn);
 
 
 //로그아웃
-router.post('/logout', isLoggedIn, user.logOut);
+router.post('/logout', user.logOut);
 //비밀번호 변경
 router.post('/password', user.updatePassword);
 //프로필 이미지 변경 or 추가

@@ -47,9 +47,10 @@ app.use(session({
   secret: process.env.COOKIE_SECRET,
   cookie: {
     httpOnly: true,
-    secure: false,
+    secure: true,
+    path: '/',
     sameSite: "none",
-    domain: prod && '.delog.net',
+    domain: '.delog.net',
   },
 }));
 app.use(passport.initialize());

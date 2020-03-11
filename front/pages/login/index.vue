@@ -51,7 +51,7 @@
 
                 <v-row align="center" justify="center" style="margin-bottom: 20px; margin-top:20px;">
                   <v-btn x-large color="grey lighten-2" width="90%" dark style="color: black;" @click="githubRedirect">
-                    <v-icon left x-large color="black">mdi-github-box</v-icon>&nbsp;
+                    <v-icon left x-large color="black">mdi-github</v-icon>&nbsp;
                     Github 로그인
                   </v-btn>
                 </v-row>

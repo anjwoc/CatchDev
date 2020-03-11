@@ -145,7 +145,7 @@ exports.logOut = async (req, res, next) => {
     if (req.isAuthenticated()) {
       req.logout();
       req.session.destroy(); // 선택사항
-      return res.clearCookie('connect.sid').status(200).send('로그아웃 되었습니다.');
+      return res.clearCookie('connect.sid', { path: '/' }).status(200).send('로그아웃 되었습니다.');
     }
   }catch(err){
     console.error(err);

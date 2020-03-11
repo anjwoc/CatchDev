@@ -201,11 +201,9 @@ export default {
     },
     coverImg() {
       const image = this.post.images[0] && this.post.images[0].src;
-      console.log(image);
       if(!image){
         return null;
       }
-      console.log(image);
       return image;
     },
     test() {

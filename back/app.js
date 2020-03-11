@@ -10,9 +10,7 @@ const helmet = require('helmet');
 const dotenv = require('dotenv');
 const db = require('./models');
 const routes = require('./routes');
-
 const passportConfig = require('./passport');
-
 
 const app = express();
 db.sequelize.sync({  });
@@ -21,7 +19,6 @@ const port = process.env.PORT || 4000;
 passportConfig();
 
 if (prod) {
-  
   app.use(helmet());
   app.use(hpp());
   app.use(morgan('combined'));
@@ -29,8 +26,6 @@ if (prod) {
     origin: ["https://www.delog.net", "https://delog.net", "https://api.github.com", "https://github.com"],
     credentials: true,
   }));
-
-  
 } else{
   app.use(morgan('dev'));
   app.use(cors({

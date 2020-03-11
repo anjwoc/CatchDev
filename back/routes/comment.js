@@ -9,6 +9,6 @@ router.get('/:id', comment.getComments);
 router.post('/update/:id', comment.updateComment);
 router.post('/:id', isLoggedIn, comment.addComment);
 
-
+router.delete('/:id', comment.deleteComment);
 
 module.exports = router

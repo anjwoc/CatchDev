@@ -11,9 +11,7 @@ export const mutations = {
     state.mainPosts.unshift(payload);
   },
   updateMainPost(state, payload) {
-    console.log(payload);
     const postIndex = state.mainPosts.findIndex(v => v.id === payload.id);
-    console.log(postIndex);
     Vue.set(state.mainPosts[postIndex], postIndex, payload);
   },
   removeMainPost(state, payload){
@@ -57,6 +55,11 @@ export const mutations = {
     //postId와 boardId 용어 혼용으로 에러 발생
     const index = state.mainPosts.findIndex(v => v.id === payload.boardId);
     state.mainPosts[index].Comments.unshift(payload);
+  },
+  deleteComment(state, payload){
+    const postIndex = state.mainPosts.findIndex(v => v.id === payload.postId);
+    const index = state.mainPosts[postIndex].Comments.findIndex(v => v.id === payload.id);
+    state.mainPosts[postIndex].Comments.splice(index, 1);
   },
   unlikePost(state, payload){
     const index = state.mainPosts.findIndex(v => v.id === payload.postId);
@@ -110,9 +113,6 @@ export const actions = {
       withCredentials: true,
     })
       .then((res)=> {
-        console.log("----posts--------");
-        console.log(res.data);
-        console.log("-----posts-------");
         commit('updateMainPost', res.data);
         return res.data.id;
       })
@@ -144,6 +144,21 @@ export const actions = {
       })
       .catch((err)=>{
         console.error(err);
+      })
+  },
+  async deleteComment({ commit }, payload){
+    await this.$axios.delete(`/comment/${payload.id}`,{
+      data: {
+        boardId: payload.postId
+      }
+    },{
+      withCredentials: true,
+    })
+      .then((res) => {
+        commit('deleteComment', {
+          id : res.data,
+          postId: payload.postId
+        });
       })
   },
   async updateComment({ commit }, payload){

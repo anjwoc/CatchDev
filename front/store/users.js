@@ -196,7 +196,6 @@ export const actions = {
       const res = await this.$axios.get(`/user/${payload.id}`, {
         withCredentials: true,
       });
-      console.log("loadConnectionUser 진입");
       commit('setMe', res.data);
     }catch(err){
       console.error(err);

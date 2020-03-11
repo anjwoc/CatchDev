@@ -7,6 +7,7 @@ exports.addComment = async (req, res, next) => {
     if(!post){
       return res.status(404).send('포스트가 존재하지 않습니다.');
     }
+    post.increment('numComments');
     const newComment = await db.Comment.create({
       boardId: post.id,
       userId: req.user.id,
@@ -73,4 +74,21 @@ exports.getComments = async (req, res, next) => {
     console.error(err);
     next(err);
   }
-}
+};
+
+exports.deleteComment = async (req, res, next) => {
+  try{
+    const post = await db.Board.findOne({ where: { id: req.body.boardId }});
+    if(!post){
+      return res.status(404).send('포스트가 존재하지 않습니다.');
+    }
+    post.decrement('numComments');
+    const result = await db.Comment.destroy({
+      where: { id: req.params.id }
+    });
+    return res.json(result);
+  }catch(err){ 
+    console.error(err);
+    next(err);
+  }
+};

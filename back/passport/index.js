@@ -44,7 +44,6 @@ module.exports = () => {
           attributes: ['github', 'gmail', 'facebook', 'userId']
         }],
       });
-      
       return done(null, user); // req.user, req.isAuthenticated() === true,
     } catch (err) {
       console.error(err);

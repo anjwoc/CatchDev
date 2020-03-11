@@ -56,7 +56,6 @@ exports.deleteBoard = async (req, res, next) => {
         id: req.params.id,
       },
     });
-    db.Board.removeHash
     res.json('삭제 성공');
   }catch(err) {
     console.error(err);

@@ -29,7 +29,7 @@
         <!-- <div v-if="c.updateOpened">여기 업데이트</div> -->
         <v-container class="pb-0 pt-0">{{ c.content }}</v-container>
         <div align="end">
-          <v-btn class="ma-0 pa-0" color="red darken-3" text outlined bottom right>삭제</v-btn>
+          <v-btn class="ma-0 pa-0" color="red darken-3" @click.prevent="onDeleteComment(c.id)" text outlined bottom right>삭제</v-btn>
         </div>
       </v-container>
     </v-card>
@@ -70,14 +70,12 @@
       },
     },
     methods: {
-      onToggleUpdate(content, commentId, updateOpened){
-        this.$store.commit('posts/updateToggleComment', {
-          postId: this.postId,
-          commentId: commentId,
-          updateOpened: updateOpened,
+      onDeleteComment(id){
+        this.$store.dispatch('posts/deleteComment', {
+          id: id,
+          postId: this.postId
         });
-      },
-      
+      } 
     },
     
 

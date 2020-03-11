@@ -11,12 +11,13 @@ const dotenv = require('dotenv');
 const db = require('./models');
 const routes = require('./routes');
 const passportConfig = require('./passport');
+passportConfig();
 
 const app = express();
 db.sequelize.sync({  });
 dotenv.config();
 const port = process.env.PORT || 4000;
-passportConfig();
+
 
 if (prod) {
   app.use(helmet());
@@ -47,17 +48,12 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: false,
-    // domain: prod && '.delog.net',
+    domain: prod && '.delog.net',
   },
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', routes);
-
-app.get('/success', (req, res) => {
-  res.json(req.headers.authorization);
-})
-
 
 app.listen(port,  () => {
   console.log(`백엔드 서버 ${port}번 포트에서 작동중.`);

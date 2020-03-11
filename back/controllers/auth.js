@@ -92,7 +92,7 @@ exports.githubCallback = async (req, res, next) => {
         name: userInfo.name,
         email: userInfo.email,
         socialType: userInfo.provider,
-        imgSrc: userInfo.profileUrl,
+        imgSrc: userInfo.photos[0].value,
         location: userInfo.location,
         about: userInfo.about,
         job: userInfo.job,

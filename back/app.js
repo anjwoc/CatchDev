@@ -48,7 +48,7 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: false,
-    // domain: prod && '.delog.net',
+    domain: prod && '.delog.net',
   },
 }));
 app.use(passport.initialize());

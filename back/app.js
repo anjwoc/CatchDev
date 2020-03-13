@@ -49,7 +49,7 @@ app.use(session({
     httpOnly: true,
     secure: false,
     path: '/',
-    domain: '.delog.net',
+    // domain: '.delog.net',
   },
 }));
 app.use(passport.initialize());

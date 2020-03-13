@@ -10,7 +10,9 @@ router.use('/comment', require('./comment'));
 router.use('/sns', require('./sns'));
 //router.use('/image', require('./image'));
 router.get('/', (req, res) => {
-  res.status(200).send('Hello World');
+  res.json({
+    "asdfasdf": req.headers.authorization
+  });
 });
 
 module.exports = router;

@@ -17,7 +17,7 @@
         <p class="font-weight-medium caption ma-0 mt-2 mb-2">{{ $moment(item.createdAt).format("YYYY년 MM월 DD일") }}</p>
         
         <a id="postLink" class="mb-4">{{ item.title }}</a>
-        <p class="body-1"> {{ bodyContent(item.content) }} </p>
+        <p> {{ bodyContent(item.content) }} </p>
       </v-container>
       
     </v-card>

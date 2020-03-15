@@ -4,11 +4,16 @@ const comment = require('../controllers/comment');
 
 const router = express.Router();
 
+// id와 일치하는 포스트의 전체 댓글 불러오기
 router.get('/:id', comment.getComments);
 
+// 댓글 수정
 router.post('/update/:id', comment.updateComment);
+
+// 댓글 작성
 router.post('/:id', isLoggedIn, comment.addComment);
 
+// 댓글 삭제
 router.delete('/:id', comment.deleteComment);
 
 module.exports = router

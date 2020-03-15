@@ -6,8 +6,7 @@ const router = express.Router();
 
 // ':'문자는 와일드카드로 사용되므로 항상 가장 뒤에 적어주는게 좋다.
 
-// 게시글 좋아요 수
-router.get('/countLike/:id', board.countLike);
+
 // 업데이트 할 게시물 로드(불 필요한 작업을 하지 않기 위해 별도로 분리)
 router.get('/history/:id', board.loadUpdateBoard);
 // 게시물 로드

@@ -1,5 +1,6 @@
 <template>
   <v-lazy ssr-only>
+    <!-- 페이지 헤더 컴포넌트로 분리시켜서 재사용하도록 추후 리팩토링 -->
     <div>
       <v-row class="mr-8" justify="end">
         <v-spacer />
@@ -17,10 +18,10 @@
         </v-toolbar>
       </v-row>
 
-      <div></div>
+      
       <v-row>
-        <v-col align="center" v-for="p in mainPosts" :key="p.id" cols="12" xl="3" lg="4" md="6" sm="6" xs="12">
-          <v-container >
+        <v-col align="center" justify="center" v-for="p in mainPosts" :key="p.id" cols="12">
+          <v-container>
             <v-hover
               v-slot:default="{ hover }"
               :open-delay="openDelay"
@@ -28,7 +29,7 @@
               :disabled="disabled"
               :value="value"
             >
-              <post-card :hover="hover" :post=p />
+              <post-category-card class="card-component" :hover="hover" :post=p />
             </v-hover>
           </v-container>
         </v-col>
@@ -40,6 +41,8 @@
 
 <script>
 import PostCard from '~/components/PostCard'
+import PostCategoryCard from '~/components/PostCategoryCard'
+
   export default {
     data() {
       return { 
@@ -51,6 +54,7 @@ import PostCard from '~/components/PostCard'
     },
     components: {
       PostCard,
+      PostCategoryCard
     },
     computed: {
       me() {
@@ -63,7 +67,6 @@ import PostCard from '~/components/PostCard'
         return this.$store.state.posts.mainPosts;
       },
       routeName() {
-        
         return this.$route.params.name;
       }
       
@@ -96,6 +99,10 @@ import PostCard from '~/components/PostCard'
 </script>
 
 <style scoped>
+
+.card-component {
+  max-width: 850px;
+}
 
 #point-color{
   color: #b79b5f;

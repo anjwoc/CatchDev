@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         '프로그래밍',
         '기타'
       ],
-      // unique: category_index
     },
     location: {
       type: DataTypes.STRING(20),

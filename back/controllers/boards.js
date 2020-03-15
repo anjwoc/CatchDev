@@ -214,13 +214,6 @@ exports.loadCategoryPosts = async (req, res, next) => {
         attributes: ['id', 'email', 'name', 'imgSrc']
       },{
         model: db.Image,
-      },{
-        model: db.User,
-        as: 'Likers',
-        attributes: ['id']
-      },{
-        model: db.Hashtag,
-        attributes: ['name']
       }],
       order: [['createdAt', 'DESC']],
       limit: parseInt(req.query.limit, 10) || 10,

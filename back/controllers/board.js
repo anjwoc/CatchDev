@@ -220,21 +220,3 @@ exports.removeLike = async (req, res, next) => {
     next(err);
   }
 };
-
-exports.countLike = async (req, res, next) => {
-  try{
-    const allCount = await db.Board.findOne({
-      where: { id: req.params.id },
-      include: [{
-        model: db.User,
-        as: 'Likers', 
-        attributes: [[db.sequelize.fn('count', '*'), 'count']],
-      }]
-    });
-    res.json(allCount.Likers);
-
-  }catch(err){
-    console.error(err);
-    next(err);
-  }
-};

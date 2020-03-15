@@ -62,5 +62,6 @@ module.exports = {
   env: {
     baseUrl: process.env.NODE_ENV === 'production' ? 'https://api.delog.net' : 'http://localhost:4000',
     default_img: 'https://catchdev-bucket.s3.ap-northeast-2.amazonaws.com/default/default-profile-image.png',
+    no_img: 'https://catchdev-bucket.s3.ap-northeast-2.amazonaws.com/default/noimage.png'
   }
 };

@@ -98,7 +98,7 @@
         { icon: 'mdi-trending-up', text: 'Popular Study', to: '/popularStudy' },
         { icon: 'mdi-clock-outline', text: 'Recent Recruit', to: '/recentRecruit' },
         { divider: true },
-        { icon: 'mdi-tag-multiple', text: 'Hashtags', to: '/' },
+        { icon: 'mdi-tag-multiple', text: 'Hashtags', to: '/tags' },
         { divider: true },
         { heading: 'Categorys', icon: 'mdi-table-of-contents' },
         { icon: 'mdi-alpha-l-box', text: '어학', to: '/category/어학' },

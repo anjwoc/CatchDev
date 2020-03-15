@@ -190,7 +190,7 @@ export const actions = {
       console.error(err);
     }
   },
-  loadCategoryPosts: throttle(async function({ commit, state }, payload){
+  async loadCategoryPosts ({ commit, state }, payload){
     try{
       let item = payload.item;
       if(payload && payload.reset) {
@@ -213,7 +213,7 @@ export const actions = {
     }catch(err){
       console.error(err);
     }
-  }, 2000),
+  },
   loadTrendingPosts: throttle(async function({ commit, state}, payload){
     try{
       if(payload && payload.reset) {

@@ -8,7 +8,7 @@
         <v-spacer />
           <v-toolbar-items id="main-color">
             <div class="title mt-2">All Study</div>
-            <v-divider class="ml-3 mr-3" dark inset vertical></v-divider>
+            <v-divider dark inset vertical></v-divider>
             <v-icon id="main-color">mdi-home</v-icon>
             <v-icon id="main-color" small>mdi-chevron-right</v-icon>
             <p class="amber--text mt-3">Home</p>

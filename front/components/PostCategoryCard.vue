@@ -35,6 +35,7 @@
           </v-chip>
         </div> 
         <p class="post-author">By {{ id }}</p>
+        
       </div>
     </article>
   </nuxt-link>

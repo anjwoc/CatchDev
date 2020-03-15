@@ -193,16 +193,6 @@ export const actions = {
   loadCategoryPosts: throttle(async function({ commit, state }, payload){
     try{
       let item = payload.item;
-      if(payload.item){
-        if(item === 'programming'){ item = '프로그래밍' }
-        else if(item === 'examination'){ item = '고시'}
-        else if(item === 'language'){ item = '어학'}
-        else if(item === 'certificate'){ item = '자격증'}
-        else if(item === 'employment'){ item = '취업'}
-        else{ item = '기타'}
-      }else{
-        item = null;
-      }
       if(payload && payload.reset) {
         const res = await this.$axios.get(`/boards/categoryPosts?item=${item}`);
         commit('loadPosts', {

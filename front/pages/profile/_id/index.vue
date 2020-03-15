@@ -154,22 +154,22 @@
         return this.$store.state.users.profileData;
       },
       github() {
-        if(!this.me.sn){
+        if(!this.me.sns){
           return '';
         }
-        return this.me.sn.github;
+        return this.me.sns.github;
       },
       gmail() {
-        if(!this.me.sn){
+        if(!this.me.sns){
           return '';
         }
-        return this.me.sn.gmail;
+        return this.me.sns.gmail;
       },
       facebook() {
-        if(!this.me.sn){
+        if(!this.me.sns){
           return '';
         }
-        return this.me.sn.facebook;
+        return this.me.sns.facebook;
       },
       
 

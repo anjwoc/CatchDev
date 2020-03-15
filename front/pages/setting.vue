@@ -207,9 +207,9 @@
       this.about = this.me && this.me.about;
       this.job = this.me.job || '';
       this.location = this.me.location || '';
-      this.github = this.me.sn ? this.me.sn.github : 'https://www.github.com/';
-      this.gmail = this.me.sn ? this.me.sn.gmail : 'example@gmail.com';
-      this.facebook = this.me.sn ? this.me.sn.facebook : 'https://www.facebook.com/in';
+      this.github = this.me.sns ? this.me.sns.github : 'https://www.github.com/';
+      this.gmail = this.me.sns ? this.me.sns.gmail : 'example@gmail.com';
+      this.facebook = this.me.sns ? this.me.sns.facebook : 'https://www.facebook.com/in';
     },
     methods: {
       onChangeImage(e){

@@ -98,18 +98,19 @@
         { icon: 'mdi-trending-up', text: 'Popular Study', to: '/popularStudy' },
         { icon: 'mdi-clock-outline', text: 'Recent Recruit', to: '/recentRecruit' },
         { divider: true },
+        { icon: 'mdi-tag-multiple', text: 'Hashtags', to: '/' },
+        { divider: true },
         { heading: 'Categorys', icon: 'mdi-table-of-contents' },
-        { icon: 'mdi-alpha-l-box', text: 'Language', to: '/category/language' },
-        { icon: 'mdi-briefcase', text: 'Employment', to: '/category/employment' },
-        { icon: 'mdi-pencil', text: 'State Examination', to: '/category/examination' },
-        { icon: 'mdi-certificate', text: 'Certificate', to: '/category/certificate' },
-        { icon: 'mdi-language-javascript', text: 'Programming', to: '/category/programming' },
-        { icon: 'mdi-dots-horizontal', text: 'etc', to: '/category/etc' },
+        { icon: 'mdi-alpha-l-box', text: '어학', to: '/category/어학' },
+        { icon: 'mdi-briefcase', text: '취업', to: '/category/취업' },
+        { icon: 'mdi-pencil', text: '고시', to: '/category/고시' },
+        { icon: 'mdi-certificate', text: '자격증', to: '/category/자격증' },
+        { icon: 'mdi-language-javascript', text: '프로그래밍', to: '/category/프로그래밍' },
+        { icon: 'mdi-dots-horizontal', text: '기타', to: '/category/기타' },
       ],
     }),
     methods: {
       onSearchPosts(event) {
-        // console.log(event.target.value);
         this.$router.push({ path: `/post/search/${event.target.value}`});
       }
     },

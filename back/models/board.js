@@ -9,8 +9,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false, // 필수
     },
     category: {
-      type: DataTypes.STRING(20),
-      allowNull: false
+      type: DataTypes.ENUM,
+      allowNull: false,
+      values: [
+        '어학',
+        '취업',
+        '고시',
+        '자격증',
+        '프로그래밍',
+        '기타'
+      ],
+      // unique: category_index
     },
     location: {
       type: DataTypes.STRING(20),
@@ -41,9 +50,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   },{
     charset: 'utf8',
-    collate: 'utf8_general_ci' //한글 저장
+    collate: 'utf8_unicode_ci' //한글 저장
   })
-  
+
+
   Board.associate = (db) => {
     db.Board.belongsTo(db.User); 
     db.Board.hasMany(db.Comment);

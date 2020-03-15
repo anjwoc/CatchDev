@@ -195,8 +195,7 @@ exports.loadCategoryPosts = async (req, res, next) => {
         },
         category: item
       }
-    }
-
+    };
     const categoryPosts = await db.Board.findAll({
       where,
       attributes: [

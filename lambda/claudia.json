@@ -1,0 +1,7 @@
+{
+  "lambda": {
+    "role": "catchdev-lambda-executor",
+    "name": "catchdev-lambda",
+    "region": "ap-northeast-2"
+  }
+}

@@ -20,6 +20,8 @@ const port = process.env.PORT || 4000;
 
 
 if (prod) {
+  console.log("==============================================");
+  console.log("production");
   app.use(helmet());
   app.use(hpp());
   app.use(morgan('combined'));
@@ -49,7 +51,7 @@ app.use(session({
     httpOnly: true,
     secure: false,
     path: '/',
-    // domain: '.delog.net',
+    domain: '.delog.net',
   },
 }));
 app.use(passport.initialize());

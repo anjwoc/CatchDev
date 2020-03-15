@@ -1,20 +1,20 @@
-version: "2"
+version: "3"
 
 services: 
-  nginx:
+#nginx:
     # 만들어질 container 이름
-    container_name: nginx
+    #container_name: nginx
 
     # Dockerfile 위치
-    build: ./nginx
+    #build: ./docker/nginx
 
     # 컨테이너끼리 내부적으로 연결할 때 alias
     # ex) A:B의 경우 컨터에니 내에서 B라는 이름으로 A에 연결 가능
     # 아래에서는 nginx에서 app이라는 도메인으로 app 컨테이너에 접근 가능
-    links: 
-      - app:app
-    ports: 
-      - 80:80
+    #links: 
+    # - app:app
+        #  ports: 
+        #- 80:80
     
   app:
     container_name: app
@@ -23,5 +23,6 @@ services:
     #환경 변수 지정
     environment: 
       NODE_ENV: production
-    ports: 4000
+    ports:
+      - "4000:4000"
     

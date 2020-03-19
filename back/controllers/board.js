@@ -152,6 +152,7 @@ exports.loadUpdateBoard = async (req, res, next) => {
         attributes: ['id']
       },{
         model: db.Hashtag,
+        as: 'hashtags',
         attributes: ['name']
       }]
     });
@@ -177,6 +178,7 @@ exports.loadBoard = async (req, res, next) => {
         attributes: ['id']
       },{
         model: db.Hashtag,
+        as: 'hashtags',
         attributes: ['name']
       }]
     });

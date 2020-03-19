@@ -5,35 +5,35 @@
       <img class="post-image" v-if="coverImg" :src="coverImg" />
       <div class="article-details">
         <h4 class="post-category">{{ post.category }}</h4>
-        
         <h3 class="post-title">{{ this.post.title }}</h3>
-        <div bottom class="ma-0 pa-0 d-flex align-end" style="display: inline-block;">
+        
+        <v-chip
+        class="ma-0 "
+        :color="statusColor"
+        small
+        text-color="white"
+        >
+        <v-avatar left>
+          <v-icon>{{statusIcon}}</v-icon>
+        </v-avatar>
+          {{ status }}
+        </v-chip>
+
+        <div class="post-hashtags">
           <v-chip
-          class="ma-0 mt-3 mr-1"
-          :color="statusColor"
-          small
-          text-color="white"
-          to="/"
+            v-for="(tag, index) in hashtags"
+            :key="index"
+            small
+            class="ml-1 mr-1 pa-0 font-weight-regular"
+            color="grey lighten-4" 
+            outlined
+            text-color="blue-grey"
+            to="/"
           >
-          <v-avatar left>
-            <v-icon>{{statusIcon}}</v-icon>
-          </v-avatar>
-            {{ status }}
+          #{{tag}}
           </v-chip>
-          <v-chip
-          class="ma-0 mt-4"
-          color="green"
-          @click="onClickHeart"
-          small
-          text-color="white"
-          to="/"
-          >
-          <v-avatar left>
-            <v-icon>{{heartIcon}}</v-icon>
-          </v-avatar>
-            좋아요 {{ this.post.like }}
-          </v-chip>
-        </div> 
+        </div>
+
         <p class="post-author">By {{ id }}</p>
         
       </div>
@@ -104,15 +104,8 @@ export default {
     me() {
       return this.$store.state.users.me;
     },
-    liked() {
-      const me = this.$store.state.users.me;
-      return !!(this.post.Likers || []).find(v => v.id === (me && me.id));
-    },
-    heartIcon() {
-      return this.liked ? 'mdi-heart' : 'mdi-heart-outline';
-    },
     status(){ 
-      return this.post.status === "open" ? '모집중' : '모집마감';
+      return this.post.status === "open" ? 'OPEN' : 'CLOSED';
     },
     statusColor() {
       return this.post.status === "open" ? 'indigo' : 'red';
@@ -263,10 +256,14 @@ $shadow: rgba(0, 0, 0, 0.2);
   margin: 0 0 0.5rem 0;
 }
 
+.post-hashtags {
+  margin: 0.5rem 0 0 0;
+}
+
 .post-author {
   font-size: 0.875rem;
   line-height: 1;
-  margin: 1.125rem 0 0 0;
+  margin: 0.2rem 0 0 0;
   padding: 1.125rem 0 0 0;
   border-top: 0.0625rem solid $border;
 }

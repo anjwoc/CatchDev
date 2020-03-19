@@ -10,20 +10,12 @@
       :to="postUrl"
       outlined
     >
-      
       <v-img
         v-if="coverImg"
         :src="coverImg"
         :lazy-src="coverImg"
         height="170px"
       ></v-img>
-      <!-- <v-card
-        v-else
-        color="primary"
-        elevation="0"
-        height="170px"
-      >
-      </v-card> -->
       
       <v-card-text class="pa-1" text style="position: relative">
         <v-btn
@@ -81,7 +73,6 @@
               좋아요 {{ this.post.like }}
             </v-chip>
           </div>
-          
             
           <v-container></v-container>
           <v-divider></v-divider>
@@ -94,7 +85,7 @@
               color="grey lighten-4" 
               outlined
               text-color="blue-grey"
-              to="/"
+              :to="`/tags/${tag}`"
             >
             #{{tag}}
             </v-chip>

@@ -32,6 +32,7 @@ exports.allPosts = async (req, res, next) => {
         attributes: ['id']
       },{
         model: db.Hashtag,
+        as: 'hashtags',
         attributes: ['name']
       }],
       order: [['createdAt', 'DESC']],
@@ -83,6 +84,7 @@ exports.loadTrendingBoards = async (req, res, next) => {
         attributes: ['id']
       },{
         model: db.Hashtag,
+        as: 'hashtags',
         attributes: ['name']
       }],
       order: [['like', 'DESC']],
@@ -177,6 +179,41 @@ exports.loadAllClosedBoardsList = async (req, res, next) => {
     next(err);
   }
 };
+exports.loadHashtagsPosts = async (req, res, next) => {
+  try{
+    const name = req.params.name;
+    let where = {};
+    if (parseInt(req.query.lastId, 10)){
+      where = {
+        id: {
+          [db.Sequelize.Op.lt]: parseInt(req.query.lastId, 10),
+        },
+      } 
+    }
+    const tagPosts = await db.Board.findAll({
+      where,
+      include: [{
+        model: db.User,
+        attributes: ['id', 'email', 'name', 'imgSrc']
+      },{
+        model: db.Image
+      },{
+        model: db.Hashtag,
+        as: 'hashtags',
+        where: { name: name },
+        attributes: ['name']
+      }]
+    },{
+      order: [['createdAt', 'DESC']],
+      limit: parseInt(req.query.limit, 10) || 10,
+    });
+    res.json(tagPosts);
+
+  }catch(err) {
+    console.log(err);
+    return next(err);
+  };
+};
 
 exports.loadCategoryPosts = async (req, res, next) => {
   try{
@@ -214,6 +251,10 @@ exports.loadCategoryPosts = async (req, res, next) => {
         attributes: ['id', 'email', 'name', 'imgSrc']
       },{
         model: db.Image,
+      },{
+        model: db.Hashtag,
+        as: 'hashtags',
+        attributes: ['name']
       }],
       order: [['createdAt', 'DESC']],
       limit: parseInt(req.query.limit, 10) || 10,
@@ -245,7 +286,7 @@ exports.searchBoards = async (req, res, next) => {
       where,
       include: [{
         model: db.User,
-        attributes: ['id', 'email', 'name', 'imgSrc', 'like', 'numComments']
+        attributes: ['id', 'email', 'name', 'imgSrc']
       },{
         model: db.Image
       },{
@@ -254,6 +295,7 @@ exports.searchBoards = async (req, res, next) => {
         attributes: ['id']
       },{
         model: db.Hashtag,
+        as: 'hashtags',
         attributes: ['name']
       }]
     });
@@ -262,6 +304,7 @@ exports.searchBoards = async (req, res, next) => {
     console.error(err);
     return next(err);
   }
-
 };
+
+
 

@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
     db.Board.hasMany(db.Comment);
     db.Board.hasMany(db.Image);
     db.Board.belongsToMany(db.User, { through: 'Like', as: 'Likers' });
-    db.Board.belongsToMany(db.Hashtag, { through: 'BoardHashtag' });
+    db.Board.belongsToMany(db.Hashtag, { through: 'BoardHashtag', as: 'hashtags' });
   };
   return Board;
 };

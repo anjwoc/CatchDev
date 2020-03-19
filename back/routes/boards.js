@@ -24,7 +24,8 @@ router.get('/:id/allClosedBoards', boards.loadAllClosedBoardsList);
 /* 카테고리 관련 라우터 */
 router.get('/categoryPosts', boards.loadCategoryPosts);
 
-
+/* 해시태그 게시물 라우터 */
+router.get('/tags/:name', boards.loadHashtagsPosts);
 
 
 module.exports = router

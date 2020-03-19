@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     collate: 'utf8_unicode_ci',
   });
   Hashtag.associate = (db) => {
-    db.Hashtag.belongsToMany(db.Board, { through: 'BoardHashtag' });
+    db.Hashtag.belongsToMany(db.Board, { through: 'BoardHashtag', as: 'hashtags' });
   };
   return Hashtag;
 };

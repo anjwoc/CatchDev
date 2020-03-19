@@ -12,7 +12,6 @@ router.get('/history/:id', board.loadUpdateBoard);
 // 게시물 로드
 router.get('/:id', board.loadBoard);
 
-
 // 게시글  작성
 router.post('/', isLoggedIn, board.addBoard);
 // 이미지 업로드

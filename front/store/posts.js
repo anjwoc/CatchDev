@@ -6,6 +6,7 @@ export const state = () => ({
   mainPosts: [],
   hasMorePost: false,
   imagePaths: [],
+  hashtags: [],
 });
 export const mutations = {
   addMainPost(state, payload){
@@ -76,6 +77,10 @@ export const mutations = {
   updatePostStatus(state, payload){
     const index = state.mainPosts.findIndex(v => v.id === payload.postId);
     state.mainPosts[index].status = payload.status;
+  },
+  loadHashtags(state, payload){
+    const tags = payload.data.map(v => v.name);
+    state.hashtags = tags;
   },
 
 };
@@ -334,7 +339,7 @@ export const actions = {
         
       })
   },
-  async loadSearchPosts({ commit}, payload){
+  async loadSearchPosts({ commit }, payload){
     if(payload && payload.reset) {
       const res = await this.$axios.get(`/boards/search/${payload.searchWord}`);
       commit('loadPosts', {
@@ -353,6 +358,17 @@ export const actions = {
       return;
     }
   },
+  async loadAllHashtags({ commit }, payload){
+    try{
+      const res = await this.$axios.get(`/boards/allTags`);
+      commit('loadHashtags', {
+        data: res.data,
+      });
+      
+    }catch(err) {
+      console.error(err);
+    }
+  }
   
   
 

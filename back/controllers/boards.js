@@ -3,6 +3,7 @@ const db = require('../models');
 const Sequelize = require('sequelize');
 const queryString = require('querystring');
 const Op = Sequelize.Op;
+const QueryTypes = Sequelize.QueryTypes;
 
 exports.allPosts = async (req, res, next) => {
   try{
@@ -93,6 +94,19 @@ exports.loadTrendingBoards = async (req, res, next) => {
     res.json(posts);
 
   }catch(err){
+    console.error(err);
+    return next(err);
+  }
+};
+
+exports.loadAllHashtags = async (req, res, next) => {
+  try{
+    // const tags = await db.Hashtag.findAll({
+    //   attributes: ['name']
+    // });
+    const tags = await db.sequelize.query("SELECT name FROM hashtags", { type: QueryTypes.SELECT});
+    return res.json(tags);
+  }catch(err) {
     console.error(err);
     return next(err);
   }

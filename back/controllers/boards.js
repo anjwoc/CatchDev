@@ -99,6 +99,7 @@ exports.loadTrendingBoards = async (req, res, next) => {
   }
 };
 
+// 모든 해시태그들의 리스트를 반환한다.
 exports.loadAllHashtags = async (req, res, next) => {
   try{
     // const tags = await db.Hashtag.findAll({

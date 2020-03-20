@@ -1,17 +1,18 @@
 <template>
-  
   <nuxt-link class="card-link" :to="postUrl">
     <article class="blog-card">
       <img class="post-image" v-if="coverImg" :src="coverImg" />
+      <img class="post-image" v-else :src="coverImg" />
+      
       <div class="article-details">
         <h4 class="post-category">{{ post.category }}</h4>
         <h3 class="post-title">{{ this.post.title }}</h3>
         
         <v-chip
-        class="ma-0 "
-        :color="statusColor"
-        small
-        text-color="white"
+          class="ma-0"
+          :color="statusColor"
+          small
+          text-color="white"
         >
         <v-avatar left>
           <v-icon>{{statusIcon}}</v-icon>
@@ -33,7 +34,6 @@
           #{{tag}}
           </v-chip>
         </div>
-
         <p class="post-author">By {{ id }}</p>
         
       </div>

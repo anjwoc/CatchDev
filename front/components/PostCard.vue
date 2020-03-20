@@ -59,21 +59,7 @@
             </v-avatar>
               {{ status }}
             </v-chip>
-            <v-chip
-            class="ma-0 mt-4"
-            color="green"
-            @click="onClickHeart"
-            small
-            text-color="white"
-            to="/"
-            >
-            <v-avatar left>
-              <v-icon>{{heartIcon}}</v-icon>
-            </v-avatar>
-              좋아요 {{ this.post.like }}
-            </v-chip>
           </div>
-            
           <v-container></v-container>
           <v-divider></v-divider>
           <div class="ma-0 pa-0">
@@ -90,13 +76,12 @@
             #{{tag}}
             </v-chip>
           </div>
+          
         </v-list-item-content>
       </v-list-item>
       <div>
       </div>
-
     </v-card>
-        
   </v-container>
     
   
@@ -180,9 +165,12 @@ export default {
     },
     hashtags() {
       if(this.post && this.post.hashtags){
-        const tags = [];
-        tags.unshift(this.post.hashtags.map(tag => tag.name));
-        return tags[0];
+        const tags = this.post.hashtags.map(tag => tag.name);
+        
+        if (this.coverImg){
+          return tags.slice(0,5);
+        }
+        return tags;
       }
       return null;
     },

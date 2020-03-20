@@ -3,7 +3,7 @@
     <v-row id="test" class="fill-height white ma-0 pa-0">
       <v-col cols="12" md="2" class="ma-0 pa-0"></v-col>
       <v-col cols="12" md="8">
-        <h1 id="mainTitle" style="font-size: 40px;">{{post.title}}</h1>
+        <h1 id="mainTitle" style="font-size: 3.2rem;">{{post.title}}</h1>
         <v-row>
           <div>
             <v-avatar class="mr-2 mb-8" size="60">
@@ -43,22 +43,26 @@
         </v-row>
 
         <div class="d-flex row">
-          <v-subheader class="" style="font-size: 18px;">{{ $moment(post.createdAt).format("YYYY년 MM월 DD일") }}</v-subheader>
+          <v-subheader style="font-size: 1rem;">{{ $moment(post.createdAt).format("YYYY년 MM월 DD일") }}</v-subheader>
           <v-spacer></v-spacer>
-          <v-btn v-if="this.isMe" @click="onUpdateStatus" text outlined color="blue-grey">모집 완료</v-btn>
+          <div class="ma-0 pa-0">
+            <v-btn @click="onClickHeart" text small outlined color="blue-grey">
+              <v-icon color="red" small>{{heartIcon}}</v-icon>
+              &nbsp;좋아요
+            </v-btn>
+            <v-btn v-if="this.isMe" @click="onUpdateStatus" text small outlined color="blue-grey">모집 완료</v-btn>
+          </div>
+          
         </div>
-        <v-divider></v-divider>
+        <v-divider class="ma-0 pa-0"></v-divider>
         <v-row>
           <div class="mt-8 ml-3 mr-3" v-html="this.post.content"></div>
         </v-row>
-        
         <div class="emptySpace"></div>
         <h2 class="mb-1">{{commentsLength}}개의 댓글</h2>
         <comment-form class="mb-6" :postId="this.post && this.post.id" />
-        
         <v-divider></v-divider>
         <comment-content :comments="post.Comments" :postId="post.id" :postCreatedAt="post.createdAt"  />
-
       </v-col>
       <v-col cols="12" md="2" class="ma-0 pa-0"></v-col>
     </v-row>
@@ -98,12 +102,31 @@
           .then((res) => {
             this.$router.push('/');
           })
-
+      },
+      onClickHeart() {
+        if(!this.me){
+          return alert('로그인이 필요합니다');
+        }
+        if(this.liked){
+          return this.$store.dispatch('posts/unlikePost', {
+            postId: this.post.id,
+          });
+        }
+        return this.$store.dispatch('posts/likePost', {
+          postId: this.post.id,
+        });
       },
     },
     computed: {
       nickname() {
         return this.post.user && this.post.user.email.split('@')[0];
+      },
+      liked() {
+        const me = this.me;
+        return !!(this.post.Likers || []).find(v => v.id === (me && me.id));
+      },
+      heartIcon() {
+        return this.liked ? 'mdi-heart' : 'mdi-heart-outline';
       },
       commentsLength() {
         const length = this.post.Comments && this.post.Comments.length;

@@ -6,7 +6,7 @@
         <v-toolbar dense id="background" elevation="0">
         <v-spacer />
           <v-toolbar-items id="main-color">
-            <div class="title mt-2">All Study</div>
+            <div class="title mt-2">Main</div>
             <v-divider class="ml-3 mr-3" dark inset vertical></v-divider>
             <v-icon id="main-color">mdi-home</v-icon>
             <v-icon id="main-color" small>mdi-chevron-right</v-icon>

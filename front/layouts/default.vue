@@ -85,7 +85,7 @@
 </template>
 
 <script>
-  import FloatingButton from '~/components/FloatingButton'
+  import FloatingButton from '~/components/FloatingButton';
   export default {
     props: {
       source: String,
@@ -115,7 +115,7 @@
       }
     },
     components: {
-      FloatingButton
+      FloatingButton,
     }
   }
 </script>

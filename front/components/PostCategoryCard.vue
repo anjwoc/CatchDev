@@ -52,8 +52,9 @@ export default {
       type: Boolean,
       required: true,
     },
-    styleNumber: {
+    idx: {
       type: Number,
+      required: true,
     }
   },
   data() {

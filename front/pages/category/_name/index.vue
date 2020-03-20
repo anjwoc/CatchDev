@@ -20,7 +20,7 @@
 
       
       <v-row>
-        <v-col align="center" justify="center" v-for="p in mainPosts" :key="p.id" cols="12">
+        <v-col align="center" justify="center" v-for="(p, index) in mainPosts" :key="p.id" cols="12">
           <v-container>
             <v-hover
               v-slot:default="{ hover }"
@@ -29,7 +29,7 @@
               :disabled="disabled"
               :value="value"
             >
-              <post-category-card class="card-component" :hover="hover" :post=p />
+              <post-category-card class="card-component" :idx="index" :hover="hover" :post=p />
             </v-hover>
           </v-container>
         </v-col>

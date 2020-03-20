@@ -98,9 +98,6 @@ export default {
       type: Boolean,
       required: true,
     },
-    styleNumber: {
-      type: Number,
-    }
   },
   data() {
     return {

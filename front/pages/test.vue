@@ -19,18 +19,13 @@
 
     
     <v-row>
-      <v-col align="center" v-for="p in mainPosts" :key="p.id" cols="12" xs="12" sm="6" md="4">
-        <v-container >
-          <v-hover
-            v-slot:default="{ hover }"
-            :open-delay="openDelay"
-            :close-delay="closeDelay"
-            :disabled="disabled"
-            :value="value"
-          >
-            <post-category-card :hover="hover" :post=p />
-          </v-hover>
-        </v-container>
+      <v-col align="center" v-for="(c, idx) in card" :key="idx" cols="12" xs="12" sm="6" md="6">
+        <info-card :info="c" :infoType="c.type" />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+
       </v-col>
     </v-row>
   </div>
@@ -38,18 +33,28 @@
 
 
 <script>
-import PostCategoryCard from '~/components/PostCategoryCard'
+import InfoCard from '~/components/InfoCard'
   export default {
     data() {
       return { 
-        disabled: false,
-        openDelay: '0',
-        closeDelay: '0',
-        value: false,
+        card: [{
+          title: "진행 중 스터디",
+          icon: "mdi-new-box",
+          number: "358",
+          desc: "In progress or new study",
+          type: "green"
+        },{
+          title: "완료 된 스터디",
+          icon: "mdi-close-octagon",
+          number: "358",
+          desc: "closed study",
+          type: "purple"
+        }],
+        
       }
     },
     components: {
-      PostCategoryCard,
+      InfoCard,
     },
     computed: {
       me() {
@@ -96,12 +101,6 @@ import PostCategoryCard from '~/components/PostCategoryCard'
 
 #point-color{
   color: #b79b5f;
-}
-#tab-color{
-  background-color: #343D46;
-}
-#background{
-  background-color: #38424B;
 }
 #main-color{
   color: #A1A8B0;

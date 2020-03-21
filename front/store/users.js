@@ -178,8 +178,7 @@ export const actions = {
         commit('setMe', res.data);
       })
       .catch((err)=>{
-        // console.log(err.response);
-        return err.response;
+        console.error(err);
       });
   },
   async logOut({ commit }, payload){

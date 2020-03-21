@@ -1,6 +1,5 @@
 <template >
   <v-app>
-    <Alert :info="errInfo" @update="onUpdateDialog" />
     <v-container
       class="fill-height background"
       fluid

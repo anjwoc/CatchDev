@@ -1,5 +1,6 @@
 <template >
   <v-app>
+    <Alert :info="errInfo" @update="onUpdateDialog" />
     <v-container
       class="fill-height background"
       fluid
@@ -79,12 +80,15 @@
 
 <script>
   import axios from 'axios';
+  import wildcard  from 'wildcard';
   export default {
     data() {
       return {
         valid: '',
         email: '',
         password: '',
+        errInfo: {},
+        dialog: false,
         emailRules: [
           v => !!v || '이메일은 필수입니다.',
           v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
@@ -107,13 +111,17 @@
             email: this.email,
             password: this.password
           })
-            .then(()=>{
+            .then((res)=>{
               this.$router.push({ path: '/' });
             })
             .catch((err)=>{
-              console.error(err)
             })
         }
+      },
+      onUpdateDialog(data) {
+        const status = data;
+        console.log(status);
+        this.dialog = status;
       },
       onTemporaryUser() {
         this.$store.commit('users/setMe', {
@@ -130,6 +138,8 @@
             console.erorr(err);
           });
       }
+    },
+    components: {
     },
     middleware: 'anonymous',
 

@@ -36,6 +36,7 @@
         <v-icon class="menu-text" left>mdi-logout</v-icon> logout
       </v-btn>
       <v-btn
+        v-if="me"
         class="ml-3"
         id="profileButton"
         :to="profileUrl"

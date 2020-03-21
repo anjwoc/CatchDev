@@ -222,7 +222,6 @@
         const imageFormData = new FormData();
         imageFormData.append('userId', this.userId);
         imageFormData.append('image', this.files);
-        console.log(this.files);
         this.$axios.post(`/user/image`,imageFormData, {
           withCredentials: true,
         });

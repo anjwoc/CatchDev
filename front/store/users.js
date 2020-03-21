@@ -168,7 +168,7 @@ export const actions = {
 
   },
   async logIn({ commit }, payload){
-    await this.$axios.post('/user/login', {
+    return await this.$axios.post('/user/login', {
       email: payload.email,
       password: payload.password
     },{
@@ -178,7 +178,8 @@ export const actions = {
         commit('setMe', res.data);
       })
       .catch((err)=>{
-        console.error(err);
+        // console.log(err.response);
+        return err.response;
       });
   },
   async logOut({ commit }, payload){

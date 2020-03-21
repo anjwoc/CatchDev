@@ -25,7 +25,7 @@
             v-for="(tag, index) in hashtags"
             :key="index"
             small
-            class="ml-1 mr-1 pa-0 font-weight-regular"
+            class="ml-1 mr-1 font-weight-regular"
             color="grey lighten-4" 
             outlined
             text-color="blue-grey"

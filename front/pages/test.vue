@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <v-row class="mr-8" justify="end">
+    <!-- <v-row class="mr-8" justify="end">
       <v-spacer />
       <v-toolbar dense id="background" elevation="0">
       <v-spacer />
@@ -15,19 +15,34 @@
           <p class="amber--text mt-3">{{routeName}}</p> 
         </v-toolbar-items>
       </v-toolbar>
-    </v-row>
+    </v-row> -->
 
     
-    <v-row>
+    <!-- <v-row>
       <v-col align="center" v-for="(c, idx) in card" :key="idx" cols="12" xs="12" sm="6" md="6">
         <info-card :info="c" :infoType="c.type" />
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
-
+      <v-col align="center" cols="12" xs="12" md="6">
+        <v-card
+          elevation="0"
+        >
+          <img
+            src="~assets/destinations.png"
+          />
+        </v-card>
       </v-col>
-    </v-row>
+      <v-col align="center" cols="12" xs="12" md="6">
+        <v-card
+          elevation="0"
+        >
+          <img
+            src="~assets/team.png"
+          />
+        </v-card>
+      </v-col>
+    </v-row> -->
   </div>
 </template>
 
@@ -98,9 +113,19 @@ import InfoCard from '~/components/InfoCard'
 </script>
 
 <style scoped>
+img {
+  width: 100%;
+  height: 100%;
+  border-radius: 40%;
+  opacity: 0.8;
+  object-fit: contain;
+}
 
 #point-color{
   color: #b79b5f;
+}
+.background{
+  background-color: white;
 }
 #main-color{
   color: #A1A8B0;

@@ -20,13 +20,11 @@ const port = process.env.PORT || 4000;
 
 
 if (prod) {
-  console.log("==============================================");
-  console.log("production");
   app.use(helmet());
   app.use(hpp());
   app.use(morgan('combined'));
   app.use(cors({
-    origin: ["https://www.delog.net", "https://delog.net", "https://api.github.com", "https://github.com"],
+    origin:  /delog\.net$/,
     credentials: true,
   }));
 } else{

@@ -20,7 +20,35 @@
         prepend-inner-icon="search"
         v-on:keyup.enter="onSearchPosts"
       />
+      
       <v-spacer />
+      
+      <v-btn class="mr-1" :to="profileUrl" dark>
+        <v-icon>mdi-account-circle</v-icon> Mypage
+      </v-btn>
+      <v-btn class="mr-1 ml-1" to="/setting" dark>
+        <v-icon>mdi-cog</v-icon> Configuration
+      </v-btn>
+      <v-btn v-if="!me" class="ml-1" to="/login" elevation="0" dark>
+        <v-icon left>mdi-login</v-icon> login
+      </v-btn>
+      <v-btn v-if="me" class="ml-1" @click="onLogout" elevation="0" dark>
+        <v-icon class="menu-text" left>mdi-logout</v-icon> logout
+      </v-btn>
+      <v-btn
+        class="ml-3"
+        id="profileButton"
+        :to="profileUrl"
+        fab
+      >
+        <v-avatar>
+          <v-img
+            :src="this.me && this.me.imgSrc"
+            :lazy-src="this.me && this.me.imgSrc"
+            alt="profileImage"
+          ></v-img>
+        </v-avatar>
+      </v-btn>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -112,6 +140,27 @@
     methods: {
       onSearchPosts(event) {
         this.$router.push({ path: `/post/search/${event.target.value}`});
+      },
+      onLogout() {
+        this.$store.dispatch('users/logOut')
+          .then(()=>{
+            this.$router.push({ path: '/login' });
+          })
+          .catch((err)=>{
+            console.error(err)
+            return next(err);
+          });
+      }
+    },
+    computed: {
+      me() {
+        return this.$store.state.users.me;
+      },
+      profileUrl() {
+        if(this.me && this.me.id){
+          return `/profile/${this.me.id}`;
+        }
+        return '/profile/'
       }
     },
     components: {

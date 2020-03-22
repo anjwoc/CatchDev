@@ -1,7 +1,9 @@
 const { Nuxt, Builder } = require('nuxt');
 const https = require('http');
 const http = require('https');
-
+const greenlock = require('greenlock-express');
+const greenlock_fs = require('greenlock-store-fs');
+const redirect_https = require('redirect-https');
 const app = require('express')();
 const isProd = (process.env.NODE_ENV === 'production');
 const port = process.env.PORT || 3081;
@@ -25,12 +27,12 @@ if (config.dev) {
 function listen() {
   // Listen the server
   if (isProd) {
-    const lex = require('greenlock-express').create({
+    const lex = greenlock.create({
       version: 'draft-11',
       configDir: '/etc/letsencrypt', // 또는 ~/letsencrypt/etc
       server: 'https://acme-v02.api.letsencrypt.org/directory',
       email: 'anjwoc@gmail.com',
-      store: require('greenlock-store-fs'),
+      store: greenlock_fs,
       approveDomains: (opts, certs, cb) => {
         if (certs) {
           opts.domains = ['delog.net', 'www.delog.net'];
@@ -44,7 +46,7 @@ function listen() {
       renewBy: 80 * 24 * 60 * 60 * 1000,
     });
     https.createServer(lex.httpsOptions, lex.middleware(app)).listen(443);
-    http.createServer(lex.middleware(require('redirect-https')())).listen(80);
+    http.createServer(lex.middleware(redirect_https())).listen(80);
   } else {
     app.listen(port, () => {
       console.log(`server is running on ${port}`);

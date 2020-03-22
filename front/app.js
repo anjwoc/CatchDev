@@ -2,24 +2,21 @@
 
 // Here's a vanilla HTTP app to start,
 // but feel free to replace it with Express, Koa, etc
-const { Nuxt, Builder } = require('nuxt');
-const config = require('./nuxt.config.js');
-const app = require('express');
-config.dev = !isProd;
+const { Nuxt, Builder }  = require('nuxt');
+const app  = require('express')();
+const isProd = (process.env.NODE_ENV === 'production');
+const config = require('./nuxt.config.js')
 const nuxt = new Nuxt(config);
+async function start() {
+  app.use(nuxt.render);
 
-app.use(nuxt.render);
+  if (!isProd) {
+    new Builder(nuxt).build();
+  }
 
-if (config.dev) {
-  new Builder(nuxt).build();
-} 
+  console.log("Server listening");
+}
 
-app.get('/', (req, res, next) => {
-  res.end("Hello World");
-});
-
-// var app = function(req, res) {
-//     res.end('Hello, Encrypted World!');
-// };
+start();
 
 module.exports = app;

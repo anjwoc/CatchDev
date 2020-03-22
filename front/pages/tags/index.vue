@@ -44,6 +44,7 @@
         return this.$store.state.posts.hashtags;
       }
     },
+    middleware: 'authenticated',
   }
 </script>
 

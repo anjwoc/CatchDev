@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
-const cookie = require('cookie-parser');
+//const cookie = require('cookie-parser');
 const morgan = require('morgan');
 const prod = process.env.NODE_ENV === 'production';
 const hpp = require('hpp');
@@ -14,8 +14,8 @@ const passportConfig = require('./passport');
 passportConfig();
 
 const app = express();
-db.sequelize.sync({  });
 dotenv.config();
+db.sequelize.sync({  });
 const port = process.env.PORT || 4000;
 
 
@@ -40,7 +40,8 @@ app.use('/', express.static('uploads'));
 app.use('/profile/', express.static('uploads/profileImage'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookie(process.env.COOKIE_SECRET));
+//app.use(passport.initialize());
+//app.use(passport.session());
 app.use(session({
   resave: false,
   saveUninitialized: false,
@@ -48,14 +49,15 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: false,
-    path: '/',
-    // domain: '.delog.net',
+    domain: prod && '.delog.net',
   },
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', routes);
 
-app.listen(port,  () => {
-  console.log(`백엔드 서버 ${port}번 포트에서 작동중.`);
-});
+module.exports = app;
+
+//app.listen(port,  () => {
+  //console.log(`백엔드 서버 ${port}번 포트에서 작동중.`);
+//});

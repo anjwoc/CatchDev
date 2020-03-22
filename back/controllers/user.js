@@ -142,7 +142,7 @@ exports.logIn = async (req, res, next) => {
 // 로그아웃하는 컨트롤러
 exports.logOut = async (req, res, next) => {
   try{
-    if (req.isAuthenticated()) {
+    if (req.session.cookie) {
       req.logout();
       req.session.destroy(); // 선택사항
       return res.clearCookie('connect.sid', { path: '/' }).status(200).send('로그아웃 되었습니다.');

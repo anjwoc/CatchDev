@@ -3,3 +3,6 @@ node_modules
 .nuxt
 front/.nuxt
 nginx.conf
+greenlock.d
+front/greenlock.d
+certbot-auto
